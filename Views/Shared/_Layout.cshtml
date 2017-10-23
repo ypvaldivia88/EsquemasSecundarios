@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="es-es">
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>ES | @ViewBag.Title</title>
+    
+        <!-- STYLES -->
+
+        <!-- Bootstrap -->
+        @Styles.Render("~/Style/Bootstrap")
+        <!-- Font Awesome -->
+        @Styles.Render("~/Style/Fonts")
+
+        @RenderSection("styles", required: false)
+
+        <!-- Custom Theme Style -->
+        @Styles.Render("~/Style/Custom")
+
+    </head>
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+            
+                <!-- Menu principal -->
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+
+                        <div class="navbar nav_title" style="border: 0;">
+                            <a href="@Url.Action("Index","Home")" class="site_title">Esquemas</a>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    
+                        <!-- sidebar menu -->                    
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <div class="menu_section">
+                                <h3>Secundarios</h3>
+                                <ul class="nav side-menu">
+                                    <li>
+                                        <a><i class="fa fa-home"></i> Módulo ES <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="@Url.Action("Index","Home")">Acerca de</a></li>
+                                            <li><a href="#">Contáctenos</a></li>
+                                            <li><a href="#">Ayuda</a></li>
+                                        </ul>
+                                    </li>                                
+                                </ul>
+                            </div>                        
+                            <div class="menu_section">
+                                <h3>Nomencladores</h3>
+                                <ul class="nav side-menu">                                
+                                    <li>
+                                        <a><i class="fa fa-cubes"></i> Relevadores <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>@Html.ActionLink("Plantillas de Relevadores", "Index", "Plantillas") </li>
+                                            <li>@Html.ActionLink("Relevadores de Protección", "Index", "Relevadores")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-flash"></i> Transformadores <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>@Html.ActionLink("Transformadores de Corriente", "Index", "TransformadoresCorriente")</li>
+                                            <li>@Html.ActionLink("Transformadores de Potencial", "Index", "TransformadoresPotencial")</li>
+                                        </ul>
+                                    </li>                      
+                                </ul>
+                            </div>
+                            <div class="menu_section">
+                                <h3>Protecciones</h3>
+                                <ul class="nav side-menu">
+                                    <li>
+                                        <a><i class="fa fa-cogs"></i> Esquemas <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>@Html.ActionLink("Esquemas de Protección", "Index", "EsquemasProteccion")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-wrench"></i> Mantenimientos</a>                                        
+                                    </li>    
+                                </ul>
+                            </div>                        
+                        </div>
+                        <!-- /sidebar menu -->                    
+                
+                        <div class="clearfix"></div>
+                    
+                        <!-- /menu footer buttons -->
+                        <div class="sidebar-footer hidden-small">
+                            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- /menu footer buttons -->
+
+                        <br />
+
+                    </div>
+                </div>
+                <!-- /Menu principal -->
+
+                <!-- Barra Superior -->
+                <div class="top_nav">
+                    <div class="nav_menu">
+                        <nav class="" role="navigation">
+                            <div class="nav toggle">
+                                <a id="menu_toggle"><i class="fa fa-bars"></i></a>                            
+                            </div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="">
+                                
+                                @{
+                                    if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-user"> </i>
+                                            @{
+                                                ViewContext.Writer.Write(User.Identity.Name);
+                                            }
+                                            <span class=" fa fa-angle-down"> </span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <i class="fa fa-unlock-alt"> </i>
+                                                    <span> Cambiar contraseña</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Login","Personal")">
+                                                    <i class="glyphicon glyphicon-share"> </i>
+                                                    <span> Cerrar sesión</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }                                
+                                }
+                                
+                                </li>                            
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- /Barra Superior -->
+            
+                <!-- Pagina de contenido -->
+                <div class="right_col" role="main">
+                    <div class="">                 
+                        <h1>@ViewBag.Title</h1><!-- Titulo de la pagina -->
+
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="x_title">
+                                    <h2>@ViewBag.PTitle</h2>  <!-- Titulo del contenido -->                              
+                                    <div class="clearfix"></div>
+                                </div>
+                                @RenderBody()<!-- Contenido -->
+                            </div>
+                        </div> 
+                                 
+                        <div class="clearfix"></div>   
+                                  
+                    </div>
+                </div>
+                <!-- /Pagina de contenido -->
+
+                <!-- Pie de pagina -->
+                <footer>
+                    <div class="pull-right">
+                        &copy;@DateTime.Now.Year - UEB Aplicaciones de Redes Sancti Spíritus
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /Pie de pagina -->
+        
+            </div>
+        </div>
+
+        <!-- JAVASCRIPTS -->
+        <!-- jQuery -->
+        @Scripts.Render("~/Script/jQuery")
+        <!-- Bootstrap -->
+        @Scripts.Render("~/Script/Bootstrap")
+        <!-- FastClick -->
+        @Scripts.Render("~/Script/FastClick")
+        <!-- NProgress -->
+        @Scripts.Render("~/Script/NProgress")        
+
+        <!-- Custom Theme Scripts -->
+        @Scripts.Render("~/Script/Custom")
+
+        @RenderSection("script", required: false)
+    
+    </body>
+</html>

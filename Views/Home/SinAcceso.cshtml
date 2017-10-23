@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gentallela Alela! | </title>
+    <!-- Bootstrap -->
+    @Styles.Render("~/Style/Bootstrap")
+    <!-- Font Awesome -->
+    @Styles.Render("~/Style/Fonts")
+    <!-- Custom Theme Style -->
+    @Styles.Render("~/Style/Custom")
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <!-- page content -->
+            <div class="col-md-12">
+                <div class="col-middle">
+                    <div class="text-center text-center">
+                        <h1 class="error-number">Sin Acceso!</h1>
+                        <h2>Lo sentimos... Usted no tiene los permisos necesario.</h2>
+                        <p>
+                            Usted está tratando de acceder a un recurso al cual no posee permisos de acceso, si cree que esto es incorrecto por favor <b><a href="#">contacte</a></b> a un administrador.
+                        </p>
+                        <div class="mid_center">
+                            <h3><a href="@Url.Action("Index","Home")"><i class="fa fa-reply"></i> Regresar</a></h3>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+        </div>
+    </div>
+    @Scripts.Render("~/Script/jQuery")
+    <!-- Bootstrap -->
+    @Scripts.Render("~/Script/Bootstrap")
+    <!-- FastClick -->
+    @Scripts.Render("~/Script/FastClick")
+    <!-- NProgress -->
+    @Scripts.Render("~/Script/NProgress")
+
+    <!-- Custom Theme Scripts -->
+    @Scripts.Render("~/Script/Custom")
+</body>
+</html>

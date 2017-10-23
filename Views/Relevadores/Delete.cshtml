@@ -1,0 +1,43 @@
+﻿@model EsquemasSecundarios.Models.Relevador
+
+@{
+    ViewBag.Title = "Relevadores";
+    ViewBag.PTitle = "Eliminar";
+}
+
+<h3>¿Seguro que desea eliminar este relevador?</h3>
+<div>
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Modelo</th>
+                    <td>@Html.DisplayFor(model => model.Plantilla.Modelo)</td>
+                </tr>
+                <tr>
+                    <th>Ubicado</th>
+                    <td>@Html.DisplayFor(model => model.Ubicado)</td>
+                </tr>
+                <tr>
+                    <th>Voltaje alterno</th>
+                    <td>@Html.DisplayFor(model => model.Voltaje_Alterno)</td>
+                </tr>
+                <tr>
+                    <th>Voltaje directo</th>
+                    <td>@Html.DisplayFor(model => model.Voltaje_Directo)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
+            <a class="btn btn-default" href="@Url.Action("Index","Plantillas")"><i class="fa fa-list"></i> Listado</a>
+        </div>
+    }
+</div>

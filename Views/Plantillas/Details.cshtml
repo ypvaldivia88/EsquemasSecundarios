@@ -1,0 +1,51 @@
+﻿@model EsquemasSecundarios.Models.Plantilla
+
+@{
+    ViewBag.Title = "Plantilla de Relevador";
+    ViewBag.PTitle = "Detalles";
+}
+
+<div class="row clearfix">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Datos de la plantilla</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>Modelo</th>
+                        <td>@Html.DisplayFor(model => model.Modelo)</td>
+                    </tr>
+                    <tr>
+                        <th>Fabricante</th>
+                        <td>@ViewBag.Fabricante</td>
+                    </tr>
+                </table>
+            </div>
+        </div> 
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Funciones asociadas a la plantilla</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    @foreach (var item in ViewBag.Funciones)
+                    {
+                        <tr>
+                            <td>@item</td>
+                        </tr>
+                    }                    
+                </table>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<hr />
+<p>
+    <a class="btn btn-info" href="@Url.Action("Edit","Plantillas", new { id = Model.id_Plantilla })"><i class="fa fa-edit"></i> Editar</a>
+    <a class="btn btn-default" href="@Url.Action("Index","Plantillas")"><i class="fa fa-list"></i> Listado</a>
+</p>

@@ -1,0 +1,35 @@
+﻿@model EsquemasSecundarios.Models.Relevador
+
+@{
+    ViewBag.Title = "Relevadores";
+    ViewBag.PTitle = "Detalles";
+}
+
+<div class="row clearfix">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>Modelo</th>
+                <td>@Html.DisplayFor(model => model.Plantilla.Modelo)</td>
+            </tr>
+            <tr>
+                <th>Ubicado</th>
+                <td>@Html.DisplayFor(model => model.Ubicado)</td>
+            </tr>
+            <tr>
+                <th>Voltaje alterno</th>
+                <td>@Html.DisplayFor(model => model.Voltaje_Alterno)</td>
+            </tr>
+            <tr>
+                <th>Voltaje directo</th>
+                <td>@Html.DisplayFor(model => model.Voltaje_Directo)</td>
+            </tr>
+        </table>
+    </div>    
+</div>
+
+<hr />
+<p>
+    <a class="btn btn-info" href="@Url.Action("Edit","Relevadores", new { id = Model.Nro_Serie })"><i class="fa fa-edit"></i> Editar</a>
+    <a class="btn btn-default" href="@Url.Action("Index","Relevadores")"><i class="fa fa-list"></i> Listado</a>
+</p>

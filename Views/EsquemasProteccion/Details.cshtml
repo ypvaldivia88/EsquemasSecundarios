@@ -1,0 +1,121 @@
+﻿@model EsquemasSecundarios.Models.EsquemaProteccion
+
+@{
+    ViewBag.Title = "Esquema de protección";
+    ViewBag.PTitle = "Detalles";
+}
+
+<div class="row clearfix">
+    <!-- price element -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="pricing">
+            <div class="title">
+                <h1>Datos generales del esquema</h1>
+            </div>
+            <div class="x_content">
+                <div class="">
+                    <div class="pricing_features">
+                        <table class="table">
+                            <tr>
+                                <th>Nombre del esquema</th>
+                                <td>@Html.DisplayFor(model => model.Nombre)</td>
+                            </tr>
+                            <tr>
+                                <th>Tipo de instalación</th>
+                                <td>@Html.DisplayFor(model => model.Subestacion)</td>
+                            </tr>
+                            <tr>
+                                <th>Tipo de equipo primario</th>
+                                <td>@Html.DisplayFor(model => model.Tipo_Equipo_Primario)</td>
+                            </tr>
+                            <tr>
+                                <th>Nombre del elemento eléctrico</th>
+                                <td>@Html.DisplayFor(model => model.Elemento_Electrico)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="pricing_footer">
+                    <a class="btn btn-info" href="@Url.Action("Edit","EsquemasProteccion", new { id = Model.id_Esquema })"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-list"></i> Listado</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- price element -->
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Elementos asociados al esquema</h3>
+                <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Interruptores</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.Interruptores)
+                            {
+                                <tr>
+                                    <td>@item</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>TC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.TC)
+                            {
+                                <tr>
+                                    <td>@item</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>TP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.TP)
+                            {
+                                <tr>
+                                    <td>@item</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Relevadores</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.Relevadores)
+                            {
+                                <tr>
+                                    <td>@item</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>          
+    </div>
+</div>

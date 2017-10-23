@@ -1,0 +1,104 @@
+﻿@model EsquemasSecundarios.Models.Personal
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es-es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Autenticar | Módulo Esquemas Secundarios del SIGERE</title>
+
+    <!-- Bootstrap -->
+    @Styles.Render("~/Style/Bootstrap")
+    <!-- Font Awesome -->
+    @Styles.Render("~/Style/Fonts")
+    <!-- Custom Theme Style -->
+    @Styles.Render("~/Style/Custom")
+    @Styles.Render("~/Style/Select2")
+
+</head>
+<body style="background:#F7F7F7;">
+    <div class="">
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
+        <div id="wrapper">
+            <div id="login" class=" form">
+                <section class="login_content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        
+                            <h1>Autentíquese</h1>
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.DropDownList("Nombre", null, "", htmlAttributes: new { @class = "select2_single form-control" })                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Inserte su contraseña" } })                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>                            
+                            <div>
+                                <input type="submit" class="btn btn-default submit pull-left" value="Acceder" />
+                                <a class="reset_pass" href="#"> Contáctenos!</a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="separator">
+                                <br />
+                                <div>
+                                    <h1><i class="fa fa-codepen" style="font-size: 26px;"></i> Esquemas Secundarios</h1>
+                                    <p>- SIGERE. ©@DateTime.Now.Year -</p>
+                                </div>
+                            </div>
+                    }
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/Script/jQuery")
+    <!-- Bootstrap -->
+    @Scripts.Render("~/Script/Bootstrap")
+    <!-- FastClick -->
+    @Scripts.Render("~/Script/FastClick")
+    <!-- NProgress -->
+    @Scripts.Render("~/Script/NProgress")
+    @Scripts.Render("~/Script/Select2")
+
+    <!-- Custom Theme Scripts -->
+    @Scripts.Render("~/Script/Custom")
+    
+
+    <script>
+        $(document).ready(function () {
+            //Select2
+            $(".select2_single").select2({
+                placeholder: "Seleccione su usuario...",
+                allowClear: true
+            });
+        });
+    </script>
+    }
+
+</body>
+</html>

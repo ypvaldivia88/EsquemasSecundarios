@@ -1,0 +1,151 @@
+﻿@model EsquemasSecundarios.Models.Mantenimientos
+
+@{
+    ViewBag.Title = "Mantenimientos";
+    ViewBag.PTitle = "Editar";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+           
+        <h2>Fecha</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "date-picker form-control" } })
+                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Elemento principal</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.EditorFor(model => model.CodEquipo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CodEquipo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Código del elemento</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.EditorFor(model => model.CodEquipo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CodEquipo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Mantenimiento</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.EditorFor(model => model.Mantenimiento, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Mantenimiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Observaciones</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.EditorFor(model => model.Observaciones, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Observaciones, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Fecha del próximo mantenimiento</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.EditorFor(model => model.FechaProximo, new { htmlAttributes = new { @class = "date-picker form-control" } })
+                        @Html.ValidationMessageFor(model => model.FechaProximo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Mantenimiento a realizar</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.EditorFor(model => model.MttoProximo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MttoProximo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Subestación</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="form-line">
+                        @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Actualizar</button>
+                <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
+            </div>
+        </div>
+
+    </div>
+}
+
+@section styles
+{
+    @Styles.Render("~/Style/iCheck")
+    @Styles.Render("~/Style/Select2")    
+}
+
+@section script
+{
+    @Scripts.Render("~/Script/Select2")
+    @Scripts.Render("~/Script/DateRangePicker")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //<!-- Select2 -->
+            $(".select2_single").select2({
+                placeholder: "Seleccione un elemento de la lista",
+                allowClear: true
+            });
+            $(document).ready(function() {
+                $('date-picker').daterangepicker({
+                    singleDatePicker: true,
+                    calender_style: "picker_4"
+                }, function (start, end, label) {
+                    console.log(start.toISOString(), end.toISOString(), label);
+                });
+            });
+
+        });
+    </script>
+}

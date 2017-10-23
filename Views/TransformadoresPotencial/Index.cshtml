@@ -1,0 +1,96 @@
+﻿@model IEnumerable<EsquemasSecundarios.Models.TransformadorPotencial>
+
+@{
+    ViewBag.Title = "Transformadores de potencial";
+    ViewBag.PTitle = "Listado";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.id_Voltaje_Primario)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cant_Devanado)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.id_Plantilla)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ubicado)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CodSub)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tipo_Equipo_Primario)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Elemento_Electrico)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id_EAdministrativa)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumAccion)
+                    </th>
+                </tr>
+                </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id_Voltaje_Primario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cant_Devanado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id_Plantilla)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ubicado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CodSub)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tipo_Equipo_Primario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Elemento_Electrico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id_EAdministrativa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumAccion)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section styles {
+    @Styles.Render("~/Style/DataTables")
+}
+
+@section script {
+
+    @Scripts.Render("~/Script/DataTables")
+
+    <!-- Datatables -->
+    <script>
+        $(document).ready(function () {
+            $(".table").DataTable();
+        });
+    </script>
+    <!-- /Datatables -->
+}

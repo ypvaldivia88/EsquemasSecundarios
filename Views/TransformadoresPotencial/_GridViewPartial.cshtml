@@ -1,0 +1,47 @@
+@{
+	var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "TransformadoresPotencial", Action = "GridViewPartial" };
+		
+				settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "TransformadoresPotencial", Action = "GridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "TransformadoresPotencial", Action = "GridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "TransformadoresPotencial", Action = "GridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+		
+		settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+				
+		settings.KeyFieldName = "Nro_Serie";
+		
+		settings.SettingsPager.Visible = true;
+		settings.Settings.ShowGroupPanel = true;
+		settings.Settings.ShowFilterRow = true;
+		settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+		settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+		settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+		settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+		settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+		settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+		
+				settings.Columns.Add("Nro_Serie");
+				settings.Columns.Add("id_Voltaje_Primario");
+				settings.Columns.Add("Cant_Devanado");
+				settings.Columns.Add("Fase");
+				settings.Columns.Add("id_Plantilla");
+				settings.Columns.Add("Ubicado");
+				settings.Columns.Add("CodSub");
+				settings.Columns.Add("Tipo_Equipo_Primario");
+				settings.Columns.Add("Elemento_Electrico");
+				settings.Columns.Add("Id_EAdministrativa");
+				settings.Columns.Add("NumAccion");
+				settings.Columns.Add("Esquemas_TP");
+			});
+		if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+	}
+@grid.Bind(Model).GetHtml()
