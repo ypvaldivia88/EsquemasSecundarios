@@ -1,40 +1,32 @@
 ﻿@model EsquemasSecundarios.Models.Mantenimientos
 
 @{
-    ViewBag.Title = "Relevadores";
-    ViewBag.PTitle = "Detalles";
+    ViewBag.Title = "Mantenimientos";
+    ViewBag.PTitle = "Detalles del mantenimiento";
 }
 
 <div class="row clearfix">
     <div class="col-md-12">
         <table class="table">
             <tr>
-                <th>@Html.DisplayNameFor(model => model.Fecha)</th>
+                <th>Subestación</th>
+                <td>@Html.DisplayFor(model => model.CodSubestacion)</td>
+            </tr>
+            <tr>
+                <th>Esquema</th>
+                <td>@ViewBag.Esquema</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
                 <td>@Html.DisplayFor(model => model.Fecha)</td>
             </tr>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.CodEquipo)</th>
-                <td>@Html.DisplayFor(model => model.CodEquipo)</td>
+                <th>Tipo de mantenimiento</th>
+                <td>@ViewBag.TipoMantenimiento</td>
             </tr>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.Mantenimiento)</th>
-                <td>@Html.DisplayFor(model => model.Mantenimiento)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Observaciones)</th>
+                <th>Observaciones</th>
                 <td>@Html.DisplayFor(model => model.Observaciones)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.FechaProximo)</th>
-                <td>@Html.DisplayFor(model => model.FechaProximo)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.MttoProximo)</th>
-                <td>@Html.DisplayFor(model => model.MttoProximo)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Subestacion)</th>
-                <td>@Html.DisplayFor(model => model.Subestacion)</td>
             </tr>
         </table>
     </div>
@@ -42,6 +34,6 @@
 
 <hr />
 <p>
-    <a class="btn btn-info" href="@Url.Action("Edit","Mantenimientos", new { Fecha = Model.Fecha, CodEquipo = Model.CodEquipo })"><i class="fa fa-edit"></i> Editar</a>
+    <a class="btn btn-info" href="@Url.Action("Edit","Mantenimientos", new { id = Model.IdMantenimiento })"><i class="fa fa-edit"></i> Editar</a>
     <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
 </p>

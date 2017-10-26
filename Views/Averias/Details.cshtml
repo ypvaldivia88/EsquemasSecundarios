@@ -1,0 +1,90 @@
+﻿@model EsquemasSecundarios.Models.Averias
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Averias</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaAtencion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaAtencion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaQueAtendio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaQueAtendio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatosReportados)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatosReportados)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Analisis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Analisis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Conclusiones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Conclusiones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Recomendaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Recomendaciones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ElaboradoPor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ElaboradoPor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RevisadoPor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RevisadoPor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AprobadoPor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AprobadoPor)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

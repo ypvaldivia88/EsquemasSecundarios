@@ -1,72 +1,47 @@
 ﻿@model EsquemasSecundarios.Models.Mantenimientos
 
 @{
-    Layout = null;
+    ViewBag.Title = "Mantenimientos";
+    ViewBag.PTitle = "Eliminar";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
-    <h3>Are you sure you want to delete this?</h3>
-    <div>
-        <h4>Mantenimientos</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Mantenimiento)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Mantenimiento)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Observaciones)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Observaciones)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.FechaProximo)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.FechaProximo)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.MttoProximo)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.MttoProximo)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Subestacion)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Subestacion)
-            </dd>
-    
-        </dl>
-    
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-    
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
+<h3>¿Seguro que desea eliminar este Mantenimiento?</h3>
+<div>
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Subestación</th>
+                    <td>@Html.DisplayFor(model => model.CodSubestacion)</td>
+                </tr>
+                <tr>
+                    <th>Esquema</th>
+                    <td>@ViewBag.Esquema</td>
+                </tr>
+                <tr>
+                    <th>Fecha</th>
+                    <td>@Html.DisplayFor(model => model.Fecha)</td>
+                </tr>
+                <tr>
+                    <th>Tipo de mantenimiento</th>
+                    <td>@ViewBag.TipoMantenimiento</td>
+                </tr>
+                <tr>
+                    <th>Observaciones</th>
+                    <td>@Html.DisplayFor(model => model.Observaciones)</td>
+                </tr>
+            </table>
+        </div>
     </div>
-</body>
-</html>
+
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
+            <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
+        </div>
+    }
+</div>

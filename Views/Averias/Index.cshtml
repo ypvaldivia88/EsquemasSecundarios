@@ -1,0 +1,123 @@
+﻿@model IEnumerable<EsquemasSecundarios.Models.Averias>
+
+@{
+    ViewBag.Title = "Averías";
+    ViewBag.PTitle = "Listado";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="datatable-buttons" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Subestacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Esquema)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaReporte)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaAtencion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PersonaQueAtendio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DatosReportados)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Analisis)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Conclusiones)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Recomendaciones)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ElaboradoPor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RevisadoPor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AprobadoPor)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Subestacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Esquema)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaReporte)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaAtencion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PersonaQueAtendio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatosReportados)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Analisis)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Conclusiones)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Recomendaciones)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ElaboradoPor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RevisadoPor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AprobadoPor)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Details","Averias", new { fecha = item.FechaReporte, subestacion = item.Subestacion, esquema = item.Esquema } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
+                            <a href="@Url.Action("Edit","Averias", new { fecha = item.FechaReporte, subestacion = item.Subestacion, esquema = item.Esquema } )"  class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
+                            <a href="@Url.Action("Delete","Averias", new { fecha = item.FechaReporte, subestacion = item.Subestacion, esquema = item.Esquema } )"  class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+
+        </table>
+
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <a href="@Url.Action("Create","Averias")" class="btn btn-info"><i class="fa fa-plus"></i> Nueva</a>
+    </div>
+</div>
+
+
+@section styles {
+    @Styles.Render("~/Style/DataTables")
+}
+
+@section script {
+    @Scripts.Render("~/Script/DataTables")
+    @Scripts.Render("~/Script/DT-Buttons")
+    @Scripts.Render("~/Script/DT-Init")
+}

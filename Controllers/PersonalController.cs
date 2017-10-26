@@ -14,10 +14,7 @@ namespace EsquemasSecundarios.Controllers
         // GET: Login
         public ActionResult Login()
         {
-            var personas = db.Personal
-                .Select(c => new SelectListItem { Value = c.Id_Persona.ToString(), Text = c.Nombre });
-
-            ViewBag.Nombre = new SelectList(personas, "Value", "Text");
+            ViewBag.Nombre = new SelectList(db.Personal, "Nombre", "Nombre");
             return View();
         }
 

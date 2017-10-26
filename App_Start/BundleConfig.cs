@@ -5,11 +5,9 @@ namespace EsquemasSecundarios
 {
     public class BundleConfig
     {
-        // Para obtener más información sobre Bundles, visite http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             // CSS !!!!!!!!!!!!!!!!!!
-
             /* Bootstrap */
             bundles.Add(new StyleBundle("~/Style/Bootstrap").Include(
                       "~/Content/libs/bootstrap/dist/css/bootstrap.min.css"));
@@ -33,9 +31,7 @@ namespace EsquemasSecundarios
             bundles.Add(new StyleBundle("~/Style/Custom").Include(
                      "~/Content/css/custom.css"));
 
-
             // JS !!!!!!!!!!!!!!!!!!!
-
             /* jQuery */
             bundles.Add(new ScriptBundle("~/Script/jQuery").Include(
                         "~/Content/libs/jquery/dist/jquery.min.js"));
@@ -79,10 +75,16 @@ namespace EsquemasSecundarios
                 "~/Content/libs/datatables.net-buttons/js/buttons.html5.min.js",
                 "~/Content/libs/datatables.net-buttons/js/buttons.print.min.js"                
                 ));
+            /* DataTablesInit*/
+            bundles.Add(new ScriptBundle("~/Script/DT-Init").Include(
+                "~/Content/js/datatables/init.js"
+                ));
+            /* Bootstrap DateRangePicker */
+            bundles.Add(new ScriptBundle("~/Script/DateRangePicker").Include(
+                "~/Content/js/datepicker/daterangepicker.js"));
             /* Custom Theme Scripts */
             bundles.Add(new ScriptBundle("~/Script/Custom").Include(
-                        "~/Content/js/custom.js"));
-
+                "~/Content/js/custom.js"));
         }
     }
 }

@@ -2,148 +2,77 @@
 
 @{
     ViewBag.Title = "Mantenimientos";
-    ViewBag.PTitle = "Listado";
+    ViewBag.PTitle = "Listado de mantenimientos";
 }
-
 
 <div class="row">
     <div class="col-md-12">
-
         <table id="datatable-buttons" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Mantenimiento)
+                        @Html.DisplayNameFor(model => model.Subestacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Esquema)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fecha)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoMantenimiento)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Observaciones)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FechaProximo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MttoProximo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Subestacion)
-                    </th>
                     <th></th>
                 </tr>
-            </thead>
-
+            </thead>            
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Mantenimiento)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Observaciones)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaProximo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MttoProximo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Subestacion)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Details","Mantenimientos", new { Fecha = item.Fecha, CodEquipo = item.CodEquipo } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
-                            <a href="@Url.Action("Edit","Mantenimientos", new { Fecha = item.Fecha, CodEquipo = item.CodEquipo } )" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
-                            <a href="@Url.Action("Delete","Mantenimientos", new { Fecha = item.Fecha, CodEquipo = item.CodEquipo } )" class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subestacion.Codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Esquema.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoMantenimiento.Tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Observaciones)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details","Mantenimientos", new { id = item.IdMantenimiento } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
+                        <a href="@Url.Action("Edit","Mantenimientos", new { id = item.IdMantenimiento } )" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
+                        <a href="@Url.Action("Delete","Mantenimientos", new { id = item.IdMantenimiento } )" class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>
+                    </td>
+                </tr>
+            }
+            </tbody>           
 
         </table>
     </div>
 </div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <a href="@Url.Action("Create","Mantenimientos")" class="btn btn-info"><i class="fa fa-plus"></i> Nuevo</a>
+    </div>
+</div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <a href="@Url.Action("Create","Mantenimientos")" class="btn btn-info"><i class="fa fa-plus"></i> Nuevo</a>
-            </div>
-        </div>
 
+@section styles {
+    @Styles.Render("~/Style/DataTables")
+}
 
-        @section styles {
-            @Styles.Render("~/Style/DataTables")
-            @Styles.Render("~/Style/DT-Buttons")
-        }
-
-        @section script {
-
-            @Scripts.Render("~/Script/DataTables")
-            @Scripts.Render("~/Script/DT-Buttons")
-
-            <!-- Datatables -->
-            <script>
-                $(document).ready(function () {
-                    var handleDataTableButtons = function () {
-                        if ($("#datatable-buttons").length) {
-                            $("#datatable-buttons").DataTable({
-                                dom: "Bfrtip",
-                                buttons: [
-                                    {
-                                        extend: "copy",
-                                        className: "btn-sm"
-                                    },
-                                    {
-                                        extend: "csv",
-                                        className: "btn-sm"
-                                    },
-                                    {
-                                        extend: "excel",
-                                        className: "btn-sm"
-                                    },
-                                    {
-                                        extend: "pdfHtml5",
-                                        className: "btn-sm"
-                                    },
-                                    {
-                                        extend: "print",
-                                        className: "btn-sm"
-                                    },
-                                ],
-                                responsive: true
-                            });
-                        }
-                    };
-
-                    TableManageButtons = function () {
-                        "use strict";
-                        return {
-                            init: function () {
-                                handleDataTableButtons();
-                            }
-                        };
-                    }();
-
-                    $('#datatable').dataTable();
-                    $('#datatable-keytable').DataTable({
-                        keys: true
-                    });
-
-                    $('#datatable-responsive').DataTable();
-
-                    $('#datatable-scroller').DataTable({
-                        ajax: "js/datatables/json/scroller-demo.json",
-                        deferRender: true,
-                        scrollY: 380,
-                        scrollCollapse: true,
-                        scroller: true
-                    });
-
-                    var table = $('#datatable-fixed-header').DataTable({
-                        fixedHeader: true
-                    });
-
-                    TableManageButtons.init();
-                });
-            </script>
-            <!-- /Datatables -->
-        }
+@section script {
+    @Scripts.Render("~/Script/DataTables")
+    @Scripts.Render("~/Script/DT-Buttons")
+    @Scripts.Render("~/Script/DT-Init")
+}

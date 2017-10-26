@@ -68,7 +68,10 @@
                                             <li>@Html.ActionLink("Transformadores de Corriente", "Index", "TransformadoresCorriente")</li>
                                             <li>@Html.ActionLink("Transformadores de Potencial", "Index", "TransformadoresPotencial")</li>
                                         </ul>
-                                    </li>                      
+                                    </li> 
+                                    <li>
+                                        <a href="@Url.Action("Index","TipoMantenimiento")"><i class="fa fa-bookmark-o"></i> Tipos de mantenimientos</a>                                        
+                                    </li>
                                 </ul>
                             </div>
                             <div class="menu_section">
@@ -82,7 +85,10 @@
                                     </li>
                                     <li>
                                         <a href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-wrench"></i> Mantenimientos</a>                                        
-                                    </li>    
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Averias")"><i class="fa fa-chain-broken"></i> Averías</a>
+                                    </li>
                                 </ul>
                             </div>                        
                         </div>

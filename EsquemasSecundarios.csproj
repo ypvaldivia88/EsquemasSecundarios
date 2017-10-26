@@ -138,12 +138,14 @@
     <Compile Include="Controllers\PlantillasController.cs" />
     <Compile Include="Controllers\RelevadoresController.cs" />
     <Compile Include="Controllers\Seguridad.cs" />
+    <Compile Include="Controllers\TipoMantenimientoController.cs" />
     <Compile Include="Controllers\TransformadoresCorrienteController.cs" />
     <Compile Include="Controllers\TransformadoresPotencialController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Averias.cs" />
     <Compile Include="Models\Barra.cs" />
     <Compile Include="Models\CircuitoPrimario.cs" />
     <Compile Include="Models\CircuitoSubtransmision.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Models\Subestacion.cs" />
     <Compile Include="Models\SubestacionCabezaLinea.cs" />
     <Compile Include="Models\SubestacionTransmision.cs" />
+    <Compile Include="Models\TipoMantenimiento.cs" />
     <Compile Include="Models\TransformadorCorriente.cs" />
     <Compile Include="Models\TransformadorPotencial.cs" />
     <Compile Include="Models\TransformadorSubtransmision.cs" />
@@ -181,7 +184,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\maps\jquery-jvectormap-2.0.3.css" />
+    <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\js\datatables\es.js" />
+    <Content Include="Content\js\datatables\init.js" />
     <Content Include="Content\js\select2\select2.spanish.js" />
     <Content Include="Content\less\custom.css" />
     <Content Include="Content\libs\bootstrap\dist\css\bootstrap-theme.css" />
@@ -1455,6 +1460,11 @@
     <Content Include="Content\libs\select2\src\scss\_single.scss" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\daterangepicker.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1517,6 +1527,16 @@
     <Content Include="Views\Mantenimientos\Details.cshtml" />
     <Content Include="Views\Mantenimientos\Edit.cshtml" />
     <Content Include="Views\Mantenimientos\Index.cshtml" />
+    <Content Include="Views\Averias\Create.cshtml" />
+    <Content Include="Views\Averias\Delete.cshtml" />
+    <Content Include="Views\Averias\Details.cshtml" />
+    <Content Include="Views\Averias\Edit.cshtml" />
+    <Content Include="Views\Averias\Index.cshtml" />
+    <Content Include="Views\TipoMantenimiento\Create.cshtml" />
+    <Content Include="Views\TipoMantenimiento\Delete.cshtml" />
+    <Content Include="Views\TipoMantenimiento\Details.cshtml" />
+    <Content Include="Views\TipoMantenimiento\Edit.cshtml" />
+    <Content Include="Views\TipoMantenimiento\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

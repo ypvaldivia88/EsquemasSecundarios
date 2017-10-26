@@ -2,8 +2,9 @@
 
 @{
     ViewBag.Title = "Mantenimientos";
-    ViewBag.PTitle = "Editar";
+    ViewBag.PTitle = "Editar mantenimiento";
 }
+
 
 @using (Html.BeginForm())
 {
@@ -11,7 +12,8 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-           
+        @Html.HiddenFor(model => model.IdMantenimiento)
+
         <h2>Fecha</h2>
         <div class="row">
             <div class="col-sm-12">
@@ -24,37 +26,37 @@
             </div>
         </div>
 
-        <h2>Elemento principal</h2>
+        <h2>Subestación</h2>
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        @Html.EditorFor(model => model.CodEquipo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.CodEquipo, "", new { @class = "text-danger" })
+                        @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                        @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
 
-        <h2>Código del elemento</h2>
+        <h2>Esquema</h2>
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        @Html.EditorFor(model => model.CodEquipo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.CodEquipo, "", new { @class = "text-danger" })
+                        @Html.DropDownList("Esquema", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                        @Html.ValidationMessageFor(model => model.Esquema, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
 
-        <h2>Mantenimiento</h2>
+        <h2>Tipo de mantenimiento</h2>
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        @Html.EditorFor(model => model.Mantenimiento, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Mantenimiento, "", new { @class = "text-danger" })
+                        @Html.DropDownList("TipoMantenimiento", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                        @Html.ValidationMessageFor(model => model.TipoMantenimiento, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -65,43 +67,8 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        @Html.EditorFor(model => model.Observaciones, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextArea("Observaciones", new { @class = "form-control", @placeholder = "Escriba una descripción detallada..." })
                         @Html.ValidationMessageFor(model => model.Observaciones, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h2>Fecha del próximo mantenimiento</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.EditorFor(model => model.FechaProximo, new { htmlAttributes = new { @class = "date-picker form-control" } })
-                        @Html.ValidationMessageFor(model => model.FechaProximo, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h2>Mantenimiento a realizar</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.EditorFor(model => model.MttoProximo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.MttoProximo, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h2>Subestación</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
                     </div>
                 </div>
             </div>
@@ -110,42 +77,46 @@
         <hr />
         <div class="row">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Actualizar</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Actualizar</button>
                 <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
             </div>
         </div>
-
     </div>
 }
 
-@section styles
-{
-    @Styles.Render("~/Style/iCheck")
-    @Styles.Render("~/Style/Select2")    
+@section styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/daterangepicker.css" />
+    @Styles.Render("~/Style/Select2")
 }
 
-@section script
-{
+@section script {
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/daterangepicker.js"></script>
     @Scripts.Render("~/Script/Select2")
-    @Scripts.Render("~/Script/DateRangePicker")
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+    <script>
 
-            //<!-- Select2 -->
-            $(".select2_single").select2({
-                placeholder: "Seleccione un elemento de la lista",
-                allowClear: true
-            });
-            $(document).ready(function() {
-                $('date-picker').daterangepicker({
-                    singleDatePicker: true,
-                    calender_style: "picker_4"
-                }, function (start, end, label) {
-                    console.log(start.toISOString(), end.toISOString(), label);
-                });
+    $(document).ready(function () {
+
+        //datepicker
+        $('.date-picker').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+        }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
             });
 
+        //select2
+        $(".select2_single").select2({
+            placeholder: "Seleccione un elemento de la lista",
+            allowClear: true
         });
+
+});
     </script>
+
 }

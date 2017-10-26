@@ -1,0 +1,43 @@
+﻿@model EsquemasSecundarios.Models.Averias
+
+@{
+    ViewBag.Title = "Averías";
+    ViewBag.PTitle = "Eliminar";
+}
+
+<h3>¿Seguro que desea eliminar esta Avería?</h3>
+<div>
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Subestación</th>
+                    <td>@Html.DisplayFor(model => model.Subestacion)</td>
+                </tr>
+                <tr>
+                    <th>Esquema</th>
+                    <td>@Html.DisplayFor(model => model.Esquema)</td>
+                </tr>
+                <tr>
+                    <th>Fecha del reporte</th>
+                    <td>@Html.DisplayFor(model => model.FechaReporte)</td>
+                </tr>
+                <tr>
+                    <th>Conclusiones</th>
+                    <td>@Html.DisplayFor(model => model.Conclusiones)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
+            <a class="btn btn-default" href="@Url.Action("Index","Averias")"><i class="fa fa-list"></i> Listado</a>
+        </div>
+    }
+</div>

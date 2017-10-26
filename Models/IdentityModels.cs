@@ -7,10 +7,7 @@ namespace EsquemasSecundarios.Models
 
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext()
-            : base("ESConnection")
-        {
-        }
+        public ApplicationDbContext() : base("ESConnection"){}
 
         public DbSet<Plantilla> Plantillas { get; set; }
         public DbSet<Relevador> Relevadores { get; set; }
@@ -33,6 +30,8 @@ namespace EsquemasSecundarios.Models
         public DbSet<LineaSubestacion> LineaSubestacion { get; set; }
         public DbSet<SubestacionCabezaLinea> SubestacionCabezaLinea { get; set; }
         public DbSet<Mantenimientos> Mantenimientos { get; set; }
+        public DbSet<Averias> Averias { get; set; }
+        public DbSet<TipoMantenimiento> TipoMantenimiento { get; set; }
 
 
         public DbSet<Plantilla_Funcion> Plantilla_Funcion { get; set; }    

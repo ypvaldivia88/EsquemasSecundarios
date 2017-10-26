@@ -1,0 +1,33 @@
+﻿@model EsquemasSecundarios.Models.TipoMantenimiento
+
+@{
+    ViewBag.Title = "Tipos de Mantenimientos";
+    ViewBag.PTitle = "Eliminar mantenimiento";
+}
+
+<h3>¿Seguro que desea eliminar este Mantenimiento?</h3>
+<div class="row clearfix">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>Tipo</th>
+                <td>@Html.DisplayFor(model => model.Tipo)</td>
+            </tr>
+            <tr>
+                <th>Siglas</th>
+                <td>@Html.DisplayFor(model => model.Siglas)</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
+    </div>
+}

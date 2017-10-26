@@ -10,25 +10,22 @@ namespace EsquemasSecundarios.Models
     [Table("ES_Mantenimientos")]
     public class Mantenimientos
     {
-        [Key, Column(Order = 1)]
-        public DateTime Fecha { get; set; }
+        [Key]
+        public int IdMantenimiento { get; set; }
 
-        [Key, Column(Order = 2)]
-        [MaxLength(50)]
-        public string CodEquipo { get; set; }
-        
-        [MaxLength(2)]
-        public char TipoEquipo { get; set; }
-
-        public short Mantenimiento { get; set; }
-
+        public DateTime Fecha { get; set; }       
+        public string CodSubestacion { get; set; }        
+        public int IdEsquema { get; set; }
+        public short? id_Tipo { get; set; }
         public string Observaciones { get; set; }
 
-        public DateTime? FechaProximo { get; set; }
+        [ForeignKey("CodSubestacion")]
+        public Subestacion Subestacion { get; set; }
 
-        public short? MttoProximo { get; set; }
+        [ForeignKey("IdEsquema")]
+        public EsquemaProteccion Esquema { get; set; }
 
-        public string Subestacion { get; set; }
-
+        [ForeignKey("id_Tipo")]
+        public TipoMantenimiento TipoMantenimiento { get; set; }
     }
 }
