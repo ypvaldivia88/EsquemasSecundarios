@@ -31,7 +31,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                        @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control" })
                         @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -43,7 +43,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        @Html.DropDownList("Esquema", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                        @Html.DropDownList("IdEsquema", null, "", htmlAttributes: new { @class = "select2_single form-control" })
                         @Html.ValidationMessageFor(model => model.Esquema, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        @Html.DropDownList("TipoMantenimiento", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                        @Html.DropDownList("id_Tipo", null, "", htmlAttributes: new { @class = "select2_single form-control" })
                         @Html.ValidationMessageFor(model => model.TipoMantenimiento, "", new { @class = "text-danger" })
                     </div>
                 </div>

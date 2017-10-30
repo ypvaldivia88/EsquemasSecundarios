@@ -33,8 +33,8 @@ namespace EsquemasSecundarios.Controllers
             {
                 return HttpNotFound();
             }            
-            ViewBag.Esquema = db.EsquemasProteccion.Find(mantenimientos.IdEsquema).Nombre;
-            ViewBag.TipoMantenimiento = db.TipoMantenimiento.Find(mantenimientos.id_Tipo).Tipo;
+            ViewBag.IdEsquema = db.EsquemasProteccion.Find(mantenimientos.IdEsquema).Nombre;
+            ViewBag.id_Tipo = db.TipoMantenimiento.Find(mantenimientos.id_Tipo).Tipo;
             return View(mantenimientos);
         }
 
@@ -45,9 +45,9 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text");
-            ViewBag.Esquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre");
-            ViewBag.TipoMantenimiento = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo");
+            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text");
+            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre");
+            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo");
             return View();
         }
 
@@ -56,14 +56,15 @@ namespace EsquemasSecundarios.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdMantenimiento,Fecha,Observaciones")] Mantenimientos mantenimientos,
-            string Subestacion, int Esquema, short TipoMantenimiento)
+        public ActionResult Create([Bind(Include = "IdMantenimiento,Subestacion,Esquema,TipoMantenimiento,Fecha,Observaciones")] Mantenimientos mantenimientos,
+            string CodSubestacion, int IdEsquema, short id_Tipo)
         {
             if (ModelState.IsValid)
             {
-                mantenimientos.CodSubestacion = Subestacion;
-                mantenimientos.IdEsquema = Esquema;
-                mantenimientos.id_Tipo = TipoMantenimiento;
+                mantenimientos.CodSubestacion = CodSubestacion;
+                mantenimientos.IdEsquema = IdEsquema;
+                mantenimientos.id_Tipo = id_Tipo;
+
                 db.Mantenimientos.Add(mantenimientos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -72,9 +73,9 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.Esquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", Esquema);
-            ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text", Subestacion);
-            ViewBag.TipoMantenimiento = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", TipoMantenimiento);
+            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
+            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
+            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", id_Tipo);
             return View(mantenimientos);
         }
 
@@ -94,9 +95,9 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.Esquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", mantenimientos.IdEsquema);
-            ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text", mantenimientos.CodSubestacion);
-            ViewBag.TipoMantenimiento = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", mantenimientos.id_Tipo);
+            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", mantenimientos.IdEsquema);
+            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", mantenimientos.CodSubestacion);
+            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", mantenimientos.id_Tipo);
             return View(mantenimientos);
         }
 
@@ -105,14 +106,14 @@ namespace EsquemasSecundarios.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdMantenimiento,Fecha,Observaciones")] Mantenimientos mantenimientos,
-            string Subestacion, int Esquema, short TipoMantenimiento)
+        public ActionResult Edit([Bind(Include = "IdMantenimiento,Subestacion,Esquema,TipoMantenimiento,Fecha,Observaciones")] Mantenimientos mantenimientos,
+            string CodSubestacion, int IdEsquema, short id_Tipo)
         {
             if (ModelState.IsValid)
             {
-                mantenimientos.CodSubestacion = Subestacion;
-                mantenimientos.IdEsquema = Esquema;
-                mantenimientos.id_Tipo = TipoMantenimiento;
+                mantenimientos.CodSubestacion = CodSubestacion;
+                mantenimientos.IdEsquema = IdEsquema;
+                mantenimientos.id_Tipo = id_Tipo;
                 db.Entry(mantenimientos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -121,9 +122,9 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.Esquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", Esquema);
-            ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text", Subestacion);
-            ViewBag.TipoMantenimiento = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", TipoMantenimiento);
+            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
+            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
+            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", id_Tipo);
             return View(mantenimientos);
         }
 
@@ -139,8 +140,8 @@ namespace EsquemasSecundarios.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Esquema = db.EsquemasProteccion.Find(mantenimientos.IdEsquema).Nombre;
-            ViewBag.TipoMantenimiento = db.TipoMantenimiento.Find(mantenimientos.id_Tipo).Tipo;
+            ViewBag.IdEsquema = db.EsquemasProteccion.Find(mantenimientos.IdEsquema).Nombre;
+            ViewBag.id_Tipo = db.TipoMantenimiento.Find(mantenimientos.id_Tipo).Tipo;
             return View(mantenimientos);
         }
 
