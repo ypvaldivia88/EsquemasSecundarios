@@ -11,7 +11,7 @@
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
     <UseIISExpress>true</UseIISExpress>
     <WebStackScaffolding_DbContextTypeFullName>EsquemasSecundarios.Models.ApplicationDbContext</WebStackScaffolding_DbContextTypeFullName>
-    <WebStackScaffolding_IsViewGenerationSelected>False</WebStackScaffolding_IsViewGenerationSelected>
+    <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

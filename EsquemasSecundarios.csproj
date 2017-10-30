@@ -131,6 +131,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AveriasController.cs" />
     <Compile Include="Controllers\EsquemasProteccionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MantenimientosController.cs" />
@@ -1527,16 +1528,16 @@
     <Content Include="Views\Mantenimientos\Details.cshtml" />
     <Content Include="Views\Mantenimientos\Edit.cshtml" />
     <Content Include="Views\Mantenimientos\Index.cshtml" />
-    <Content Include="Views\Averias\Create.cshtml" />
-    <Content Include="Views\Averias\Delete.cshtml" />
-    <Content Include="Views\Averias\Details.cshtml" />
-    <Content Include="Views\Averias\Edit.cshtml" />
-    <Content Include="Views\Averias\Index.cshtml" />
     <Content Include="Views\TipoMantenimiento\Create.cshtml" />
     <Content Include="Views\TipoMantenimiento\Delete.cshtml" />
     <Content Include="Views\TipoMantenimiento\Details.cshtml" />
     <Content Include="Views\TipoMantenimiento\Edit.cshtml" />
     <Content Include="Views\TipoMantenimiento\Index.cshtml" />
+    <Content Include="Views\Averias\Create.cshtml" />
+    <Content Include="Views\Averias\Delete.cshtml" />
+    <Content Include="Views\Averias\Details.cshtml" />
+    <Content Include="Views\Averias\Edit.cshtml" />
+    <Content Include="Views\Averias\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

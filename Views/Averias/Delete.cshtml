@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Averías";
-    ViewBag.PTitle = "Eliminar";
+    ViewBag.PTitle = "Eliminar avería";
 }
 
 <h3>¿Seguro que desea eliminar esta Avería?</h3>
@@ -11,21 +11,53 @@
         <div class="col-md-12">
             <table class="table">
                 <tr>
-                    <th>Subestación</th>
-                    <td>@Html.DisplayFor(model => model.Subestacion)</td>
+                    <th>@Html.DisplayNameFor(model => model.Subestacion)</th>
+                    <td>@Html.DisplayFor(model => model.CodSubestacion)</td>
                 </tr>
                 <tr>
-                    <th>Esquema</th>
-                    <td>@Html.DisplayFor(model => model.Esquema)</td>
+                    <th>@Html.DisplayNameFor(model => model.Esquema)</th>
+                    <td>@ViewBag.Esquema</td>
                 </tr>
                 <tr>
-                    <th>Fecha del reporte</th>
+                    <th>@Html.DisplayFor(model => model.FechaReporte)</th>
                     <td>@Html.DisplayFor(model => model.FechaReporte)</td>
                 </tr>
                 <tr>
-                    <th>Conclusiones</th>
+                    @Html.DisplayFor(model => model.FechaAtencion)
+                    <td>@Html.DisplayFor(model => model.FechaAtencion)</td>
+                </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.PersonaQueAtendio)
+                    <td>@Html.DisplayFor(model => model.PersonaQueAtendio)</td>
+                </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.DatosReportados)
+                    <td>@Html.DisplayFor(model => model.DatosReportados)</td>
+                </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.Analisis)
+                    <td>@Html.DisplayFor(model => model.Analisis)</td>
+                </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.Conclusiones)
                     <td>@Html.DisplayFor(model => model.Conclusiones)</td>
                 </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.Recomendaciones)
+                    <td>@Html.DisplayFor(model => model.Recomendaciones)</td>
+                </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.ElaboradoPor)
+                    <td>@Html.DisplayFor(model => model.ElaboradoPor)</td>
+                </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.RevisadoPor)
+                    <td>@Html.DisplayFor(model => model.RevisadoPor)</td>
+                </tr>
+                <tr>
+                    @Html.DisplayFor(model => model.AprobadoPor)
+                    <td>@Html.DisplayFor(model => model.AprobadoPor)</td>
+                </tr> 
             </table>
         </div>
     </div>

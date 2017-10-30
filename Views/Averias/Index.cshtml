@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Averías";
-    ViewBag.PTitle = "Listado";
+    ViewBag.PTitle = "Listado de averías";
 }
 
 <div class="row">
@@ -11,13 +11,13 @@
             <thead>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.FechaReporte)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Subestacion)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Esquema)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FechaReporte)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FechaAtencion)
@@ -48,60 +48,57 @@
                     </th>
                     <th></th>
                 </tr>
-            </thead>
-
+            </thead>            
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Subestacion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Esquema)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaReporte)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaAtencion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PersonaQueAtendio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DatosReportados)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Analisis)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Conclusiones)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Recomendaciones)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ElaboradoPor)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RevisadoPor)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AprobadoPor)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Details","Averias", new { fecha = item.FechaReporte, subestacion = item.Subestacion, esquema = item.Esquema } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
-                            <a href="@Url.Action("Edit","Averias", new { fecha = item.FechaReporte, subestacion = item.Subestacion, esquema = item.Esquema } )"  class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
-                            <a href="@Url.Action("Delete","Averias", new { fecha = item.FechaReporte, subestacion = item.Subestacion, esquema = item.Esquema } )"  class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaReporte)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodSubestacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Esquema.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaAtencion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonaQueAtendio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatosReportados)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Analisis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Conclusiones)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Recomendaciones)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ElaboradoPor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RevisadoPor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AprobadoPor)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details","Averias", new { id = item.IdAveria } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
+                        <a href="@Url.Action("Edit","Averias", new { id = item.IdAveria } )" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
+                        <a href="@Url.Action("Delete","Averias", new { id = item.IdAveria } )" class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>
+                    </td>
+                </tr>
+            }
+            </tbody>           
 
         </table>
-
     </div>
 </div>
 <hr />
