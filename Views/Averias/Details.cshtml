@@ -6,11 +6,11 @@
 }
 
 <div class="row clearfix">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <table class="table">
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Subestacion)</th>
-                <td>@Html.DisplayFor(model => model.CodSubestacion)</td>
+                <td>@Html.DisplayFor(model => model.CodSubestacion) - @ViewBag.NombreSubestacion</td>
             </tr>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Esquema)</th>
@@ -29,22 +29,6 @@
                 <td>@Html.DisplayFor(model => model.PersonaQueAtendio)</td>
             </tr>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.DatosReportados)</th>
-                <td>@Html.DisplayFor(model => model.DatosReportados)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Analisis)</th>
-                <td>@Html.DisplayFor(model => model.Analisis)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Conclusiones)</th>
-                <td>@Html.DisplayFor(model => model.Conclusiones)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Recomendaciones)</th>
-                <td>@Html.DisplayFor(model => model.Recomendaciones)</td>
-            </tr>
-            <tr>
                 <th>@Html.DisplayNameFor(model => model.ElaboradoPor)</th>
                 <td>@Html.DisplayFor(model => model.ElaboradoPor)</td>
             </tr>
@@ -58,8 +42,24 @@
             </tr>            
         </table>
     </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                    <b>@Html.DisplayNameFor(model => model.DatosReportados)</b>
+                    <p>@Html.DisplayFor(model => model.DatosReportados)</p>
+                
+                    <b>@Html.DisplayNameFor(model => model.Analisis)</b>
+                    <p>@Html.DisplayFor(model => model.Analisis)</p>
+               
+                    <b>@Html.DisplayNameFor(model => model.Conclusiones)</b>
+                    <p>@Html.DisplayFor(model => model.Conclusiones)</p>
+               
+                    <b>@Html.DisplayNameFor(model => model.Recomendaciones)</b>
+                    <p>@Html.DisplayFor(model => model.Recomendaciones)</p>
+            </div>
+        </div>
+    </div>
 </div>
-
 <hr />
 <p>
     <a class="btn btn-info" href="@Url.Action("Edit","Averias", new { id = Model.IdAveria })"><i class="fa fa-edit"></i> Editar</a>

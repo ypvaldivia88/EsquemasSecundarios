@@ -34,6 +34,7 @@ namespace EsquemasSecundarios.Controllers
                 return HttpNotFound();
             }
             ViewBag.Esquema = db.EsquemasProteccion.Find(averias.IdEsquema).Nombre;
+            ViewBag.NombreSubestacion = db.Subestacion.First(c => c.Codigo == averias.CodSubestacion).NombreSubestacion;
             return View(averias);
         }
 
@@ -44,18 +45,18 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
+
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text");
             ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre");
             ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre");
             ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre");
             ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre");
             ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre");
+
             return View();
         }
 
         // POST: Averias/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdAveria,FechaReporte,CodSubestacion,IdEsquema,FechaAtencion,PersonaQueAtendio,DatosReportados,Analisis,Conclusiones,Recomendaciones,ElaboradoPor,RevisadoPor,AprobadoPor")] Averias averias,
@@ -77,16 +78,14 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", averias.CodSubestacion);
-            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", averias.IdEsquema);
-            var personaQueAtendio = db.Personal.FirstOrDefault(c => c.Nombre == PersonaQueAtendio);
-            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", personaQueAtendio.Id_Persona);
-            var elaboradoPor = db.Personal.FirstOrDefault(c => c.Nombre == ElaboradoPor);
-            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", elaboradoPor.Id_Persona);
-            var revisadoPor = db.Personal.FirstOrDefault(c => c.Nombre == RevisadoPor);
-            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", revisadoPor.Id_Persona);
-            var aprobadoPor = db.Personal.FirstOrDefault(c => c.Nombre == AprobadoPor);
-            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", aprobadoPor.Id_Persona);
+
+            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
+            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
+            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", PersonaQueAtendio);
+            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", ElaboradoPor);
+            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", RevisadoPor);
+            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", AprobadoPor);
+
             return View(averias);
         }
 
@@ -106,28 +105,18 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
+
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", averias.CodSubestacion);
-
             ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", averias.IdEsquema);
-
-            var personaQueAtendio = db.Personal.FirstOrDefault(c => c.Nombre == averias.PersonaQueAtendio);
-            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", personaQueAtendio.Id_Persona);
-
-            var elaboradoPor = db.Personal.FirstOrDefault(c => c.Nombre == averias.ElaboradoPor);
-            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", elaboradoPor.Id_Persona);
-
-            var revisadoPor = db.Personal.FirstOrDefault(c => c.Nombre == averias.RevisadoPor);
-            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", revisadoPor.Id_Persona);
-
-            var aprobadoPor = db.Personal.FirstOrDefault(c => c.Nombre == averias.AprobadoPor);
-            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", aprobadoPor.Id_Persona);
+            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", averias.PersonaQueAtendio);
+            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.ElaboradoPor);
+            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.RevisadoPor);
+            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.AprobadoPor);
 
             return View(averias);
         }
 
         // POST: Averias/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdAveria,FechaReporte,CodSubestacion,IdEsquema,FechaAtencion,PersonaQueAtendio,DatosReportados,Analisis,Conclusiones,Recomendaciones,ElaboradoPor,RevisadoPor,AprobadoPor")] Averias averias,
@@ -151,14 +140,10 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
             ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
-            var personaQueAtendio = db.Personal.FirstOrDefault(c => c.Nombre == PersonaQueAtendio);
-            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", personaQueAtendio.Id_Persona);
-            var elaboradoPor = db.Personal.FirstOrDefault(c => c.Nombre == ElaboradoPor);
-            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", elaboradoPor.Id_Persona);
-            var revisadoPor = db.Personal.FirstOrDefault(c => c.Nombre == RevisadoPor);
-            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", revisadoPor.Id_Persona);
-            var aprobadoPor = db.Personal.FirstOrDefault(c => c.Nombre == AprobadoPor);
-            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", aprobadoPor.Id_Persona);
+            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", PersonaQueAtendio);
+            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", ElaboradoPor);
+            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", RevisadoPor);
+            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", AprobadoPor);
             return View(averias);
         }
 

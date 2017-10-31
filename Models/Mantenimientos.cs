@@ -12,19 +12,26 @@ namespace EsquemasSecundarios.Models
     {
         [Key]
         public int IdMantenimiento { get; set; }
-
-        public DateTime Fecha { get; set; }       
-        public string CodSubestacion { get; set; }        
-        public int IdEsquema { get; set; }
-        public short? id_Tipo { get; set; }
+        public DateTime Fecha { get; set; }        
         public string Observaciones { get; set; }
 
+        //Propiedades Virtuales Referencias a otras clases
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Subestación")]
+        public string CodSubestacion { get; set; }
         [ForeignKey("CodSubestacion")]
         public Subestacion Subestacion { get; set; }
 
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Esquema")]
+        public int IdEsquema { get; set; }
         [ForeignKey("IdEsquema")]
         public EsquemaProteccion Esquema { get; set; }
 
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Tipo de mantenimiento")]
+        public short? id_Tipo { get; set; }
         [ForeignKey("id_Tipo")]
         public TipoMantenimiento TipoMantenimiento { get; set; }
     }

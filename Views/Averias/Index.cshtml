@@ -26,18 +26,6 @@
                         @Html.DisplayNameFor(model => model.PersonaQueAtendio)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.DatosReportados)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Analisis)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Conclusiones)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Recomendaciones)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.ElaboradoPor)
                     </th>
                     <th>
@@ -69,18 +57,6 @@
                         @Html.DisplayFor(modelItem => item.PersonaQueAtendio)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DatosReportados)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Analisis)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Conclusiones)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Recomendaciones)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.ElaboradoPor)
                     </td>
                     <td>
@@ -89,7 +65,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.AprobadoPor)
                     </td>
-                    <td>
+                    <td style="width: 95px;">
                         <a href="@Url.Action("Details","Averias", new { id = item.IdAveria } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
                         <a href="@Url.Action("Edit","Averias", new { id = item.IdAveria } )" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
                         <a href="@Url.Action("Delete","Averias", new { id = item.IdAveria } )" class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>

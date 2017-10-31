@@ -10,18 +10,23 @@ namespace EsquemasSecundarios.Models
         [Key]
         public int id_Esquema { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [MaxLength(50)]
         public string Nombre { get; set; }
 
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [MaxLength(7)]
         public string Subestacion { get; set; }
-        
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [MaxLength(15)]
         public string Tipo_Equipo_Primario { get; set; }
-        
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [MaxLength(20)]
         public string Elemento_Electrico { get; set; }
+
+        //Propiedades Virtuales Referencias a otras clases
 
         public List<Esquema_Relevador> Esquemas_Relevadores { get; set; }
         public List<Esquema_Desconectivo> Esquemas_Desconectivos { get; set; }

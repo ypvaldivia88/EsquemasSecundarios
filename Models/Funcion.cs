@@ -9,6 +9,7 @@ namespace EsquemasSecundarios.Models
     {
         [Key]
         public int Id_Esquema { get; set; }
+
         [MaxLength(50)]
         public string Codigo { get; set; }
 
