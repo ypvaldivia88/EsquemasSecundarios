@@ -11,7 +11,7 @@ namespace EsquemasSecundarios.Controllers
     public class EsquemasProteccionController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        #region CRUD
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -62,13 +62,13 @@ namespace EsquemasSecundarios.Controllers
         {
             Inicializar();
             return View();
-        }        
-       
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
             [Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico")] EsquemaProteccion esquemaProteccion,
-            int instalacion,string Linea,string[] Interruptores,string[] TC,string[] TP,string[] Relevadores,string RelevadorFunc,int[] Funciones
+            int instalacion, string Linea, string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones
         )
         {
             Inicializar();
@@ -148,10 +148,10 @@ namespace EsquemasSecundarios.Controllers
 
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = esquemaProteccion.id_Esquema });
-            }            
+            }
             return View(esquemaProteccion);
         }
-               
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -166,21 +166,21 @@ namespace EsquemasSecundarios.Controllers
             Inicializar(esquemaProteccion);
             return View(esquemaProteccion);
         }
-                
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico")] EsquemaProteccion esquemaProteccion,
             int instalacion, string Linea, string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones)
         {
             if (ModelState.IsValid)
-            {     
+            {
                 db.Entry(esquemaProteccion).State = EntityState.Modified;
-                               
+
                 if (Interruptores != null)
                 {
                     db.Esquema_Desconectivo.RemoveRange(db.Esquema_Desconectivo.Where(c => c.esquema == esquemaProteccion.id_Esquema));
                     foreach (var item in Interruptores)
-                    {                       
+                    {
                         Esquema_Desconectivo e = new Esquema_Desconectivo();
                         e.desconectivo = item;
                         e.esquema = esquemaProteccion.id_Esquema;
@@ -238,7 +238,7 @@ namespace EsquemasSecundarios.Controllers
                         Plantilla_Funcion pf = new Plantilla_Funcion();
                         pf.id_Funcion = item;
                         pf.id_Plantilla = PlantillaId[0];
-                        db.Plantilla_Funcion.Add(pf);                        
+                        db.Plantilla_Funcion.Add(pf);
                     }
                 }
 
@@ -251,7 +251,7 @@ namespace EsquemasSecundarios.Controllers
 
             return View(esquemaProteccion);
         }
-        
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -265,7 +265,7 @@ namespace EsquemasSecundarios.Controllers
             }
             return View(esquemaProteccion);
         }
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -284,6 +284,8 @@ namespace EsquemasSecundarios.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #endregion
 
         public void Inicializar()
         {

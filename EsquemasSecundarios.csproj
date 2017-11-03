@@ -1532,6 +1532,7 @@
     <Content Include="Views\Averias\Details.cshtml" />
     <Content Include="Views\Averias\Edit.cshtml" />
     <Content Include="Views\Averias\Index.cshtml" />
+    <Content Include="Views\Mantenimientos\_CargarEsquemas.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,24 @@
+﻿@Html.DropDownList("IdEsquema", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+
+@section styles
+{
+    @Styles.Render("~/Style/iCheck")
+    @Styles.Render("~/Style/Select2")
+}
+
+@section script
+{
+    @Scripts.Render("~/Script/Select2")
+
+    <script>
+        $(".select2_single").select2({
+            placeholder: "Seleccione un elemento de la lista",
+            allowClear: true
+        });
+        $(".select2_group").select2({});
+        $(".select2_multiple").select2({
+            placeholder: "Seleccione uno o varios elementos de la lista",
+            allowClear: true
+        });
+    </script>
+}

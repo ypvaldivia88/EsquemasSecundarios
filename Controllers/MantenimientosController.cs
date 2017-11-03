@@ -14,6 +14,7 @@ namespace EsquemasSecundarios.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        #region CRUD
         // GET: Mantenimientos
         public ActionResult Index()
         {
@@ -47,16 +48,16 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text");
             ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre");
-            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo");
+            var tipo = db.TipoMantenimiento
+                .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
+            ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text");
             return View();
         }
 
         // POST: Mantenimientos/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdMantenimiento,Subestacion,Esquema,TipoMantenimiento,Fecha,Observaciones")] Mantenimientos mantenimientos,
+        public ActionResult Create([Bind(Include = "IdMantenimiento,CodSubestacion,IdEsquema,id_Tipo,Fecha,Observaciones")] Mantenimientos mantenimientos,
             string CodSubestacion, int IdEsquema, short id_Tipo)
         {
             if (ModelState.IsValid)
@@ -75,7 +76,9 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
             ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
-            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", id_Tipo);
+            var tipo = db.TipoMantenimiento
+                .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
+            ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text", id_Tipo);
             return View(mantenimientos);
         }
 
@@ -97,16 +100,16 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
             ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", mantenimientos.IdEsquema);
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", mantenimientos.CodSubestacion);
-            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", mantenimientos.id_Tipo);
+            var tipo = db.TipoMantenimiento
+                .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
+            ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text", mantenimientos.id_Tipo);
             return View(mantenimientos);
         }
 
         // POST: Mantenimientos/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdMantenimiento,Subestacion,Esquema,TipoMantenimiento,Fecha,Observaciones")] Mantenimientos mantenimientos,
+        public ActionResult Edit([Bind(Include = "IdMantenimiento,CodSubestacion,IdEsquema,id_Tipo,Fecha,Observaciones")] Mantenimientos mantenimientos,
             string CodSubestacion, int IdEsquema, short id_Tipo)
         {
             if (ModelState.IsValid)
@@ -124,7 +127,9 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
             ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
-            ViewBag.id_Tipo = new SelectList(db.TipoMantenimiento, "id_Tipo", "Tipo", id_Tipo);
+            var tipo = db.TipoMantenimiento
+                .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
+            ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text", id_Tipo);
             return View(mantenimientos);
         }
 
@@ -164,5 +169,16 @@ namespace EsquemasSecundarios.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion CRUD
+
+        #region AJAX
+        public ActionResult CargarEsquemas(string codsub)
+        {            
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == codsub);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre");
+            return PartialView("_CargarEsquemas");
+        }
+        #endregion
+        
     }
 }

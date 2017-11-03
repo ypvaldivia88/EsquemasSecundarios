@@ -9,6 +9,6 @@ namespace EsquemasSecundarios.Models
         [Key]
         public short id_Tipo { get; set; }
         public string Tipo { get; set; }
-        public char Siglas { get; set; }
+        public string Siglas { get; set; }
     }
 }
