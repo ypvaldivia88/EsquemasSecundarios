@@ -10,6 +10,7 @@ using EsquemasSecundarios.Models;
 
 namespace EsquemasSecundarios.Controllers
 {
+    [TienePermiso(Servicio: 9)]
     public class AveriasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -78,9 +79,11 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
-            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
+
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == CodSubestacion);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", IdEsquema);
+
             ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", PersonaQueAtendio);
             ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", ElaboradoPor);
             ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", RevisadoPor);
@@ -105,9 +108,11 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", averias.CodSubestacion);
-            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", averias.IdEsquema);
+
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == averias.CodSubestacion);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", averias.IdEsquema);
+
             ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", averias.PersonaQueAtendio);
             ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.ElaboradoPor);
             ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.RevisadoPor);
@@ -139,7 +144,8 @@ namespace EsquemasSecundarios.Controllers
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
-            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == CodSubestacion);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", IdEsquema);
             ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", PersonaQueAtendio);
             ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", ElaboradoPor);
             ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", RevisadoPor);
@@ -182,5 +188,15 @@ namespace EsquemasSecundarios.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region AJAX
+        public ActionResult CargarEsquemas(string codsub)
+        {
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == codsub);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre");
+            return PartialView("_CargarEsquemas");
+        }
+        #endregion
+
     }
 }

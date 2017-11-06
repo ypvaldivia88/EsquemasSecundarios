@@ -29,7 +29,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <div class="form-line">
-                            @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                            @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
                             @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -38,11 +38,13 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <div class="form-line">
-                            @Html.DropDownList("IdEsquema", null, "", htmlAttributes: new { @class = "select2_single form-control" })
-                            @Html.ValidationMessageFor(model => model.Esquema, "", new { @class = "text-danger" })
+                            <div id="sinSubestacion">
+                                @Html.EditorFor(model => model.Esquema.Nombre, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @placeholder = "Ud. debe seleccionar una subestación" } })
+                            </div>
+                            <div id="cargarEsquemas" hidden></div>
                         </div>
                     </div>
-                </div>
+                </div>                
                 <h2>@Html.DisplayNameFor(model => model.FechaAtencion)</h2>
                 <div class="col-sm-12">
                     <div class="form-group">
@@ -173,19 +175,42 @@
 
             //datepicker
             $('.date-picker').daterangepicker({
+                autoUpdateInput: false,
                 singleDatePicker: true,
                 calender_style: "picker_4",
-                locale: {
-                    format: 'YYYY-MM-DD'
-                },
-            }, function (start, end, label) {
-                console.log(start.toISOString(), end.toISOString(), label);
+            }, function (chosen_date) {
+                $('.date-picker').val(chosen_date.format('YYYY-MM-DD'));
             });
 
             //select2
             $(".select2_single").select2({
                 placeholder: "Seleccione un elemento de la lista",
                 allowClear: true
+            });
+
+            //Cargar esquemas segun la subestacion
+            $("#subestacion").change(function () {
+                var sub = $("#subestacion").val();
+                if (sub != "") {
+                    $("#sinSubestacion").hide();
+                    $("#cargarEsquemas").show();
+                    $.ajax({
+                        url: '@Url.Action("CargarEsquemas", "Mantenimientos")',
+                        method: "POST",
+                        data: { codsub: sub },
+                        success: function (data) {
+                            $('#cargarEsquemas').html(data);
+                            $(".select2_single").select2({
+                                placeholder: "Seleccione un elemento de la lista",
+                                allowClear: true
+                            });
+                        }
+                    });
+                }
+                else {
+                    $("#sinSubestacion").show();
+                    $("#cargarEsquemas").hide();
+                }
             });
 
         });

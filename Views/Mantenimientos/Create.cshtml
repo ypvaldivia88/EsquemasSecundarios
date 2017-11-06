@@ -43,13 +43,10 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <div class="form-line">
-                        <div id="cargarEsquemas">
-                            <div class='alert alert-warning alert-dismissible fade in' role='alert'>
-                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                    <span aria-hidden='true'>×</span>
-                                </button><strong>Atención!</strong> Una subestación debe ser seleccionada
-                            </div>
-                        </div>                        
+                        <div id="sinSubestacion">
+                            @Html.EditorFor(model => model.Esquema.Nombre, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @placeholder = "Ud. debe seleccionar una subestación" } })
+                        </div>
+                        <div id="cargarEsquemas" hidden></div>       
                     </div>
                 </div>
             </div>
@@ -105,14 +102,12 @@
 
         //datepicker
         $('.date-picker').daterangepicker({
+            autoUpdateInput: false,
             singleDatePicker: true,
             calender_style: "picker_4",
-            locale: {
-                format: 'YYYY-MM-DD'
-            },
-        }, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-            });
+        }, function (chosen_date) {
+            $('.date-picker').val(chosen_date.format('YYYY-MM-DD'));
+        });
 
         //select2
         $(".select2_single").select2({
@@ -120,30 +115,32 @@
             allowClear: true
         });
 
-        var sub = $("#subestacion").val();
-        if (sub != "") {
-            $("#subestacion").change(function () {
-
-            $.ajax({
-                url: '@Url.Action("CargarEsquemas", "Mantenimientos")',
-                method: "POST",
-                data: { codsub: sub },
-                success: function (data) {
-                    $('#cargarEsquemas').html(data);
-                    $(".select2_single").select2({
-                        placeholder: "Seleccione un elemento de la lista",
-                        allowClear: true
-                    });
-                }
-            });
+        //Cargar esquemas segun la subestacion
+        $("#subestacion").change(function () {
+            var sub = $("#subestacion").val();
+            if (sub != "") {
+                $("#sinSubestacion").hide();
+                $("#cargarEsquemas").show();
+                $.ajax({
+                    url: '@Url.Action("CargarEsquemas", "Mantenimientos")',
+                    method: "POST",
+                    data: { codsub: sub },
+                    success: function (data) {
+                        $('#cargarEsquemas').html(data);
+                        $(".select2_single").select2({
+                            placeholder: "Seleccione un elemento de la lista",
+                            allowClear: true
+                        });
+                    }
+                });
+            }
+            else {
+                $("#sinSubestacion").show();
+                $("#cargarEsquemas").hide();
+            }
         });
-        }
-        else
-            $('#elemento_electrico').html(
-                "<div class='alert alert-warning alert-dismissible fade in col-md-8' role='alert'>" +
-                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
-                "</button><strong>Atención!</strong> Una subestación debe ser seleccionada</div>"
-            );
+
+
 });
 </script>
 

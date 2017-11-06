@@ -10,6 +10,7 @@ using EsquemasSecundarios.Models;
 
 namespace EsquemasSecundarios.Controllers
 {
+    [TienePermiso(Servicio: 9)]
     public class MantenimientosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -70,15 +71,20 @@ namespace EsquemasSecundarios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             var subestaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
+
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == CodSubestacion);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", IdEsquema);
+
             var tipo = db.TipoMantenimiento
                 .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
             ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text", id_Tipo);
+
             return View(mantenimientos);
         }
 
@@ -94,15 +100,20 @@ namespace EsquemasSecundarios.Controllers
             {
                 return HttpNotFound();
             }
+
             var subestaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", mantenimientos.IdEsquema);
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", mantenimientos.CodSubestacion);
+
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == mantenimientos.CodSubestacion);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", mantenimientos.IdEsquema);
+
             var tipo = db.TipoMantenimiento
                 .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
             ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text", mantenimientos.id_Tipo);
+
             return View(mantenimientos);
         }
 
@@ -121,15 +132,20 @@ namespace EsquemasSecundarios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             var subestaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre", IdEsquema);
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
+
+            var e = db.EsquemasProteccion.Where(c => c.Subestacion == CodSubestacion);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", IdEsquema);
+
             var tipo = db.TipoMantenimiento
                 .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
             ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text", id_Tipo);
+
             return View(mantenimientos);
         }
 
