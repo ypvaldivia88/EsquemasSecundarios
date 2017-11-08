@@ -185,9 +185,11 @@
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\maps\jquery-jvectormap-2.0.3.css" />
     <Content Include="Content\daterangepicker.css" />
-    <Content Include="Content\js\datatables\es.js" />
-    <Content Include="Content\js\datatables\init.js" />
-    <Content Include="Content\js\select2\select2.spanish.js" />
+    <Content Include="Scripts\Lenguaje\datatables.es.js" />
+    <Content Include="Scripts\Inicializadores\datatables.js" />
+    <Content Include="Scripts\Inicializadores\daterangepicker.js" />
+    <Content Include="Scripts\Inicializadores\select2.js" />
+    <Content Include="Scripts\Lenguaje\select2.es.js" />
     <Content Include="Content\less\custom.css" />
     <Content Include="Content\libs\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="Content\libs\bootstrap\dist\css\bootstrap-theme.min.css" />
@@ -512,7 +514,7 @@
     <Content Include="Content\libs\jquery\src\var\support.js" />
     <Content Include="Content\libs\jquery\src\var\toString.js" />
     <Content Include="Content\libs\jquery\src\wrap.js" />
-    <Content Include="Content\js\custom.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Content\js\datepicker\daterangepicker.js" />
     <Content Include="Content\js\flot\curvedLines.js" />
     <Content Include="Content\js\flot\date.js" />
@@ -1486,6 +1488,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\js\select2\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -75,10 +75,7 @@
                                 <h3>Protecciones</h3>
                                 <ul class="nav side-menu">
                                     <li>
-                                        <a><i class="fa fa-cogs"></i> Esquemas <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li>@Html.ActionLink("Esquemas de Protección", "Index", "EsquemasProteccion")</li>
-                                        </ul>
+                                        <a href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-cogs"></i> Esquemas </a>                                        
                                     </li>
                                     <li>
                                         <a href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-wrench"></i> Mantenimientos</a>                                        

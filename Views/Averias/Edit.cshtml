@@ -160,61 +160,41 @@
 }
 
 @section styles {
-    <link rel="stylesheet" type="text/css" href="~/Content/daterangepicker.css" />
-    @Styles.Render("~/Style/Select2")
+@Styles.Render("~/Style/Select2")
+@Styles.Render("~/Style/DateRangePicker")
 }
 
 @section script {
-
-    <script src="~/Scripts/moment.min.js"></script>
-    <script src="~/Scripts/daterangepicker.js"></script>
-    @Scripts.Render("~/Script/Select2")
-
+@Scripts.Render("~/Script/Select2")
+@Scripts.Render("~/Script/DateRangePicker")
 <script>
+$(document).ready(function () {
 
-    $(document).ready(function () {
-
-        //datepicker
-        $('.date-picker').daterangepicker({
-            autoUpdateInput: false,
-            singleDatePicker: true,
-            calender_style: "picker_4",
-        }, function (chosen_date) {
-            $('.date-picker').val(chosen_date.format('YYYY-MM-DD'));
-        });
-
-        //select2
-        $(".select2_single").select2({
-            placeholder: "Seleccione un elemento de la lista",
-            allowClear: true
-        });
-
-        //Cargar esquemas segun la subestacion
-        $("#subestacion").change(function () {
-            var sub = $("#subestacion").val();
-            if (sub != "") {
-                $("#sinSubestacion").hide();
-                $("#cargarEsquemas").show();
-                $.ajax({
-                    url: '@Url.Action("CargarEsquemas", "Mantenimientos")',
-                    method: "POST",
-                    data: { codsub: sub },
-                    success: function (data) {
-                        $('#cargarEsquemas').html(data);
-                        $(".select2_single").select2({
-                            placeholder: "Seleccione un elemento de la lista",
-                            allowClear: true
-                        });
-                    }
-                });
-            }
-            else {
-                $("#sinSubestacion").show();
-                $("#cargarEsquemas").hide();
-            }
-        });
-
+    //Cargar esquemas segun la subestacion
+    $("#subestacion").change(function () {
+        var sub = $("#subestacion").val();
+        if (sub != "") {
+            $("#sinSubestacion").hide();
+            $("#cargarEsquemas").show();
+            $.ajax({
+                url: '@Url.Action("CargarEsquemas", "Mantenimientos")',
+                method: "POST",
+                data: { codsub: sub },
+                success: function (data) {
+                    $('#cargarEsquemas').html(data);
+                    $(".select2_single").select2({
+                        placeholder: "Seleccione un elemento de la lista",
+                        allowClear: true
+                    });
+                }
+            });
+        }
+        else {
+            $("#sinSubestacion").show();
+            $("#cargarEsquemas").hide();
+        }
     });
-</script>
 
+});
+</script>
 }

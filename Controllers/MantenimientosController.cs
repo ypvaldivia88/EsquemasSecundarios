@@ -19,8 +19,12 @@ namespace EsquemasSecundarios.Controllers
         // GET: Mantenimientos
         public ActionResult Index()
         {
-            var mantenimientos = db.Mantenimientos.Include(m => m.Esquema).Include(m => m.Subestacion).Include(m => m.TipoMantenimiento);
-            return View(mantenimientos.ToList());
+            var mantenimientos = db.Mantenimientos.Include(c => c.Esquema).Include(c => c.TipoMantenimiento);
+            ViewBag.NomSub = db.Subestacion
+                .Select(c => c.NombreSubestacion)
+                .Union(db.SubestacionTransmision
+                .Select(c => c.NombreSubestacion)).ToList();
+            return View(mantenimientos.ToList().OrderByDescending(c=> c.IdMantenimiento));
         }
 
         // GET: Mantenimientos/Details/5
@@ -34,9 +38,12 @@ namespace EsquemasSecundarios.Controllers
             if (mantenimientos == null)
             {
                 return HttpNotFound();
-            }            
-            ViewBag.IdEsquema = db.EsquemasProteccion.Find(mantenimientos.IdEsquema).Nombre;
-            ViewBag.id_Tipo = db.TipoMantenimiento.Find(mantenimientos.id_Tipo).Tipo;
+            }
+            EsquemaProteccion ep = db.EsquemasProteccion.Find(mantenimientos.IdEsquema);
+            TipoMantenimiento tm = db.TipoMantenimiento.Find(mantenimientos.id_Tipo);
+            ViewBag.NombreEsquema = ep.Nombre;
+            ViewBag.SiglasTipoMant = tm.Siglas;
+            ViewBag.TipoMant = tm.Tipo;
             return View(mantenimientos);
         }
 
@@ -193,8 +200,8 @@ namespace EsquemasSecundarios.Controllers
             var e = db.EsquemasProteccion.Where(c => c.Subestacion == codsub);
             ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre");
             return PartialView("_CargarEsquemas");
-        }
+        }        
         #endregion
-        
+
     }
 }

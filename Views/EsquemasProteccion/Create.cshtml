@@ -172,164 +172,150 @@
     </div>
 </div>
 
-@section styles
+@section styles 
 {
-    @Styles.Render("~/Style/iCheck")
     @Styles.Render("~/Style/Select2")
 }
 
 @section script 
-{ 
+{
     @Scripts.Render("~/Script/Select2")
-    
-    <script type="text/javascript">
-        $(document).ready(function () {
+    <script>
+$(document).ready(function () {
 
-            //<!-- Select2 -->
-            $(".select2_single").select2({
-                placeholder: "Seleccione un elemento de la lista",
-                allowClear: true
-            });
-            $(".select2_group").select2({});
-            $(".select2_multiple").select2({
-                placeholder: "Seleccione uno o varios elementos de la lista",
-                allowClear: true
-            });
+    //inicializar con la subestacion marcada y la linea escondida
+    $("#selector_subestacion").show();
+    $("#selector_linea").hide();
 
-            //inicializar con la subestacion marcada y la linea escondida
-            $("#selector_subestacion").show();
+    //ocultar o mostrar linea/subestacion por el radio button
+    $('input:radio[name="instalacion"]').change(function () {
+        if (this.checked && this.value == 0) {
             $("#selector_linea").hide();
+            $("#selector_subestacion").show();
+            $("#Tipo_Equipo_Primario").show();
+        }
+        if (this.checked && this.value == 1) {
+            $("#selector_subestacion").hide();
+            $("#selector_linea").show();
+            $("#Tipo_Equipo_Primario").hide();
+        }
+    });
 
-            //ocultar o mostrar linea/subestacion por el radio button
-            $('input:radio[name="instalacion"]').change(function () {
-                if (this.checked && this.value == 0) {
-                    $("#selector_linea").hide();
-                    $("#selector_subestacion").show();
-                    $("#Tipo_Equipo_Primario").show();
-                }
-                if (this.checked && this.value == 1) {
-                    $("#selector_subestacion").hide();
-                    $("#selector_linea").show();
-                    $("#Tipo_Equipo_Primario").hide();
-                }
-            });
-
-            //cargar equipos primarios
-            $('input:radio[name="Tipo_Equipo_Primario"]').change(
-                function () {
-                    if ($('input:radio[name="instalacion"]').val() == 1) {
-                        var l = $("#linea").val();
-                        if (l != "")
-                            $('#elemento_electrico').html("<h2>Elemento eléctrico seleccionado: " + l + "</h2>");
-                        else
-                            $('#elemento_electrico').html("<h2>Seleccione una Línea</h2>");
-                    } else {
-                        var cod = $("#subestacion").val();
-
-                        if (cod != "") {
-                            var sub = $("#subestacion").val();
-                            if (this.checked && this.value == "Barra")
-                                loadEquiposPrimarios('barra', sub);
-                            else if (this.checked && this.value == "Transformador")
-                                loadEquiposPrimarios('transformador', sub);
-                            else if (this.checked && this.value == "Línea")
-                                loadEquiposPrimarios('linea', sub);
-                        }
-                        else
-                            $('#elemento_electrico').html(
-                                "<div class='alert alert-warning alert-dismissible fade in col-md-8' role='alert'>" +
-                                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
-                                "</button><strong>Atención!</strong> Una subestación debe ser seleccionada</div>"
-                            );
-                    }
-
-                });
-
-            //cargar datos asociados al esquema
-            $("#subestacion").change(function () {
-                loadTransformadores(true);
-                $('#elemento_electrico').html("");
-                var elem = $('#elemento_electrico');
-                $('input[name=Tipo_Equipo_Primario]').attr('checked', false);
-            });
-            $("#linea").change(function () {
-                loadTransformadores(false);
-                $('#elemento_electrico').html("");
-            });
-
-            //mostrar funciones asociadas al rele seleccionado
-            $("#rele_fn").change(function () {
-                var rele = $("#rele_fn").val();
-                if (rele != "") {
-                    $.ajax({
-                        url: '@Url.Action("Funciones", "EsquemasProteccion")',
-                        method: "POST",
-                        data: { NroSerie: rele },
-                        success: function (data) {
-                            $('#modalFuncionesContenido').html(data);
-                            $(".select2_multiple").select2({
-                                placeholder: "Seleccione un elemento de la lista",
-                                allowClear: true
-                            });
-                            $("#btn-modal-guardar").show();
-                        }
-                    });
-                }
-            });
-            
-            //guardar cambios en las funciones del rele
-            $("#btn-modal-guardar").click(function () {                
-                var f = $("#Funciones").val();
-                var r = $("#rele_fn").val();
-                $.ajax({
-                    url: '@Url.Action("GuardarFunciones", "EsquemasProteccion")',
-                    method: "POST",
-                    data: { rele: r, func: f },
-                    success: function (data) {
-                        $('#modal-msg').html(data);
-                        $("#modal-alert-msg").show();
-                    }
-                });
-            });
-
-            /*              FUNCIONES AUXILIARES                   */
-
-            function loadEquiposPrimarios(tipoequipo, sub) {
-                $.ajax({
-                    url: '@Url.Action("EquiposPrimarios", "EsquemasProteccion")',
-                    method: "POST",
-                    data: { e: tipoequipo, codsub: sub },
-                    success: function (data) {
-                        $('#elemento_electrico').html(data);
-                        $(".select2_single").select2({
-                            placeholder: "Seleccione un elemento de la lista",
-                            allowClear: true
-                        });
-                    }
-                });
-            }
-
-            function loadTransformadores() {
-
-                if ($('input:radio[name="instalacion"]').val() == 0)
-                    var cod = $("#subestacion").val();
+    //cargar equipos primarios
+    $('input:radio[name="Tipo_Equipo_Primario"]').change(
+        function () {
+            if ($('input:radio[name="instalacion"]').val() == 1) {
+                var l = $("#linea").val();
+                if (l != "")
+                    $('#elemento_electrico').html("<h2>Elemento eléctrico seleccionado: " + l + "</h2>");
                 else
-                    var cod = $("#linea").val();
-                $.ajax({
-                    url: '@Url.Action("Transformadores", "EsquemasProteccion")',
-                    method: "POST",
-                    data: { codsub: cod },
-                    success: function (data) {
-                        $('#transformadores').html(data);
-                        $(".select2_multiple").select2({
-                            placeholder: "Seleccione un elemento de la lista",
-                            allowClear: true
-                        });
-                    }
-                });
+                    $('#elemento_electrico').html("<h2>Seleccione una Línea</h2>");
+            } else {
+                var cod = $("#subestacion").val();
+
+                if (cod != "") {
+                    var sub = $("#subestacion").val();
+                    if (this.checked && this.value == "Barra")
+                        loadEquiposPrimarios('barra', sub);
+                    else if (this.checked && this.value == "Transformador")
+                        loadEquiposPrimarios('transformador', sub);
+                    else if (this.checked && this.value == "Línea")
+                        loadEquiposPrimarios('linea', sub);
+                }
+                else
+                    $('#elemento_electrico').html(
+                        "<div class='alert alert-warning alert-dismissible fade in col-md-8' role='alert'>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
+                        "</button><strong>Atención!</strong> Una subestación debe ser seleccionada</div>"
+                    );
             }
 
         });
+
+    //cargar datos asociados al esquema
+    $("#subestacion").change(function () {
+        loadTransformadores(true);
+        $('#elemento_electrico').html("");
+        var elem = $('#elemento_electrico');
+        $('input[name=Tipo_Equipo_Primario]').attr('checked', false);
+    });
+    $("#linea").change(function () {
+        loadTransformadores(false);
+        $('#elemento_electrico').html("");
+    });
+
+    //mostrar funciones asociadas al rele seleccionado
+    $("#rele_fn").change(function () {
+        var rele = $("#rele_fn").val();
+        if (rele != "") {
+            $.ajax({
+                url: '@Url.Action("Funciones", "EsquemasProteccion")',
+                method: "POST",
+                data: { NroSerie: rele },
+                success: function (data) {
+                    $('#modalFuncionesContenido').html(data);
+                    $(".select2_multiple").select2({
+                        placeholder: "Seleccione un elemento de la lista",
+                        allowClear: true
+                    });
+                    $("#btn-modal-guardar").show();
+                }
+            });
+        }
+    });
+
+    //guardar cambios en las funciones del rele
+    $("#btn-modal-guardar").click(function () {
+        var f = $("#Funciones").val();
+        var r = $("#rele_fn").val();
+        $.ajax({
+            url: '@Url.Action("GuardarFunciones", "EsquemasProteccion")',
+            method: "POST",
+            data: { rele: r, func: f },
+            success: function (data) {
+                $('#modal-msg').html(data);
+                $("#modal-alert-msg").show();
+            }
+        });
+    });
+
+    /*              FUNCIONES AUXILIARES                   */
+
+    function loadEquiposPrimarios(tipoequipo, sub) {
+        $.ajax({
+            url: '@Url.Action("EquiposPrimarios", "EsquemasProteccion")',
+            method: "POST",
+            data: { e: tipoequipo, codsub: sub },
+            success: function (data) {
+                $('#elemento_electrico').html(data);
+                $(".select2_single").select2({
+                    placeholder: "Seleccione un elemento de la lista",
+                    allowClear: true
+                });
+            }
+        });
+    }
+
+    function loadTransformadores() {
+
+        if ($('input:radio[name="instalacion"]').val() == 0)
+            var cod = $("#subestacion").val();
+        else
+            var cod = $("#linea").val();
+        $.ajax({
+            url: '@Url.Action("Transformadores", "EsquemasProteccion")',
+            method: "POST",
+            data: { codsub: cod },
+            success: function (data) {
+                $('#transformadores').html(data);
+                $(".select2_multiple").select2({
+                    placeholder: "Seleccione un elemento de la lista",
+                    allowClear: true
+                });
+            }
+        });
+    }
+
+});
     </script>
 }
-   
