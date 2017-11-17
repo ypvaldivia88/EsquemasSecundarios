@@ -19,11 +19,7 @@ namespace EsquemasSecundarios.Controllers
         // GET: Mantenimientos
         public ActionResult Index()
         {
-            var mantenimientos = db.Mantenimientos.Include(c => c.Esquema).Include(c => c.TipoMantenimiento);
-            ViewBag.NomSub = db.Subestacion
-                .Select(c => c.NombreSubestacion)
-                .Union(db.SubestacionTransmision
-                .Select(c => c.NombreSubestacion)).ToList();
+            var mantenimientos = db.Mantenimientos.Include(c => c.Esquema).Include(c => c.TipoMantenimiento);            
             return View(mantenimientos.ToList().OrderByDescending(c=> c.IdMantenimiento));
         }
 

@@ -1,0 +1,366 @@
+﻿@model EsquemasSecundarios.Models.EsquemaProteccion
+
+@{
+    ViewBag.Title = "Esquemas de protección";
+    ViewBag.PTitle = "Nuevo esquema";
+}
+
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Datos generales del esquema</h3><hr />
+
+                    <h2>Clase de Esquema</h2>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select id="ClaseEsquema" class="select2_single form-control">
+                                    <option value="Esquema de Protección">Esquema de Protección</option>
+                                    <option value="Esquema de Control">Esquema de Control</option>
+                                    <option value="Esquema de Señalización Central">Esquema de Señalización Central</option>
+                                    <option value="Esquema de Automática">Esquema de Automática</option>
+                                </select>
+                                @Url.Action("Index","EsquemasProteccion")
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Tipo de Esquema</h2>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select id="TipoEsquema" class="select2_single form-control">
+                                    <option value="Esquema de Protección y Control del Interruptor: ">Esquema de Protección y Control de Interruptor</option>
+                                    <option value="Esquema de Protección del Transformador: ">Esquema de Protección de Transformador</option>
+                                    <option value="Esquema de Control - Ventilación del Transformador: ">Esquema de Control - Ventilación de Transformador</option>
+                                    <option value="Esquema de Control - Cambia Taps de Transformador: ">Esquema de Control - Cambia Taps de Transformador</option>
+                                    <option value="Esquema de Control – Desconectivo: ">Esquema de Control – Desconectivo</option>
+                                    <option value="Esquema de Control Potenciales de Barra: ">Esquema de Control Potenciales de Barra</option>
+                                    <option value="Esquema de Señalización Central: ">Esquema de Señalización Central</option>
+                                    <option value="Esquema de Control – Cargador de Baterías: ">Esquema de Control – Cargador de Baterías</option>
+                                    <option value="Esquema de Protección – Diferencial de Barras: ">Esquema de Protección – Diferencial de Barras</option>
+                                    <option value="Esquema de Protección DAF/DAV: ">Esquema de Protección DAF/DAV</option>
+                                    <option value="Esquema de Control Distribución de Corriente Directa: ">Esquema de Control Distribución de Corriente Directa</option>
+                                    <option value="Esquema de Control Distribución de Corriente Alterna: ">Esquema de Control Distribución de Corriente Alterna</option>
+                                    <option value="Esquema de Automática RAS (Reposición Automática del Servicio): ">Esquema de Automática RAS (Reposición Automática del Servicio)</option>
+                                    <option value="Esquema de Protección Especial de Barra: ">Esquema de Protección Especial de Barra</option>
+                                    <option value="Esquema de Protección Separadora: ">Esquema de Protección Separadora</option>
+                                    <option value="Esquema de Automática de Líneas: ">Esquema de Automática de Líneas</option>
+                                </select>
+                                @*@Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @placeholder = "Escriba un nombre descriptivo para el esquema" } })*@
+                                @Html.DropDownList("RelevadorFunc", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "rele_fn" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Tipo de Instalación</h2>
+                    <div class="row clearfix">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <small>Seleccione el tipo de Instalación</small>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" class="flat" checked value="0" name="instalacion"> Subestación
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" class="flat" value="1" name="instalacion"> Línea
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="selector_subestacion" class="col-md-8">
+                                <small>Seleccione la Subestación</small>
+                                @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "rele_fn" })
+                            </div>
+                            <div id="selector_linea" class="col-md-8">
+                                <small>Seleccione la Línea</small>
+                                @Html.DropDownList("Linea", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "rele_fn" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="Tipo_Equipo_Primario">
+                        <h2>Tipo de equipo primario y Elemento eléctrico</h2>
+                        <div class="row clearfix">
+                            <div class="form-inline form-group">
+                                <div class="col-md-12">
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" class="flat" value="Barra" name="Tipo_Equipo_Primario"> Barra
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" class="flat" value="Transformador" name="Tipo_Equipo_Primario"> Transformador
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" class="flat" value="Línea" name="Tipo_Equipo_Primario"> Línea
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" class="flat" value="Ninguno" name="Tipo_Equipo_Primario"> Ninguno
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="form-group">
+                                        <div id="elemento_electrico" class="col-md-12"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Datos asociados al esquema</h3><hr />
+                    <!-- INTERRUPTORES -->
+                    <h2>Interruptores</h2>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  TRANSFORMADORES ELECTRICOS Y DE POTENCIAL -->
+                    <h2>Transformadores eléctricos y de potencial</h2>
+                    <div id="transformadores">
+                        <div class="row clearfix">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <small>TC</small>
+                                    @Html.DropDownList("TC", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+                                </div>
+                                <div class="col-md-6">
+                                    <small>TP</small>
+                                    @Html.DropDownList("TP", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RELEVADORES Y FUNCIONES -->
+                    <h2>Relevadores</h2>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.DropDownList("Relevadores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <a id="btnModalFunciones" data-toggle="modal" data-target=".bs-funciones-modal-lg" href="#"><i class="fa fa-cogs"></i> Gestionar funciones</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <hr />
+                <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Crear Esquema</button>
+                <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-list"></i> Regresar al Listado</a>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade bs-funciones-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="modalFuncionesTitle">Gestionar funciones</h4>
+            </div>
+            <div class="modal-body">
+                <div id="modal-alert-msg" class="alert alert-success alert-dismissible fade in" role="alert" style="display:none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <div id="modal-msg"></div>
+                </div>
+                <h2>Relevador</h2>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.DropDownList("RelevadorFunc", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "rele_fn" })
+                        </div>
+                    </div>
+                </div>
+                <div id="modalFuncionesContenido"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn-modal-guardar" style="display:none;">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>           
+        </div>
+    </div>
+</div>
+
+@section styles 
+{
+@Styles.Render("~/Style/Select2")
+}
+
+@section script 
+{
+    @Scripts.Render("~/Script/Select2")
+
+    <script>
+    $(document).ready(function () {
+
+        //inicializar con la subestacion marcada y la linea escondida
+        $("#selector_subestacion").show();
+        $("#selector_linea").hide();
+
+        //ocultar o mostrar linea/subestacion por el radio button
+        $('input:radio[name="instalacion"]').change(function () {
+            if (this.checked && this.value == 0) {
+                $("#selector_linea").hide();
+                $("#selector_subestacion").show();
+                $("#Tipo_Equipo_Primario").show();
+            }
+            if (this.checked && this.value == 1) {
+                $("#selector_subestacion").hide();
+                $("#selector_linea").show();
+                $("#Tipo_Equipo_Primario").hide();
+            }
+        });
+
+        //cargar equipos primarios
+        $('input:radio[name="Tipo_Equipo_Primario"]').change(
+            function () {
+                if ($('input:radio[name="instalacion"]').val() == 1) {
+                    var l = $("#linea").val();
+                    if (l != "")
+                        $('#elemento_electrico').html("<h2>Elemento eléctrico seleccionado: " + l + "</h2>");
+                    else
+                        $('#elemento_electrico').html("<h2>Seleccione una Línea</h2>");
+                } else {
+                    var cod = $("#subestacion").val();
+
+                    if (cod != "") {
+                        var sub = $("#subestacion").val();
+                        if (this.checked && this.value == "Barra")
+                            loadEquiposPrimarios('barra', sub);
+                        else if (this.checked && this.value == "Transformador")
+                            loadEquiposPrimarios('transformador', sub);
+                        else if (this.checked && this.value == "Línea")
+                            loadEquiposPrimarios('linea', sub);
+                    }
+                    else
+                        $('#elemento_electrico').html(
+                            "<div class='alert alert-warning alert-dismissible fade in col-md-8' role='alert'>" +
+                            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
+                            "</button><strong>Atención!</strong> Una subestación debe ser seleccionada</div>"
+                        );
+                }
+
+            });
+
+        //cargar datos asociados al esquema
+        $("#subestacion").change(function () {
+            loadTransformadores(true);
+            $('#elemento_electrico').html("");
+            var elem = $('#elemento_electrico');
+            $('input[name=Tipo_Equipo_Primario]').attr('checked', false);
+        });
+        $("#linea").change(function () {
+            loadTransformadores(false);
+            $('#elemento_electrico').html("");
+        });
+
+        //mostrar funciones asociadas al rele seleccionado
+        $("#rele_fn").change(function () {
+            var rele = $("#rele_fn").val();
+            if (rele != "") {
+                $.ajax({
+                    url: '@Url.Action("Funciones", "EsquemasProteccion")',
+                    method: "POST",
+                    data: { NroSerie: rele },
+                    success: function (data) {
+                        $('#modalFuncionesContenido').html(data);
+                        $(".select2_multiple").select2({
+                            placeholder: "Seleccione un elemento de la lista",
+                            allowClear: true
+                        });
+                        $("#btn-modal-guardar").show();
+                    }
+                });
+            }
+        });
+
+        //guardar cambios en las funciones del rele
+        $("#btn-modal-guardar").click(function () {
+            var f = $("#Funciones").val();
+            var r = $("#rele_fn").val();
+            $.ajax({
+                url: '@Url.Action("GuardarFunciones", "EsquemasProteccion")',
+                method: "POST",
+                data: { rele: r, func: f },
+                success: function (data) {
+                    $('#modal-msg').html(data);
+                    $("#modal-alert-msg").show();
+                }
+            });
+        });
+
+        /*              FUNCIONES AUXILIARES                   */
+
+        function loadEquiposPrimarios(tipoequipo, sub)
+        {
+            $.ajax({
+                url: '@Url.Action("EquiposPrimarios", "EsquemasProteccion")',
+                method: "POST",
+                data: { e: tipoequipo, codsub: sub },
+                success: function (data) {
+                    $('#elemento_electrico').html(data);
+                    $(".select2_single").select2({
+                        placeholder: "Seleccione un elemento de la lista",
+                        allowClear: true
+                    });
+                }
+            });
+        }
+
+        function loadTransformadores()
+        {
+            if ($('input:radio[name="instalacion"]').val() == 0)
+                var cod = $("#subestacion").val();
+            else
+                var cod = $("#linea").val();
+            $.ajax({
+                url: '@Url.Action("Transformadores", "EsquemasProteccion")',
+                method: "POST",
+                data: { codsub: cod },
+                success: function (data) {
+                    $('#transformadores').html(data);
+                    $(".select2_multiple").select2({
+                        placeholder: "Seleccione un elemento de la lista",
+                        allowClear: true
+                    });
+                }
+            });
+        }
+
+    });
+    </script>
+}

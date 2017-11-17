@@ -12,6 +12,7 @@ namespace EsquemasSecundarios.Models
     {
         [Key]
         public int IdMantenimiento { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd h:mm tt}")]
         public DateTime Fecha { get; set; }        
         public string Observaciones { get; set; }
 

@@ -26,6 +26,8 @@ namespace EsquemasSecundarios.Models
         [MaxLength(20)]
         public string Elemento_Electrico { get; set; }
 
+        public string Clase { get; set; }
+
         //Propiedades Virtuales Referencias a otras clases
 
         public List<Esquema_Relevador> Esquemas_Relevadores { get; set; }

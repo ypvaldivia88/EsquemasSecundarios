@@ -16,7 +16,7 @@ namespace EsquemasSecundarios.Models
         public string NombreSubestacion { get; set; }
         public short? Id_EAdministrativa { get; set; }
         public int NumAccion { get; set; }
-        public short? TipoSubestacion { get; set; }
+        public string TipoSub { get; set; }
 
         public List<Barra> Barras { get; set; }
 

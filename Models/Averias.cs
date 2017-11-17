@@ -14,11 +14,9 @@ namespace EsquemasSecundarios.Models
         public int IdAveria { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha del Reporte"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        [DataType(DataType.Date)]
+        [Display(Name = "Fecha del Reporte"), DisplayFormat(DataFormatString = "{0:yyy-MM-dd h:mm tt}")]
         public DateTime FechaReporte { get; set; }
-        [Display(Name = "Fecha de Atención"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        [DataType(DataType.Date)]
+        [Display(Name = "Fecha de Atención"), DisplayFormat(DataFormatString = "{0:yyy-MM-dd h:mm tt}")]
         public DateTime FechaAtencion { get; set; }
         [Display(Name = "Persona Que Atendió")]
         public string PersonaQueAtendio { get; set; }

@@ -17,7 +17,7 @@ namespace EsquemasSecundarios.Controllers
         // GET: TransformadoresPotencial
         public ActionResult Index()
         {
-            return View(db.TransformadoresPotencial.ToList());
+            return View(db.TransformadoresPotencial.Include(c => c.VoltajeSistema)/*.Include(c=> c.Plantilla).Include(c=> c.Plantilla.Fabricante)*/.ToList());
         }
     }
 }

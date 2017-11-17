@@ -17,8 +17,14 @@
                         @Html.DisplayNameFor(model => model.Frecuencia)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.id_Voltaje_Nominal)
+                        @Html.DisplayNameFor(model => model.VoltajeSistema)
                     </th>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Plantilla.Modelo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Plantilla.Fabricante)
+                    </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.Ubicado)
                     </th>
@@ -44,8 +50,14 @@
                         @Html.DisplayFor(modelItem => item.Frecuencia)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.id_Voltaje_Nominal)
+                        @Html.DisplayFor(modelItem => item.VoltajeSistema.Voltaje)
                     </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Plantilla.Modelo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Plantilla.Fabricante.Nombre)
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.Ubicado)
                     </td>

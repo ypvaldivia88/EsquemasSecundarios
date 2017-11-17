@@ -21,7 +21,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <div class="form-line">
-                            @Html.EditorFor(model => model.FechaReporte, new { htmlAttributes = new { @class = "date-picker form-control" } })
+                            @Html.EditorFor(model => model.FechaReporte, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp1" } })
                             @Html.ValidationMessageFor(model => model.FechaReporte, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <div class="form-line">
-                            @Html.EditorFor(model => model.FechaAtencion, new { htmlAttributes = new { @class = "date-picker form-control" } })
+                            @Html.EditorFor(model => model.FechaAtencion, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp2" } })
                             @Html.ValidationMessageFor(model => model.FechaAtencion, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -166,35 +166,119 @@
 
 @section script {
 @Scripts.Render("~/Script/Select2")
-@Scripts.Render("~/Script/DateRangePicker")
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/daterangepicker.js"></script>
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    //Cargar esquemas segun la subestacion
-    $("#subestacion").change(function () {
-        var sub = $("#subestacion").val();
-        if (sub != "") {
-            $("#sinSubestacion").hide();
-            $("#cargarEsquemas").show();
-            $.ajax({
-                url: '@Url.Action("CargarEsquemas", "Mantenimientos")',
-                method: "POST",
-                data: { codsub: sub },
-                success: function (data) {
-                    $('#cargarEsquemas').html(data);
-                    $(".select2_single").select2({
-                        placeholder: "Seleccione un elemento de la lista",
-                        allowClear: true
-                    });
-                }
+        //daterangepicker
+        $('#drp1').daterangepicker({
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            timePicker: true,
+            timePickerIncrement: 15,
+            locale: {
+                format: 'YYYY-MM-DD h:mm A',
+                applyLabel: "Aplicar",
+                cancelLabel: "Cancelar",
+                fromLabel: "Desde",
+                toLabel: "Hasta",
+                customRangeLabel: "Personalizar",
+                daysOfWeek: [
+                    "Do",
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
+                ],
+                monthNames: [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ],
+                firstDay: 1
+            }
+        }, function (chosen_date) {
+            $('#drp1').val(chosen_date.format('YYYY-MM-DD h:mm A'));
+        });
+
+        $('#drp2').daterangepicker({
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            timePicker: true,
+            timePickerIncrement: 15,
+            locale: {
+                format: 'YYYY-MM-DD h:mm A',
+                applyLabel: "Aplicar",
+                cancelLabel: "Cancelar",
+                fromLabel: "Desde",
+                toLabel: "Hasta",
+                customRangeLabel: "Personalizar",
+                daysOfWeek: [
+                    "Do",
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
+                ],
+                monthNames: [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ],
+                firstDay: 1
+            }
+        }, function (chosen_date) {
+            $('#drp2').val(chosen_date.format('YYYY-MM-DD h:mm A'));
             });
-        }
-        else {
-            $("#sinSubestacion").show();
-            $("#cargarEsquemas").hide();
-        }
+
+        //Cargar esquemas segun la subestacion
+        $("#subestacion").change(function () {
+            var sub = $("#subestacion").val();
+            if (sub != "") {
+                CargarEsquemas(sub);
+            }
+        });
+
     });
 
-});
+    function CargarEsquemas(sub) {
+        $.ajax({
+            url: '@Url.Action("CargarEsquemas", "Averias")',
+            method: "POST",
+            data: { codsub: sub },
+            success: function (data) {
+                $('#cargarEsquemas').html(data);
+                $(".select2_single").select2({
+                    placeholder: "Seleccione un elemento de la lista",
+                    allowClear: true
+                });
+            }
+        });
+    }
 </script>
 }

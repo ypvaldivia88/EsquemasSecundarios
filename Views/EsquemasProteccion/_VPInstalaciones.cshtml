@@ -1,0 +1,20 @@
+﻿@if (ViewBag.TipoInstalacion == "Subestacion")
+{
+    <small>Subestaciones</small>
+    @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorSubestacion" })
+}
+@if (ViewBag.TipoInstalacion == "Linea")
+{
+    <small>Líneas</small>
+    @Html.DropDownList("Linea", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorLinea" })
+}
+
+<script>
+    $("#SelectorSubestacion").change(function () {
+        var codsub = $(this).val();
+        CargarInterruptores(codsub, "no");
+        if ($(this).val() == "Esquema de Protección y Control del Interruptor") {
+            CargarElementosElectricos("linea", codsub);
+        }
+    })
+</script>

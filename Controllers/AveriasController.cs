@@ -17,9 +17,9 @@ namespace EsquemasSecundarios.Controllers
 
         // GET: Averias
         public ActionResult Index()
-        {
-            var averias = db.Averias.Include(a => a.Esquema).Include(a => a.Subestacion);
-            return View(averias.ToList());
+        {            
+            var averias = db.Averias.Include(c => c.Esquema);
+            return View(averias);
         }
 
         // GET: Averias/Details/5
@@ -34,8 +34,14 @@ namespace EsquemasSecundarios.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Esquema = db.EsquemasProteccion.Find(averias.IdEsquema).Nombre;
-            ViewBag.NombreSubestacion = db.Subestacion.First(c => c.Codigo == averias.CodSubestacion).NombreSubestacion;
+            ViewBag.NombreEsquema = db.EsquemasProteccion.Find(averias.IdEsquema).Nombre;
+            var sub = db.Subestacion.Find(averias.CodSubestacion);
+            var subtra = db.SubestacionTransmision.Find(averias.CodSubestacion);
+            if (sub != null && subtra == null)
+                ViewBag.NombreSubestacion = sub.NombreSubestacion;
+            else if (sub == null && subtra != null)
+                ViewBag.NombreSubestacion = subtra.NombreSubestacion;
+
             return View(averias);
         }
 

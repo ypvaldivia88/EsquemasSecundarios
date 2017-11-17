@@ -17,7 +17,7 @@ namespace EsquemasSecundarios.Controllers
         // GET: TransformadoresCorriente
         public ActionResult Index()
         {
-            return View(db.TransformadoresCorriente.ToList());
+            return View(db.TransformadoresCorriente.Include(c=> c.VoltajeSistema)/*.Include(c => c.Plantilla).Include(c => c.Plantilla.Fabricante)*/.ToList());
         }        
     }
 }

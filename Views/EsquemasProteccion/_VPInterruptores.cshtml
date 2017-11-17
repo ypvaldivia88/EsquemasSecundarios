@@ -1,0 +1,18 @@
+﻿@if (ViewBag.Multiple == "si")
+{
+    @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple", @id = "SelectorInterruptor" })
+}
+@if (ViewBag.Multiple == "no")
+{
+    @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorInterruptor" })
+}
+
+<script>
+    $("#SelectorInterruptor").change(function () {
+        if ($("#SelectorTipoEsquema").val() != "" && $("#SelectorInterruptor").val() != "") {
+            $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorInterruptor").val());
+        } else {
+            $("#NombreEsquema").val("");
+        }        
+    })
+</script>

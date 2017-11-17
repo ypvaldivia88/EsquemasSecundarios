@@ -10,22 +10,31 @@
         <table class="table">
             <tr>
                 <th>Modelo</th>
-                <td>@Html.DisplayFor(model => model.Plantilla.Modelo)</td>
+                <td>@ViewBag.Modelo</td>
             </tr>
             <tr>
-                <th>Ubicado</th>
-                <td>@Html.DisplayFor(model => model.Ubicado)</td>
-            </tr>
-            <tr>
-                <th>Voltaje alterno</th>
-                <td>@Html.DisplayFor(model => model.Voltaje_Alterno)</td>
-            </tr>
-            <tr>
-                <th>Voltaje directo</th>
-                <td>@Html.DisplayFor(model => model.Voltaje_Directo)</td>
+                <th>Fabricante</th>
+                <td>@ViewBag.Fabricante</td>
             </tr>
         </table>
     </div>    
+</div>
+<div class="row clearfix">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Funciones asociadas al relevador</div>
+            <div class="panel-body">
+                <table class="table">
+                    @foreach (var item in ViewBag.Funciones)
+                    {
+                        <tr>
+                            <td>@item</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <hr />

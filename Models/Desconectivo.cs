@@ -13,5 +13,12 @@ namespace EsquemasSecundarios.Models
 
         [Key, Column(Order = 2)]
         public int id_EAdministrativa_Prov { get; set; }
+
+        public string TipoSeccionalizador { get; set; }
+
+        public string UbicadaEn { get; set; }
+        [ForeignKey("UbicadaEn")]
+        public Subestacion Subestacion { get; set; }
+        
     }
 }

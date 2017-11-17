@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="es-es">
+<html lang="es">
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,6 +16,7 @@
         @Styles.Render("~/Style/Bootstrap")
         <!-- Font Awesome -->
         @Styles.Render("~/Style/Fonts")
+        <!-- NProgress -->
 
         @RenderSection("styles", required: false)
 
@@ -30,31 +31,27 @@
                 <!-- Menu principal -->
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
-
-                        <div class="navbar nav_title" style="border: 0;">
-                            <a href="@Url.Action("Index","Home")" class="site_title">Esquemas</a>
-                        </div>
-
+                        
                         <div class="clearfix"></div>
-                    
+
+                        <!-- menu site info -->
+                        <div class="profile clearfix">
+                            <div class="profile_pic">
+                                <img src="~/Content/images/logo.png" alt="..." class="img-circle profile_img">                                
+                            </div>
+                            <div class="profile_info">
+                                <h3>SIGERE</h3>
+                            </div>
+                            <div class="clearfix"><a href="@Url.Action("Index","Home")" style="margin-bottom: 10px;"><h4>Esquemas Secundarios</h4></a></div>
+                            
+                        </div>
+                        <!-- /menu site info -->
+                        <br />
                         <!-- sidebar menu -->                    
-                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                            <div class="menu_section">
-                                <h3>Secundarios</h3>
-                                <ul class="nav side-menu">
-                                    <li>
-                                        <a><i class="fa fa-home"></i> Módulo ES <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href="@Url.Action("Index","Home")">Acerca de</a></li>
-                                            <li><a href="#">Contáctenos</a></li>
-                                            <li><a href="#">Ayuda</a></li>
-                                        </ul>
-                                    </li>                                
-                                </ul>
-                            </div>                        
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">                           
                             <div class="menu_section">
                                 <h3>Nomencladores</h3>
-                                <ul class="nav side-menu">                                
+                                <ul class="nav side-menu">
                                     <li>
                                         <a><i class="fa fa-cubes"></i> Relevadores <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
@@ -68,28 +65,26 @@
                                             <li>@Html.ActionLink("Transformadores de Corriente", "Index", "TransformadoresCorriente")</li>
                                             <li>@Html.ActionLink("Transformadores de Potencial", "Index", "TransformadoresPotencial")</li>
                                         </ul>
-                                    </li> 
+                                    </li>
                                 </ul>
                             </div>
                             <div class="menu_section">
                                 <h3>Protecciones</h3>
                                 <ul class="nav side-menu">
                                     <li>
-                                        <a href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-cogs"></i> Esquemas </a>                                        
+                                        <a href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-cogs"></i> Esquemas </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-wrench"></i> Mantenimientos</a>                                        
+                                        <a href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-wrench"></i> Mantenimientos</a>
                                     </li>
                                     <li>
                                         <a href="@Url.Action("Index","Averias")"><i class="fa fa-chain-broken"></i> Averías</a>
                                     </li>
                                 </ul>
-                            </div>                        
+                            </div>
                         </div>
-                        <!-- /sidebar menu -->                    
-                
-                        <div class="clearfix"></div>
-                    
+                        <!-- /sidebar menu --> 
+
                         <!-- /menu footer buttons -->
                         <div class="sidebar-footer hidden-small">
                             <a data-toggle="tooltip" data-placement="top" title="Settings">
@@ -101,7 +96,7 @@
                             <a data-toggle="tooltip" data-placement="top" title="Lock">
                                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                             </a>
-                            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
                                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                             </a>
                         </div>
@@ -159,22 +154,37 @@
             
                 <!-- Pagina de contenido -->
                 <div class="right_col" role="main">
-                    <div class="">                 
-                        <h1>@ViewBag.Title</h1><!-- Titulo de la pagina -->
+                    <div class="">  
+                        
+                        <div class="page-title">
+                            <div class="title_left">
+                                <h3>@ViewBag.Title</h3>
+                            </div>
+                        </div>
 
                         <div class="clearfix"></div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="x_title">
-                                    <h2>@ViewBag.PTitle</h2>  <!-- Titulo del contenido -->                              
-                                    <div class="clearfix"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>@ViewBag.PTitle</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li>
+                                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>                                            
+                                            <li>
+                                                <a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        @RenderBody()
+                                    </div>
                                 </div>
-                                @RenderBody()<!-- Contenido -->
                             </div>
-                        </div> 
-                                 
-                        <div class="clearfix"></div>   
+                        </div>
                                   
                     </div>
                 </div>
@@ -183,7 +193,7 @@
                 <!-- Pie de pagina -->
                 <footer>
                     <div class="pull-right">
-                        &copy;@DateTime.Now.Year - UEB Aplicaciones de Redes Sancti Spíritus
+                        &copy; @DateTime.Now.Year - UEB Aplicaciones de Redes Sancti Spíritus
                     </div>
                     <div class="clearfix"></div>
                 </footer>
@@ -202,10 +212,10 @@
         <!-- NProgress -->
         @Scripts.Render("~/Script/NProgress")        
 
+        @RenderSection("script", required: false)
+
         <!-- Custom Theme Scripts -->
         @Scripts.Render("~/Script/Custom")
-
-        @RenderSection("script", required: false)
     
     </body>
 </html>

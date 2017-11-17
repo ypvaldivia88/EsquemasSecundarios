@@ -11,14 +11,17 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.id_Voltaje_Primario)
+                        @Html.DisplayNameFor(model => model.VoltajeSistema)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Cant_Devanado)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.id_Plantilla)
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Plantilla.Modelo)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Plantilla.Fabricante)
+                    </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.Ubicado)
                     </th>
@@ -32,10 +35,7 @@
                         @Html.DisplayNameFor(model => model.Elemento_Electrico)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Id_EAdministrativa)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NumAccion)
+                        @Html.DisplayNameFor(model => model.VoltajeNominal)
                     </th>
                 </tr>
                 </thead>
@@ -44,14 +44,17 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.id_Voltaje_Primario)
+                            @Html.DisplayFor(modelItem => item.VoltajeSistema.Voltaje)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Cant_Devanado)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.id_Plantilla)
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Plantilla.Modelo)
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Plantilla.Fabricante.Nombre)
+                        </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => item.Ubicado)
                         </td>
@@ -65,10 +68,7 @@
                             @Html.DisplayFor(modelItem => item.Elemento_Electrico)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Id_EAdministrativa)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumAccion)
+                            @Html.DisplayFor(modelItem => item.VoltajeNominal)
                         </td>
                     </tr>
                 }

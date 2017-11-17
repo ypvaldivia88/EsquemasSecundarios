@@ -19,7 +19,7 @@ namespace EsquemasSecundarios.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var relevadores = db.Relevadores.Include(r => r.Plantilla);
+            var relevadores = db.Relevadores.Include(r => r.Plantilla).Include(p => p.Plantilla.Fabricante);
             return View(relevadores.ToList());
         }
 
@@ -36,6 +36,19 @@ namespace EsquemasSecundarios.Controllers
             {
                 return HttpNotFound();
             }
+
+            var f = (
+                from pl in db.Plantillas
+                join pf in db.Plantilla_Funcion on pl.id_Plantilla equals pf.id_Plantilla
+                join fun in db.Funciones on pf.id_Funcion equals fun.Id_Esquema
+                where pl.id_Plantilla == relevador.id_Plantilla
+                select fun.Descripcion
+                ).ToList();
+
+            ViewBag.Fabricante = db.Plantillas.Include(c=> c.Fabricante).Where(c => c.id_Plantilla == relevador.id_Plantilla).Select(c=> c.Fabricante.Nombre).FirstOrDefault();
+            ViewBag.Modelo = db.Plantillas.Where(c => c.id_Plantilla == relevador.id_Plantilla).Select(c => c.Modelo).FirstOrDefault(); ;
+            ViewBag.Funciones = f;
+
             return View(relevador);
         }
 
@@ -55,6 +68,7 @@ namespace EsquemasSecundarios.Controllers
         {
             if (ModelState.IsValid)
             {
+                relevador.Plantilla = db.Plantillas.Find(relevador.id_Plantilla);
                 db.Relevadores.Add(relevador);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -89,6 +103,7 @@ namespace EsquemasSecundarios.Controllers
         {
             if (ModelState.IsValid)
             {
+                relevador.Plantilla = db.Plantillas.Find(relevador.id_Plantilla);
                 db.Entry(relevador).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
