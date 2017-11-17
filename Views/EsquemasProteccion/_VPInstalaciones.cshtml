@@ -6,13 +6,13 @@
 @if (ViewBag.TipoInstalacion == "Linea")
 {
     <small>Líneas</small>
-    @Html.DropDownList("Linea", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorLinea" })
+    @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorLinea" })
 }
 
 <script>
     $("#SelectorSubestacion").change(function () {
         var codsub = $(this).val();
-        CargarInterruptores(codsub, "no");
+        CargarInterruptores(codsub, false);
         if ($(this).val() == "Esquema de Protección y Control del Interruptor") {
             CargarElementosElectricos("linea", codsub);
         }

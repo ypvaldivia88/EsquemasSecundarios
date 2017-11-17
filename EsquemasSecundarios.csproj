@@ -4500,6 +4500,7 @@
     <Content Include="Views\EsquemasProteccion\Create.cshtml" />
     <Content Include="Views\EsquemasProteccion\_VPInstalaciones.cshtml" />
     <Content Include="Views\EsquemasProteccion\_VPInterruptores.cshtml" />
+    <Content Include="Views\EsquemasProteccion\_VPTipoEquipoPrimario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

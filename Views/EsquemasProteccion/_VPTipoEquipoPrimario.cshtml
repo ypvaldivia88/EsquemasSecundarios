@@ -1,0 +1,19 @@
+﻿@if (ViewBag.Habilitado)
+{
+    @Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @id = "TipoEquipoPrimario" })
+}
+else
+{
+    @Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @disabled = "disabled", @id = "TipoEquipoPrimario" })
+}
+
+<script>
+    $("#TipoEquipoPrimario").change(function () {
+        var codsub = $("#Subestacion").val();
+        var tipo = $("#TipoEquipoPrimario").val();
+        CargarElementosElectricos(tipo,codsub);
+        if ($(this).val() == "Esquema de Protección y Control del Interruptor") {
+            CargarElementosElectricos("linea", codsub);
+        }
+    })
+</script>

@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿InitSelect2();
+
+
+function InitSelect2() {
     //<!-- Select2 -->
     $(".select2_single").select2({
         placeholder: "Seleccione un elemento de la lista",
@@ -9,4 +12,4 @@
         placeholder: "Seleccione uno o varios elementos de la lista",
         allowClear: true
     });
-});
+}

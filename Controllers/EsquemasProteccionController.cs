@@ -69,7 +69,7 @@ namespace EsquemasSecundarios.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico")] EsquemaProteccion esquemaProteccion,
+            [Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico,Clase")] EsquemaProteccion esquemaProteccion,
             int instalacion, string Linea, string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones
         )
         {
@@ -171,7 +171,7 @@ namespace EsquemasSecundarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico")] EsquemaProteccion esquemaProteccion,
+        public ActionResult Edit([Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico,Clase")] EsquemaProteccion esquemaProteccion,
             int instalacion, string Linea, string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones)
         {
             if (ModelState.IsValid)
@@ -293,7 +293,7 @@ namespace EsquemasSecundarios.Controllers
 
         public ActionResult VPInstalaciones(string ti)
         {
-            if (ti == "Subestacion")//tipo de instalacion 1 = subestacion
+            if (ti == "Subestacion")
             {
                 var subestaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
@@ -303,7 +303,7 @@ namespace EsquemasSecundarios.Controllers
                 ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text");
             }
 
-            if (ti == "Linea")//tipo de instalacion 2 = linea
+            if (ti == "Linea")
             {
                 var lineas = db.LineaTransmision
                 .Select(c => new SelectListItem { Value = c.Codigolinea, Text = c.Codigolinea + " - " + c.NombreCircuito })
@@ -312,14 +312,14 @@ namespace EsquemasSecundarios.Controllers
                 .Union(db.CircuitoSubtransmision
                 .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreCircuito }));
 
-                ViewBag.Linea = new SelectList(lineas, "Value", "Text");                
+                ViewBag.Subestacion = new SelectList(lineas, "Value", "Text");                
             }
 
             ViewBag.TipoInstalacion = ti;
             return PartialView("_VPInstalaciones");
         }
 
-        public ActionResult VPInterruptores(string sub, string mult)
+        public ActionResult VPInterruptores(string sub, bool mult)
         {
             var interruptores = db.Desconectivos
                 .Where(c => c.UbicadaEn == sub && c.TipoSeccionalizador == "4")
@@ -331,9 +331,24 @@ namespace EsquemasSecundarios.Controllers
             return PartialView("_VPInterruptores");
         }
 
-        public ActionResult VPElementoElectrico(string e, string codsub)
+        public ActionResult VPTipoEquipoPrimario(int seleccionado, bool habilitado)
         {
-            if (e == "barra")
+            var list = new SelectList(new[]
+            {
+                new { ID = "1", Name = "Barra" },
+                new { ID = "2", Name = "Línea" },
+                new { ID = "3", Name = "Transformador" },
+                new { ID = "4", Name = "Ninguno" },
+            },
+            "ID", "Name", seleccionado);
+            ViewBag.Tipo_Equipo_Primario = list;
+            ViewBag.Habilitado = habilitado;
+            return PartialView("_VPTipoEquipoPrimario");
+        }
+
+        public ActionResult VPElementoElectrico(int e, string codsub)
+        {            
+            if (e == 1)
             {
                 var barras = (
                     from sb in db.Barras
@@ -342,23 +357,11 @@ namespace EsquemasSecundarios.Controllers
                     where sb.Subestacion.Contains(codsub)
                     select new SelectListItem { Value = sb.codigo, Text = sb.codigo + " - " + vs.Voltaje.ToString() }
                 ).ToList();
+                ViewBag.TipoEquipo = "Barra";
                 ViewBag.Elemento_Electrico = new SelectList(barras, "Value", "Text");
                 return PartialView("_VPElementoElectrico");
             }
-            else if (e == "transformador")
-            {
-                var transformadores = db.TransformadorTransmision
-                    .Where(c => c.Codigo.Contains(codsub))
-                    .Select(c => new SelectListItem { Value = c.Nombre, Text = c.Codigo + " - " + c.Nombre })
-                    .Union(db.TransformadorSubtransmision
-                    .Where(c => c.Codigo.Contains(codsub))
-                    .Select(c => new SelectListItem { Value = c.Nombre, Text = c.Codigo + " - " + c.Nombre })
-                    );
-
-                ViewBag.Elemento_Electrico = new SelectList(transformadores, "Value", "Text");
-                return PartialView("_VPElementoElectrico");
-            }
-            else if (e == "linea")
+            else if (e == 2)
             {
                 var lineas =
                     db.LineaSubestacion
@@ -394,12 +397,26 @@ namespace EsquemasSecundarios.Controllers
                             .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito })
                         )
                     );
-
+                ViewBag.TipoEquipo = "Línea";
                 ViewBag.Elemento_Electrico = new SelectList(lineas, "Value", "Text");
                 return PartialView("_VPElementoElectrico");
             }
+            else if (e == 3)
+            {
+                var transformadores = db.TransformadorTransmision
+                    .Where(c => c.Codigo.Contains(codsub))
+                    .Select(c => new SelectListItem { Value = c.Nombre, Text = c.Codigo + " - " + c.Nombre })
+                    .Union(db.TransformadorSubtransmision
+                    .Where(c => c.Codigo.Contains(codsub))
+                    .Select(c => new SelectListItem { Value = c.Nombre, Text = c.Codigo + " - " + c.Nombre })
+                    );
+                ViewBag.TipoEquipo = "Transformador";
+                ViewBag.Elemento_Electrico = new SelectList(transformadores, "Value", "Text");
+                return PartialView("_VPElementoElectrico");
+            }            
             else
             {
+                ViewBag.TipoEquipo = "Ninguno";
                 return PartialView("_VPElementoElectrico");
             }
         }
@@ -464,8 +481,18 @@ namespace EsquemasSecundarios.Controllers
                 .Union(db.CircuitoSubtransmision
                 .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreCircuito }));
 
+            var tipoequipo = new SelectList(new[]
+            {
+                new { ID = "1", Name = "Barra" },
+                new { ID = "2", Name = "Línea" },
+                new { ID = "3", Name = "Transformador" },
+                new { ID = "4", Name = "Ninguno" },
+            },
+            "ID", "Name", 4);
+
             ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text");
             ViewBag.Linea = new SelectList(lineas, "Value", "Text");
+            ViewBag.Tipo_Equipo_Primario = tipoequipo;
             ViewBag.Interruptores = new SelectList(db.Desconectivos.ToList(), "Codigo", "Codigo");
             ViewBag.Relevadores = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie");
             ViewBag.RelevadorFunc = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie");

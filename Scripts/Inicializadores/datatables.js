@@ -1,5 +1,6 @@
-﻿$(document).ready(function () {
+﻿InitDataTables();
 
+function InitDataTables() {
     var handleDataTableButtons = function () {
 
         if ($("#datatable-buttons").length) {
@@ -7,24 +8,19 @@
                 dom: "Bfrtip",
                 buttons: [
                     {
-                        extend: "copy",
-                        className: "btn-sm"
+                        extend: "copy", className: "btn-sm", label: "Copiar"
                     },
                     {
-                        extend: "csv",
-                        className: "btn-sm"
+                        extend: "csv", className: "btn-sm", label: "CSV"
                     },
                     {
-                        extend: "excel",
-                        className: "btn-sm"
+                        extend: "excel", className: "btn-sm", label: "Excel"
                     },
                     {
-                        extend: "pdfHtml5",
-                        className: "btn-sm"
+                        extend: "pdfHtml5", className: "btn-sm", label: "PDF"
                     },
                     {
-                        extend: "print",
-                        className: "btn-sm"
+                        extend: "print", className: "btn-sm", label: "Imprimir"
                     },
                 ],
                 responsive: true
@@ -62,4 +58,4 @@
     });
 
     TableManageButtons.init();
-});
+}

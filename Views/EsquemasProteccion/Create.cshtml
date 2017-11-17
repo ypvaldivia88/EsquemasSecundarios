@@ -21,12 +21,14 @@
             </div>
         </div>
 
+        @Html.HiddenFor(model => model.Clase)
+
         <h2>Tipo de Esquema</h2>
         <div class="row clearfix">
             <div class="col-md-12">
                 <div class="form-group">
                     <select id="SelectorTipoEsquema" class="select2_single form-control">
-                        <optgroup label="Esquema de Protección">
+                        <optgroup label="Esquemas de Protección">
                             <option selected disabled></option>
                             <option value="Esquema de Protección y Control del Interruptor">Esquema de Protección y Control de Interruptor</option>
                             <option value="Esquema de Protección del Transformador">Esquema de Protección de Transformador</option>
@@ -35,7 +37,7 @@
                             <option value="Esquema de Protección Especial de la Barra">Esquema de Protección Especial de Barra</option>
                             <option value="Esquema de Protección Separadora">Esquema de Protección Separadora</option>
                         </optgroup>
-                        <optgroup label="Esquema de Control">
+                        <optgroup label="Esquemas de Control">
                             <option value="Esquema de Control - Ventilación del Transformador">Esquema de Control - Ventilación de Transformador</option>
                             <option value="Esquema de Control - Cambia Taps del Transformador">Esquema de Control - Cambia Taps de Transformador</option>
                             <option value="Esquema de Control – del Desconectivo">Esquema de Control – Desconectivo</option>
@@ -44,10 +46,10 @@
                             <option value="Esquema de Control Distribución de Corriente Directa">Esquema de Control Distribución de Corriente Directa</option>
                             <option value="Esquema de Control Distribución de Corriente Alterna">Esquema de Control Distribución de Corriente Alterna</option>
                         </optgroup>
-                        <optgroup label="Esquema de Señalización">
+                        <optgroup label="Esquemas de Señalización">
                             <option value="Esquema de Señalización Central">Esquema de Señalización Central</option>
                         </optgroup>
-                        <optgroup label="Esquema de Automática">
+                        <optgroup label="Esquemas de Automática">
                             <option value="Esquema de Automática RAS (Reposición Automática del Servicio)">Esquema de Automática RAS (Reposición Automática del Servicio)</option>
                             <option value="Esquema de Automática de Líneas">Esquema de Automática de Líneas</option>
                         </optgroup>
@@ -78,7 +80,7 @@
         <div class="row clearfix">
             <div class="col-md-12">
                 <div id="VPTipoEquipoPrimario" class="form-group">
-                    <input type="text" name="Tipo_Equipo_Primario" id="InputTipoEquipoPrimario" placeholder="Necesita seleccionar un Tipo de Esquema" disabled="disabled" class="form-control" />
+                    @Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -170,19 +172,24 @@
             InitSelect2();
 
             $("#SelectorTipoEsquema").change(function () {
+
                 if ($(this).val() == "Esquema de Protección y Control del Interruptor") {
                     CargarInstalaciones("Subestacion");
                     $("#InputTipoEquipoPrimario").val("Línea");
+                    $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                    CargarTipoEquipoPrimario(2, false);
                 }
             });
 
         });
 
-        function CargarInstalaciones(tipo) {
+
+        function CargarInstalaciones(tipo)
+        {
             $.ajax({
                 url: '@Url.Action("VPInstalaciones", "EsquemasProteccion")',
                 method: "POST",
-                data: { ti : tipo},
+                data: { ti: tipo },
                 success: function (data) {
                     $('#VPInstalacion').html(data);
                     InitSelect2();
@@ -190,7 +197,7 @@
             });
         }
 
-        function CargarInterruptores(subestacion,multiple)
+        function CargarInterruptores(subestacion, multiple)
         {
             $.ajax({
                 url: '@Url.Action("VPInterruptores", "EsquemasProteccion")',
@@ -203,7 +210,20 @@
             });
         }
 
-        function CargarElementosElectricos(elemento,subestacion)
+        function CargarTipoEquipoPrimario(selected,enabled)
+        {
+            $.ajax({
+                url: '@Url.Action("VPTipoEquipoPrimario", "EsquemasProteccion")',
+                method: "POST",
+                data: { seleccionado: selected, habilitado: enabled },
+                success: function (data) {
+                    $('#VPTipoEquipoPrimario').html(data);
+                    InitSelect2();
+                }
+            });
+        }
+
+        function CargarElementosElectricos(elemento, subestacion)
         {
             $.ajax({
                 url: '@Url.Action("VPElementoElectrico", "EsquemasProteccion")',
@@ -215,19 +235,6 @@
                 }
             });
         }
-
-        function InitSelect2()
-        {
-            $(".select2_single").select2({
-                placeholder: "Seleccione un elemento de la lista",
-                allowClear: true
-            });
-            $(".select2_multiple").select2({
-                placeholder: "Seleccione un elemento de la lista",
-                allowClear: true
-            });
-        }
-
 
     </script>
 }
