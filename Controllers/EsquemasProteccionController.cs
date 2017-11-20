@@ -289,16 +289,16 @@ namespace EsquemasSecundarios.Controllers
 
         #endregion
 
-        #region Vistas Parciales AJAX
+        #region Vistas Parciales (VP) AJAX
 
-        public ActionResult VPInstalaciones(string ti)
+        public ActionResult VPInstalaciones(string ti, string te)
         {
             if (ti == "Subestacion")
             {
                 var subestaciones = db.Subestacion
-                .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
+                .Select(c => new SelectListItem { Value = c.Codigo, Text = "Código: " + c.Codigo + ", Nombre: " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
-                .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
+                .Select(c => new SelectListItem { Value = c.Codigo, Text = "Código: " + c.Codigo + ", Nombre: " + c.NombreSubestacion }));
 
                 ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text");
             }
@@ -306,16 +306,17 @@ namespace EsquemasSecundarios.Controllers
             if (ti == "Linea")
             {
                 var lineas = db.LineaTransmision
-                .Select(c => new SelectListItem { Value = c.Codigolinea, Text = c.Codigolinea + " - " + c.NombreCircuito })
+                .Select(c => new SelectListItem { Value = c.Codigolinea, Text = "Código: " + c.Codigolinea + ", Nombre: " + c.NombreCircuito })
                 .Union(db.CircuitoPrimario
-                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreAntiguo }))
+                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = "Código: " + c.CodigoCircuito + ", Nombre: " + c.NombreAntiguo }))
                 .Union(db.CircuitoSubtransmision
-                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreCircuito }));
+                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = "Código: " + c.CodigoCircuito + ", Nombre: " + c.NombreCircuito }));
 
                 ViewBag.Subestacion = new SelectList(lineas, "Value", "Text");                
             }
 
             ViewBag.TipoInstalacion = ti;
+            ViewBag.TipoEsquema = te;
             return PartialView("_VPInstalaciones");
         }
 
@@ -346,7 +347,7 @@ namespace EsquemasSecundarios.Controllers
             return PartialView("_VPTipoEquipoPrimario");
         }
 
-        public ActionResult VPElementoElectrico(int e, string codsub)
+        public ActionResult VPElementosElectricos(int e, string codsub)
         {            
             if (e == 1)
             {
@@ -359,7 +360,6 @@ namespace EsquemasSecundarios.Controllers
                 ).ToList();
                 ViewBag.TipoEquipo = "Barra";
                 ViewBag.Elemento_Electrico = new SelectList(barras, "Value", "Text");
-                return PartialView("_VPElementoElectrico");
             }
             else if (e == 2)
             {
@@ -399,7 +399,6 @@ namespace EsquemasSecundarios.Controllers
                     );
                 ViewBag.TipoEquipo = "Línea";
                 ViewBag.Elemento_Electrico = new SelectList(lineas, "Value", "Text");
-                return PartialView("_VPElementoElectrico");
             }
             else if (e == 3)
             {
@@ -412,31 +411,30 @@ namespace EsquemasSecundarios.Controllers
                     );
                 ViewBag.TipoEquipo = "Transformador";
                 ViewBag.Elemento_Electrico = new SelectList(transformadores, "Value", "Text");
-                return PartialView("_VPElementoElectrico");
             }            
             else
             {
                 ViewBag.TipoEquipo = "Ninguno";
-                return PartialView("_VPElementoElectrico");
             }
+            return PartialView("_VPElementoElectrico");
         }
 
-        public ActionResult Transformadores(string codsub)
+        public ActionResult VPTransformadores(string codsub)
         {
             var tc = db.TransformadoresCorriente
                     .Where(c => c.CodSub.Contains(codsub))
-                    .Select(c => new SelectListItem { Value = c.Nro_Serie, Text = c.Nro_Serie });
+                    .Select(c => new SelectListItem { Value = c.Nro_Serie, Text = "Nro de Serie: " + c.Nro_Serie + ", Equipo Protegido: " + c.Elemento_Electrico });
             ViewBag.TC = new SelectList(tc, "Value", "Text");
 
             var tp = db.TransformadoresPotencial
                     .Where(c => c.CodSub.Contains(codsub))
-                    .Select(c => new SelectListItem { Value = c.Nro_Serie, Text = c.Nro_Serie });
+                    .Select(c => new SelectListItem { Value = c.Nro_Serie, Text = "Nro de Serie: " + c.Nro_Serie + ", Equipo Protegido: " + c.Elemento_Electrico });
             ViewBag.TP = new SelectList(tp, "Value", "Text");
 
-            return PartialView("_Transformadores");
+            return PartialView("_VPTransformadores");
         }
 
-        public ActionResult Funciones(string NroSerie)
+        public ActionResult VPFunciones(string NroSerie)
         {
             var funcIds = (
                 from rf in db.Relevador_Funcion                
@@ -448,23 +446,9 @@ namespace EsquemasSecundarios.Controllers
 
             ViewBag.Funciones = new MultiSelectList(allfunc, "Id_Esquema", "Descripcion", funcIds);
 
-            return PartialView("_Funciones");
+            return PartialView("_VPFunciones");
         }
-
-        public string GuardarFunciones(string rele, int[] func)
-        {
-            db.Relevador_Funcion.RemoveRange(db.Relevador_Funcion.Where(c => c.Nro_Serie_R == rele));
-            foreach (var item in func)
-            {
-                Relevador_Funcion rf = new Relevador_Funcion();
-                rf.Nro_Serie_R = rele;
-                rf.id_Funcion = item;
-                db.Relevador_Funcion.Add(rf);
-                db.SaveChanges();
-            }
-            return "Se han realizado los cambios correctamente";
-        }
-        
+                
         #endregion
 
         public void Inicializar()
@@ -490,11 +474,21 @@ namespace EsquemasSecundarios.Controllers
             },
             "ID", "Name", 4);
 
+            var reles = (
+                from rel in db.Relevadores
+                join pl in db.Plantillas on rel.id_Plantilla equals pl.id_Plantilla
+                join fa in db.Fabricantes on pl.Id_Fabricante equals fa.Id_Fabricante
+                select new SelectListItem {
+                    Value = rel.Nro_Serie,
+                    Text = rel.Nro_Serie + " - " + pl.Modelo + " - " + fa.Nombre
+                }
+            );
+
             ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text");
             ViewBag.Linea = new SelectList(lineas, "Value", "Text");
             ViewBag.Tipo_Equipo_Primario = tipoequipo;
             ViewBag.Interruptores = new SelectList(db.Desconectivos.ToList(), "Codigo", "Codigo");
-            ViewBag.Relevadores = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie");
+            ViewBag.Relevadores = new SelectList(reles, "Value", "Text");
             ViewBag.RelevadorFunc = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie");
             ViewBag.TC = new SelectList(db.TransformadoresCorriente.ToList(), "Nro_Serie", "Nro_Serie");
             ViewBag.TP = new SelectList(db.TransformadoresPotencial.ToList(), "Nro_Serie", "Nro_Serie");
@@ -549,7 +543,20 @@ namespace EsquemasSecundarios.Controllers
 
             ViewBag.RelevadorFunc = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie");           
         }
-        
-        
+
+        public string GuardarFunciones(string rele, int[] func)
+        {
+            db.Relevador_Funcion.RemoveRange(db.Relevador_Funcion.Where(c => c.Nro_Serie_R == rele));
+            foreach (var item in func)
+            {
+                Relevador_Funcion rf = new Relevador_Funcion();
+                rf.Nro_Serie_R = rele;
+                rf.id_Funcion = item;
+                db.Relevador_Funcion.Add(rf);
+                db.SaveChanges();
+            }
+            return "Se han realizado los cambios correctamente";
+        }
+
     }
 }

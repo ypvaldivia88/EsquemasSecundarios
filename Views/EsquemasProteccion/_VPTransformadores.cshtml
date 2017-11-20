@@ -1,19 +1,10 @@
-﻿<h2>Transformadores de Corriente</h2>
-<div class="row clearfix">
-    <div class="form-group">
-        <div class="col-md-12">
-            <small>Seleccione el elemento eléctrico de tipo Barra</small>
-            @Html.DropDownList("TC", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-        </div>
+﻿<div class="form-group">
+    <div class="col-md-6">
+        <small>TC</small>
+        @Html.DropDownList("TC", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
     </div>
-</div>  
-
-<h2>Transformadores de Potencial</h2>
-<div class="row clearfix">
-    <div class="form-group">
-        <div class="col-md-12">
-            <small>Seleccione el elemento eléctrico de tipo Barra</small>
-            @Html.DropDownList("TP", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-        </div>
+    <div class="col-md-6">
+        <small>TP</small>
+        @Html.DropDownList("TP", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
     </div>
-</div> 
+</div>

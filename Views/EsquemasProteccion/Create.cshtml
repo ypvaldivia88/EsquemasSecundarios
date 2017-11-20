@@ -17,11 +17,13 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <input id="NombreEsquema" title="Seleccione el Tipo de Esquema y el Interruptor" name="Nombre" type="text" placeholder="Este campo se generará de manera automatizada" disabled="disabled" class="form-control"/>
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
 
         @Html.HiddenFor(model => model.Clase)
+        @Html.ValidationMessageFor(model => model.Clase, "", new { @class = "text-danger" })
 
         <h2>Tipo de Esquema</h2>
         <div class="row clearfix">
@@ -64,6 +66,8 @@
                 <div id="VPInstalacion" class="form-group">
                     <input type="text" placeholder="Necesita seleccionar un Tipo de Esquema" disabled="disabled" class="form-control" />
                 </div>
+                @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
+                <input type="hidden" id="instalacion" name="instalacion" value="0" />
             </div>
         </div>
 
@@ -82,6 +86,7 @@
                 <div id="VPTipoEquipoPrimario" class="form-group">
                     @Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @disabled = "disabled" })
                 </div>
+                @Html.ValidationMessageFor(model => model.Tipo_Equipo_Primario, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -91,6 +96,7 @@
                 <div id="VPElementoElectrico" class="form-group">
                     <input type="text" placeholder="Necesita seleccionar un Equipo Primario" disabled="disabled" class="form-control" />
                 </div>
+                @Html.ValidationMessageFor(model => model.Elemento_Electrico, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -107,11 +113,13 @@
         <div class="row clearfix">
             <div class="col-md-12">
                 <div id="VPRelevadores" class="form-group">
-                    <input type="text" placeholder="Necesita seleccionar una Instalacion" disabled="disabled" class="form-control" />
+                    @Html.DropDownList("Relevadores", null, "", htmlAttributes: new { @class = "select2_multiple form-control" })
+                    <a id="btnModalFunciones" data-toggle="modal" data-target=".bs-funciones-modal-lg" href="#"><i class="fa fa-cogs"></i> Gestionar funciones</a>
                 </div>
             </div>
         </div>
-
+        
+        @* Boton formulario *@
         <div class="row clearfix">
             <div class="col-md-12">
                 <hr />
@@ -122,6 +130,7 @@
     </div>
 }
 
+@* Modal Funciones de los relevadores *@
 <div class="modal fade bs-funciones-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -164,32 +173,48 @@
 @section script
 {
     @Scripts.Render("~/Script/Select2")
-
     <script>
 
         $(document).ready(function () {
 
-            InitSelect2();
-
             $("#SelectorTipoEsquema").change(function () {
 
                 if ($(this).val() == "Esquema de Protección y Control del Interruptor") {
-                    CargarInstalaciones("Subestacion");
+                    CargarInstalaciones("Subestacion", $(this).val());
                     $("#InputTipoEquipoPrimario").val("Línea");
                     $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
                     CargarTipoEquipoPrimario(2, false);
                 }
             });
 
+            $("#rele_fn").change(function () {
+                CargarFunciones()
+            });
+
+            //guardar cambios en las funciones del rele
+            $("#btn-modal-guardar").click(function () {
+                var f = $("#Funciones").val();
+                var r = $("#rele_fn").val();
+                $.ajax({
+                    url: '@Url.Action("GuardarFunciones", "EsquemasProteccion")',
+                    method: "POST",
+                    data: { rele: r, func: f },
+                    success: function (data) {
+                        $('#modal-msg').html(data);
+                        $("#modal-alert-msg").show();
+                    }
+                });
+            });
+
         });
 
 
-        function CargarInstalaciones(tipo)
+        function CargarInstalaciones(instalacion,tipoesquema)
         {
             $.ajax({
                 url: '@Url.Action("VPInstalaciones", "EsquemasProteccion")',
                 method: "POST",
-                data: { ti: tipo },
+                data: { ti: instalacion, te: tipoesquema },
                 success: function (data) {
                     $('#VPInstalacion').html(data);
                     InitSelect2();
@@ -226,7 +251,7 @@
         function CargarElementosElectricos(elemento, subestacion)
         {
             $.ajax({
-                url: '@Url.Action("VPElementoElectrico", "EsquemasProteccion")',
+                url: '@Url.Action("VPElementosElectricos", "EsquemasProteccion")',
                 method: "POST",
                 data: { e: elemento, codsub: subestacion },
                 success: function (data) {
@@ -234,6 +259,36 @@
                     InitSelect2();
                 }
             });
+        }
+
+        function CargarTransformadores(subestacion)
+        {
+            $.ajax({
+                url: '@Url.Action("VPTransformadores", "EsquemasProteccion")',
+                method: "POST",
+                data: { codsub: subestacion },
+                success: function (data) {
+                    $('#VPTransformadores').html(data);
+                    InitSelect2();
+                }
+            });
+        }
+
+        function CargarFunciones()
+        {
+            var rele = $("#rele_fn").val();
+            if (rele != "") {
+                $.ajax({
+                    url: '@Url.Action("VPFunciones", "EsquemasProteccion")',
+                    method: "POST",
+                    data: { NroSerie: rele },
+                    success: function (data) {
+                        $('#modalFuncionesContenido').html(data);
+                        InitSelect2();
+                        $("#btn-modal-guardar").show();
+                    }
+                });
+            }
         }
 
     </script>
