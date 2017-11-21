@@ -17,7 +17,7 @@ namespace EsquemasSecundarios.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.EsquemasProteccion.ToList());
+            return View(db.EsquemasProteccion.OrderByDescending(c => c.id_Esquema).ToList());
         }
 
         [AllowAnonymous]
@@ -303,7 +303,7 @@ namespace EsquemasSecundarios.Controllers
                 ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text");
             }
 
-            if (ti == "Linea")
+            if (ti == "Línea")
             {
                 var lineas = db.LineaTransmision
                 .Select(c => new SelectListItem { Value = c.Codigolinea, Text = "Código: " + c.Codigolinea + ", Nombre: " + c.NombreCircuito })
@@ -320,48 +320,81 @@ namespace EsquemasSecundarios.Controllers
             return PartialView("_VPInstalaciones");
         }
 
-        public ActionResult VPInterruptores(string sub, bool mult)
+        public ActionResult VPInterruptores(string subestacion, bool esInterruptor, bool esMultiple)
         {
-            var interruptores = db.Desconectivos
-                .Where(c => c.UbicadaEn == sub && c.TipoSeccionalizador == "4")
+            if (esInterruptor)
+            {
+                var interruptores = db.Desconectivos
+                .Where(c => c.UbicadaEn == subestacion && c.TipoSeccionalizador == "2")
+                .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo })
+                .ToList();                
+                ViewBag.Interruptores = new SelectList(interruptores, "Value", "Text");
+                ViewBag.IntDes = "Interruptores";
+            }
+            else
+            {
+                var desconectivos = db.Desconectivos
+                .Where(c => c.UbicadaEn == subestacion && 
+                    (
+                        c.TipoSeccionalizador == "3" || 
+                        c.TipoSeccionalizador == "4" ||
+                        c.TipoSeccionalizador == "5" ||
+                        c.TipoSeccionalizador == "6" ||
+                        c.TipoSeccionalizador == "7"
+                    )
+                )
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo })
                 .ToList();
-                
-            ViewBag.Interruptores = new SelectList(interruptores, "Value", "Text");
-            ViewBag.Multiple = mult;
+                ViewBag.Interruptores = new SelectList(desconectivos, "Value", "Text");
+                ViewBag.IntDes = "Desconectivos";
+            }
+            
+            ViewBag.EsMultiple = esMultiple;
             return PartialView("_VPInterruptores");
         }
 
-        public ActionResult VPTipoEquipoPrimario(int seleccionado, bool habilitado)
+        public ActionResult VPTipoEquipoPrimario(string seleccionado, bool habilitado)
         {
-            var list = new SelectList(new[]
+            if (habilitado)
             {
-                new { ID = "1", Name = "Barra" },
-                new { ID = "2", Name = "Línea" },
-                new { ID = "3", Name = "Transformador" },
-                new { ID = "4", Name = "Ninguno" },
-            },
-            "ID", "Name", seleccionado);
-            ViewBag.Tipo_Equipo_Primario = list;
-            ViewBag.Habilitado = habilitado;
+                var list = new SelectList(new[]
+                {
+                    new { Value = "Barra", Text = "Barra" },
+                    new { Value = "Línea", Text = "Línea" },
+                    new { Value = "Transformador", Text = "Transformador" },
+                    new { Value = "Ninguno", Text = "Ninguno" },
+                },
+                "Value", "Text", seleccionado);
+                    ViewBag.Tipo_Equipo_Primario = list;
+            }
+            else
+            {
+                var list = new SelectList(new[]
+                {                    
+                    new { Value = seleccionado, Text = seleccionado },
+                },
+                "Value", "Text", seleccionado);
+                ViewBag.Tipo_Equipo_Primario = list;
+            }
+            
             return PartialView("_VPTipoEquipoPrimario");
         }
 
-        public ActionResult VPElementosElectricos(int e, string codsub)
-        {            
-            if (e == 1)
+        public ActionResult VPElementosElectricos(string tipoequipo, string codsub)
+        {
+            bool especificar = false;
+            if (tipoequipo == "Barra")
             {
                 var barras = (
                     from sb in db.Barras
                     join vs in db.VoltajesSistemas
                     on sb.ID_Voltaje equals vs.Id_VoltajeSistema
                     where sb.Subestacion.Contains(codsub)
-                    select new SelectListItem { Value = sb.codigo, Text = sb.codigo + " - " + vs.Voltaje.ToString() }
+                    select new SelectListItem { Value = sb.codigo, Text = "Código: " +  sb.codigo + " Voltaje: " + vs.Voltaje.ToString() }
                 ).ToList();
-                ViewBag.TipoEquipo = "Barra";
                 ViewBag.Elemento_Electrico = new SelectList(barras, "Value", "Text");
             }
-            else if (e == 2)
+            else if (tipoequipo == "Línea")
             {
                 var lineas =
                     db.LineaSubestacion
@@ -397,10 +430,9 @@ namespace EsquemasSecundarios.Controllers
                             .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito })
                         )
                     );
-                ViewBag.TipoEquipo = "Línea";
                 ViewBag.Elemento_Electrico = new SelectList(lineas, "Value", "Text");
             }
-            else if (e == 3)
+            else if (tipoequipo == "Transformador")
             {
                 var transformadores = db.TransformadorTransmision
                     .Where(c => c.Codigo.Contains(codsub))
@@ -409,13 +441,11 @@ namespace EsquemasSecundarios.Controllers
                     .Where(c => c.Codigo.Contains(codsub))
                     .Select(c => new SelectListItem { Value = c.Nombre, Text = c.Codigo + " - " + c.Nombre })
                     );
-                ViewBag.TipoEquipo = "Transformador";
                 ViewBag.Elemento_Electrico = new SelectList(transformadores, "Value", "Text");
             }            
-            else
-            {
-                ViewBag.TipoEquipo = "Ninguno";
-            }
+            else especificar = true;
+            
+            ViewBag.Especificar = especificar;
             return PartialView("_VPElementoElectrico");
         }
 

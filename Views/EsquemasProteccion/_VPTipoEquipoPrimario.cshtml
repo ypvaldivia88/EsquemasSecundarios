@@ -1,11 +1,5 @@
-﻿@if (ViewBag.Habilitado)
-{
-    @Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @id = "TipoEquipoPrimario" })
-}
-else
-{
-    @Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @disabled = "disabled", @id = "TipoEquipoPrimario" })
-}
+﻿@Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @id = "TipoEquipoPrimario" })
+
 
 <script>    
     $("#TipoEquipoPrimario").change(function () {

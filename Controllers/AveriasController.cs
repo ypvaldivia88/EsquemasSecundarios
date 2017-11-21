@@ -16,6 +16,7 @@ namespace EsquemasSecundarios.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Averias
+        [AllowAnonymous]
         public ActionResult Index()
         {            
             var averias = db.Averias.Include(c => c.Esquema);

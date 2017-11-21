@@ -12,9 +12,10 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Instalación</th>
+                    <th>Clase de Esquema</th>
                     <th>Tipo Equipo Primario</th>
                     <th>Elemento Eléctrico</th>
-                    <th>Acciones</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -24,6 +25,7 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
                         <td>@Html.DisplayFor(modelItem => item.Subestacion)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Clase)</td>
                         <td>@Html.DisplayFor(modelItem => item.Tipo_Equipo_Primario)</td>
                         <td>@Html.DisplayFor(modelItem => item.Elemento_Electrico)</td>
                         <td>

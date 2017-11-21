@@ -10,20 +10,23 @@ namespace EsquemasSecundarios.Models
         [Key]
         public int id_Esquema { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Debe introducir: {0}")]
+        [MaxLength(100)]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [MaxLength(7)]
+        [Required(ErrorMessage = "Debe introducir: {0}")]
+        [Display(Name = "Instalación")]
+        [MaxLength(50)]
         public string Subestacion { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [MaxLength(15)]
+        [Required(ErrorMessage = "Debe introducir: {0}")]
+        [Display(Name = "Tipo de Equipo Primario")]
+        [MaxLength(50)]
         public string Tipo_Equipo_Primario { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [MaxLength(20)]
+        [Required(ErrorMessage = "Debe introducir: {0}")]
+        [Display(Name = "Elemento Eléctrico")]
+        [MaxLength(100)]
         public string Elemento_Electrico { get; set; }
 
         public string Clase { get; set; }

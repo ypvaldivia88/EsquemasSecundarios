@@ -1,4 +1,4 @@
-﻿@if (ViewBag.Multiple)
+﻿@if (ViewBag.EsMultiple)
 {
     @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple", @id = "SelectorInterruptor" })
 }
@@ -7,12 +7,18 @@ else
     @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorInterruptor" })
 }
 
-<script>
+<input type="text" id="IntDes" hidden value="@ViewBag.IntDes" />
+
+<script>    
     $("#SelectorInterruptor").change(function () {
-        if ($("#SelectorTipoEsquema").val() != "" && $("#SelectorInterruptor").val() != "") {
+        if ($("#SelectorTipoEsquema").val() != "" &&
+            $("#SelectorInterruptor").val() != "" && (
+                $("#TipoEsquema").val() == "Esquema de Protección y Control del Interruptor" ||
+                $("#TipoEsquema").val() == "Esquema de Control – del Desconectivo")
+            )            
+        {
             $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorInterruptor").val());
-        } else {
-            $("#NombreEsquema").val("");
-        }        
+        }     
     })
+    $("#Interr-Descon").html($("#IntDes").val());
 </script>

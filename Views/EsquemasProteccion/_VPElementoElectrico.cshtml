@@ -1,7 +1,31 @@
-﻿@if (ViewBag.TipoEquipo == "Ninguno")
+﻿@if (!ViewBag.Especificar)
 {
-    <input type="text" name="Elemento_Electrico" value="Ninguno" />
-}else
-{
-    @Html.DropDownList("Elemento_Electrico", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12" })
+    @Html.DropDownList("Elemento_Electrico", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @id = "SelectorElementoElectrico" })
 }
+else
+{
+    <input type="text" class="form-control" name="Elemento_Electrico" id="SelectorElementoElectrico" placeholder="Inserte el nombre del elemento eléctrico"/>
+}
+
+<script>
+    $("#SelectorElementoElectrico").change(function () {
+        if ($("#TipoEsquema").val() == "Esquema de Protección del Transformador") {
+            $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorElementoElectrico").val());
+        }
+        if ($("#TipoEsquema").val() == "Esquema de Control - Ventilación del Transformador") {
+            $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorElementoElectrico").val());
+        }
+        if ($("#TipoEsquema").val() == "Esquema de Control - Cambia Taps del Transformador") {
+            $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorElementoElectrico").val());
+        }
+        if ($("#TipoEsquema").val() == "Esquema de Control - Potenciales de la Barra") {
+            $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorElementoElectrico").val());
+        } 
+        if ($("#TipoEsquema").val() == "Esquema de Protección – Diferencial de la Barra") {
+            $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorElementoElectrico").val());
+        }
+        if ($("#TipoEsquema").val() == "Esquema de Protección Especial de la Barra") {
+            $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorElementoElectrico").val());
+        }
+    })
+</script>
