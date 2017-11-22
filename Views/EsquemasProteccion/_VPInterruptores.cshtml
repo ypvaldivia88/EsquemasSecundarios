@@ -1,13 +1,18 @@
-﻿@if (ViewBag.EsMultiple)
-{
-    @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple", @id = "SelectorInterruptor" })
-}
-else
-{
-    @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorInterruptor" })
-}
-
-<input type="text" id="IntDes" hidden value="@ViewBag.IntDes" />
+﻿<h2>@ViewBag.Titulo</h2>
+<div class="row clearfix">
+    <div class="col-md-12">
+        <div class="form-group">
+            @if (ViewBag.EsMultiple)
+            {
+                @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple", @id = "SelectorInterruptor" })
+            }
+            else
+            {
+                @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorInterruptor" })
+            } 
+        </div>
+    </div>
+</div>
 
 <script>    
     $("#SelectorInterruptor").change(function () {
@@ -20,5 +25,4 @@ else
             $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorInterruptor").val());
         }     
     })
-    $("#Interr-Descon").html($("#IntDes").val());
 </script>

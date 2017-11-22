@@ -1,8 +1,1 @@
-﻿@Html.DropDownList("Tipo_Equipo_Primario", null, "", htmlAttributes: new { @class = "select2_single form-control col-md-12", @id = "TipoEquipoPrimario" })
-
-
-<script>    
-    $("#TipoEquipoPrimario").change(function () {
-        CargarElementosElectricos($(this).val(), $("#Subestacion").val());        
-    })
-</script>
+﻿<input type="text" name="Tipo_Equipo_Primario" id="TipoEquipoPrimario" value="@ViewBag.TipoEquipo" class = "form-control" readonly />

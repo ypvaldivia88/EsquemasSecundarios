@@ -15,16 +15,15 @@
     $("#SelectorSubestacion").change(function () {
         var codsub = $(this).val();
         CargarTransformadores(codsub);
-        //CargarInterruptores(subestacion,esInterruptor,esMultiple)
 
         var tipoesquema = $("#TipoEsquema").val();
         if (tipoesquema == "Esquema de Protección y Control del Interruptor") {            
             CargarElementosElectricos("Línea", codsub);
-            CargarInterruptores(codsub, true, false);            
+            CargarInterruptores(codsub, "Interruptores", false);            
         }
         if (tipoesquema == "Esquema de Protección del Transformador") {
             CargarElementosElectricos("Transformador", codsub);
-            CargarInterruptores(codsub, true, true);            
+            CargarInterruptores(codsub, "Interruptores", false);            
         }
         if (tipoesquema == "Esquema de Control - Ventilación del Transformador") {
             CargarElementosElectricos("Transformador", codsub);
@@ -34,7 +33,7 @@
         }
         if (tipoesquema == "Esquema de Control – del Desconectivo") {
             CargarElementosElectricos("Ninguno", codsub);
-            CargarInterruptores(codsub, false, false);            
+            CargarInterruptores(codsub, "Desconectivos", false);            
         }
         if (tipoesquema == "Esquema de Control - Potenciales de la Barra") {
             CargarElementosElectricos("Barra", codsub);
@@ -47,11 +46,11 @@
         }
         if (tipoesquema == "Esquema de Protección – Diferencial de la Barra") {
             CargarElementosElectricos("Barra", codsub);
-            CargarInterruptores(codsub, true, true);
+            CargarInterruptores(codsub, "Interruptores", false);
         }
         if (tipoesquema == "Esquema de Protección DAF/DAV") {
             CargarElementosElectricos("Ninguno", codsub);
-            CargarInterruptores(codsub, true, true);
+            CargarInterruptores(codsub, "Interruptores", false);
         }
         if (tipoesquema == "Esquema de Control Distribución de Corriente Directa") {
             CargarElementosElectricos("Ninguno", codsub);
@@ -61,18 +60,18 @@
         }
         if (tipoesquema == "Esquema de Automática RAS (Reposición Automática del Servicio)") {
             CargarElementosElectricos("Ninguno", codsub);
-            CargarInterruptores(codsub, true, true);
+            CargarInterruptores(codsub, "Interruptores", false);
         }
         if (tipoesquema == "Esquema de Protección Especial de la Barra") {
             CargarElementosElectricos("Barra", codsub);
-            CargarInterruptores(codsub, true, true);
+            CargarInterruptores(codsub, "Interruptores", false);
         }
         if (tipoesquema == "Esquema de Protección Separadora") {
             CargarElementosElectricos("Ninguno", codsub);
         }
         if (tipoesquema == "Esquema de Automática de Líneas") {
             CargarElementosElectricos("Línea", codsub);
-            CargarInterruptores(codsub, true, true);
+            CargarInterruptores(codsub, "Selectivos y Recerradores", true);
         }
     })
 </script>

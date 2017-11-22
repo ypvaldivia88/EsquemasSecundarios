@@ -32,6 +32,7 @@ namespace EsquemasSecundarios.Models
         public DbSet<Mantenimientos> Mantenimientos { get; set; }
         public DbSet<Averias> Averias { get; set; }
         public DbSet<TipoMantenimiento> TipoMantenimiento { get; set; }
+        public DbSet<Selectivo> Selectivos { get; set; }
 
 
         public DbSet<Plantilla_Funcion> Plantilla_Funcion { get; set; }    

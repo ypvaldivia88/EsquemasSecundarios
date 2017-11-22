@@ -13,11 +13,6 @@ namespace EsquemasSecundarios.Models
 
         [Key, Column(Order = 2)]
         public int esquema { get; set; }
-
-        [ForeignKey("desconectivo")]
-        public Relevador id_Desconectivo { get; set; }
-
-        [ForeignKey("esquema")]
-        public EsquemaProteccion id_Esquema { get; set; }
+        
     }
 }

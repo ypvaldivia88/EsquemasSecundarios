@@ -168,6 +168,7 @@
     <Compile Include="Models\Plantilla.cs" />
     <Compile Include="Models\Plantilla_Funcion.cs" />
     <Compile Include="Models\Relevador.cs" />
+    <Compile Include="Models\Selectivo.cs" />
     <Compile Include="Models\Subestacion.cs" />
     <Compile Include="Models\SubestacionCabezaLinea.cs" />
     <Compile Include="Models\SubestacionTransmision.cs" />

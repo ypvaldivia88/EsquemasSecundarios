@@ -1,10 +1,15 @@
-﻿<div class="form-group">
-    <div class="col-md-6" id="SelectorTC">
-        <small>TC</small>
-        @Html.DropDownList("TC", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-    </div>
-    <div class="col-md-6" id="SelectorTP">
-        <small>TP</small>
-        @Html.DropDownList("TP", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+﻿<h2>Transformadores</h2>
+<div class="row clearfix">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="col-md-6" id="SelectorTC">
+                <small>TC</small>
+                @Html.DropDownList("TC", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+            </div>
+            <div class="col-md-6" id="SelectorTP">
+                <small>TP</small>
+                @Html.DropDownList("TP", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+            </div>
+        </div>
     </div>
 </div>
