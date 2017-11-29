@@ -12,19 +12,23 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
-        <h2>Nombre del esquema</h2>
-        <div class="row clearfix">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <input id="NombreEsquema" name="Nombre" title="Este campo se generará de manera automatizada" type="text" placeholder="Necesita seleccionar los datos necesarios de acuerdo al tipo de esquema" readonly="readonly" class="form-control"/>
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        <div id="SeccionNombreEsquema">
+            <h2>Nombre del esquema</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input id="NombreEsquema" name="Nombre" title="Este campo se generará de manera automatizada" type="text" placeholder="Necesita seleccionar los datos necesarios de acuerdo al tipo de esquema" readonly="readonly" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
         </div>
-
-        @Html.HiddenFor(model => model.Clase)
-        @Html.ValidationMessageFor(model => model.Clase, "", new { @class = "text-danger" })
-
+        
+        <div id="SeccionClaseEsquema">
+            @Html.HiddenFor(model => model.Clase)
+            @Html.ValidationMessageFor(model => model.Clase, "", new { @class = "text-danger" })
+        </div>
+        
         <div id="SeccionTipoEsquema">
             <h2>Tipo de Esquema</h2>
             <div class="row clearfix">
@@ -70,7 +74,6 @@
                         <input type="text" placeholder="Necesita seleccionar un Tipo de Esquema" readonly="readonly" class="form-control" />
                     </div>
                     @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
-                    <input type="hidden" id="instalacion" name="instalacion" value="0" />
                 </div>
             </div>  
         </div>      
@@ -92,16 +95,20 @@
             <div class="row clearfix">
                 <div class="col-md-12">
                     <div id="VPElementoElectrico" class="form-group">
-                        <input type="text" placeholder="Necesita seleccionar una instalación" readonly="readonly" class="form-control" />
+                        <input type="text" id="Elemento_Electrico" name="Elemento_Electrico" placeholder="Necesita seleccionar una instalación" readonly="readonly" class="form-control" />
                     </div>
                     @Html.ValidationMessageFor(model => model.Elemento_Electrico, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
 
-        <div id="VPInterruptores"></div>
+        <div id="SeccionInterruptores">
+            <div id="VPInterruptores"></div>
+        </div>        
 
-        <div id="VPTransformadores"></div>
+        <div id="SeccionTransformadores">
+            <div id="VPTransformadores"></div>
+        </div>        
 
         <div id="SeccionRelevadores">
             <h2>Relevadores</h2>

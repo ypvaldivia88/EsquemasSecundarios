@@ -33,7 +33,7 @@
         }
         if (tipoesquema == "Esquema de Control – del Desconectivo") {
             CargarElementosElectricos("Ninguno", codsub);
-            CargarInterruptores(codsub, "Desconectivos", false);            
+            CargarInterruptores(codsub, "Desconectivos", false);
         }
         if (tipoesquema == "Esquema de Control - Potenciales de la Barra") {
             CargarElementosElectricos("Barra", codsub);
@@ -70,7 +70,7 @@
             CargarElementosElectricos("Ninguno", codsub);
         }
         if (tipoesquema == "Esquema de Automática de Líneas") {
-            CargarElementosElectricos("Línea", codsub);
+            $("#Elemento_Electrico").val(codsub);
             CargarInterruptores(codsub, "Selectivos y Recerradores", true);
         }
     })

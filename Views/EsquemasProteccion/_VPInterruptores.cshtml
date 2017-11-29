@@ -16,11 +16,7 @@
 
 <script>    
     $("#SelectorInterruptor").change(function () {
-        if ($("#SelectorTipoEsquema").val() != "" &&
-            $("#SelectorInterruptor").val() != "" && (
-                $("#TipoEsquema").val() == "Esquema de Protección y Control del Interruptor" ||
-                $("#TipoEsquema").val() == "Esquema de Control – del Desconectivo")
-            )            
+        if ($("#SelectorTipoEsquema").val() != "" && $("#SelectorInterruptor").val() != "" && ( $("#TipoEsquema").val() == "Esquema de Protección y Control del Interruptor" || $("#TipoEsquema").val() == "Esquema de Control – del Desconectivo"))            
         {
             $("#NombreEsquema").val($("#SelectorTipoEsquema").val() + " " + $("#SelectorInterruptor").val());
         }     

@@ -70,19 +70,11 @@ namespace EsquemasSecundarios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(
             [Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico,Clase")] EsquemaProteccion esquemaProteccion,
-            int instalacion, string Linea, string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones
+            string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones
         )
-        {
-            Inicializar();
+        {            
             if (ModelState.IsValid)
-            {
-                if (instalacion == 1)
-                {
-                    esquemaProteccion.Subestacion = Linea;
-                    esquemaProteccion.Tipo_Equipo_Primario = "Línea";
-                    esquemaProteccion.Elemento_Electrico = Linea;
-                }
-
+            {    
                 EsquemaProteccion ep = db.EsquemasProteccion.Add(esquemaProteccion);
                 db.Entry(ep).State = EntityState.Added;
 
@@ -151,6 +143,7 @@ namespace EsquemasSecundarios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = esquemaProteccion.id_Esquema });
             }
+            Inicializar(esquemaProteccion);
             return View(esquemaProteccion);
         }
 
@@ -166,13 +159,14 @@ namespace EsquemasSecundarios.Controllers
                 return HttpNotFound();
             }
             Inicializar(esquemaProteccion);
+            ViewBag.Titulo = "Interruptores / Desconectivos";
             return View(esquemaProteccion);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id_Esquema,Nombre,Subestacion,Tipo_Equipo_Primario,Elemento_Electrico,Clase")] EsquemaProteccion esquemaProteccion,
-            int instalacion, string Linea, string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones)
+            string[] Interruptores, string[] TC, string[] TP, string[] Relevadores, string RelevadorFunc, int[] Funciones)
         {
             if (ModelState.IsValid)
             {
@@ -180,7 +174,11 @@ namespace EsquemasSecundarios.Controllers
 
                 if (Interruptores != null)
                 {
-                    db.Esquema_Desconectivo.RemoveRange(db.Esquema_Desconectivo.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    if (db.Esquema_Desconectivo.Where(c => c.esquema == esquemaProteccion.id_Esquema).Select(c => c.esquema).ToList() != null)
+                    {
+                        db.Esquema_Desconectivo.RemoveRange(db.Esquema_Desconectivo.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    }
+                    
                     foreach (var item in Interruptores)
                     {
                         Esquema_Desconectivo e = new Esquema_Desconectivo();
@@ -192,7 +190,11 @@ namespace EsquemasSecundarios.Controllers
 
                 if (TC != null)
                 {
-                    db.Esquema_TC.RemoveRange(db.Esquema_TC.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    if (db.Esquema_TC.Where(c => c.esquema == esquemaProteccion.id_Esquema).Select(c => c.esquema).ToList() != null)
+                    {
+                        db.Esquema_TC.RemoveRange(db.Esquema_TC.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    }
+                    
                     foreach (var item in TC)
                     {
                         Esquema_TC e = new Esquema_TC();
@@ -204,7 +206,11 @@ namespace EsquemasSecundarios.Controllers
 
                 if (TP != null)
                 {
-                    db.Esquema_TP.RemoveRange(db.Esquema_TP.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    if (db.Esquema_TP.Where(c => c.esquema == esquemaProteccion.id_Esquema).Select(c => c.esquema).ToList() != null)
+                    {
+                        db.Esquema_TP.RemoveRange(db.Esquema_TP.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    }
+                    
                     foreach (var item in TP)
                     {
                         Esquema_TP e = new Esquema_TP();
@@ -216,7 +222,11 @@ namespace EsquemasSecundarios.Controllers
 
                 if (Relevadores != null)
                 {
-                    db.Esquema_Rele.RemoveRange(db.Esquema_Rele.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    if (db.Esquema_Rele.Where(c => c.esquema == esquemaProteccion.id_Esquema).Select(c => c.esquema).ToList() != null)
+                    {
+                        db.Esquema_Rele.RemoveRange(db.Esquema_Rele.Where(c => c.esquema == esquemaProteccion.id_Esquema));
+                    }
+                    
                     foreach (var item in Relevadores)
                     {
                         Esquema_Relevador e = new Esquema_Relevador();
@@ -322,7 +332,7 @@ namespace EsquemasSecundarios.Controllers
 
         public ActionResult VPInterruptores(string instalacion, string titulo, bool esMultiple)
         {
-            if (titulo == "Interruptores")
+            if (titulo == "Desconectivos")
             {
                 var interruptores = db.Desconectivos
                 .Where(c => c.UbicadaEn == instalacion && c.TipoSeccionalizador == "2")
@@ -330,7 +340,7 @@ namespace EsquemasSecundarios.Controllers
                 .ToList();                
                 ViewBag.Interruptores = new SelectList(interruptores, "Value", "Text");
             }
-            else if(titulo == "Desconectivos")
+            else if(titulo == "Interruptores")
             {
                 var desconectivos = db.Desconectivos
                 .Where(c => c.UbicadaEn == instalacion && 
@@ -385,13 +395,43 @@ namespace EsquemasSecundarios.Controllers
                 ViewBag.Elemento_Electrico = new SelectList(barras, "Value", "Text");
             }
             else if (tipoequipo == "Línea")
-            {               
-                var list = new SelectList(new[]
-                {
-                    new { Value = codsub, Text = codsub },
-                },
-                "Value", "Text", codsub);
-                ViewBag.Elemento_Electrico = list;
+            {
+                var lineas =
+                    db.LineaSubestacion
+                    .Where(c => c.Subestacion.Contains(codsub))
+                    .Select(c => new SelectListItem { Value = c.Circuito, Text = c.Circuito })
+                    .Union
+                    (
+                        db.CircuitoPrimario
+                        .Where(c => c.SubAlimentadora.Contains(codsub))
+                        .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito })
+                        .Union
+                        (
+                            db.CircuitoSubtransmision
+                            .Where(c => c.SubestacionTransmision.Contains(codsub))
+                            .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito })
+                        )
+                    )
+                    .Union
+                    (
+                            db.SubestacionCabezaLinea
+                            .Where(c => c.SubestacionTransmicion.Contains(codsub))
+                            .Select(c => new SelectListItem { Value = c.Codigolinea, Text = c.Codigolinea })
+                    )
+                    .Union
+                    (
+                        db.CircuitoSubtransmision
+                        .Where(c => c.SubestacionTransmision.Contains(codsub))
+                        .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito })
+                        .Union
+                        (
+                            db.CircuitoPrimario
+                            .Where(c => c.SubAlimentadora.Contains(codsub))
+                            .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito })
+                        )
+                    );
+
+                ViewBag.Elemento_Electrico = new SelectList(lineas, "Value", "Text");
             }
             else if (tipoequipo == "Transformador")
             {
@@ -444,26 +484,17 @@ namespace EsquemasSecundarios.Controllers
 
         public void Inicializar()
         {
-            var subestaciones = db.Subestacion
+            var instalaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
-                .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            
-            var lineas = db.LineaTransmision
-                .Select(c => new SelectListItem { Value = c.Codigolinea, Text = c.Codigolinea + " - " + c.NombreCircuito })
-                .Union(db.CircuitoPrimario
-                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreAntiguo }))
-                .Union(db.CircuitoSubtransmision
-                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreCircuito }));
-
-            var tipoequipo = new SelectList(new[]
-            {
-                new { ID = "1", Name = "Barra" },
-                new { ID = "2", Name = "Línea" },
-                new { ID = "3", Name = "Transformador" },
-                new { ID = "4", Name = "Ninguno" },
-            },
-            "ID", "Name", 4);
+                    .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }))
+                .Union(db.LineaTransmision
+                    .Select(c => new SelectListItem { Value = c.Codigolinea, Text = c.Codigolinea + " - " + c.NombreCircuito })
+                    .Union(db.CircuitoPrimario
+                        .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreAntiguo }))
+                    .Union(db.CircuitoSubtransmision
+                        .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreCircuito }))
+                );
 
             var reles = (
                 from rel in db.Relevadores
@@ -475,9 +506,7 @@ namespace EsquemasSecundarios.Controllers
                 }
             );
 
-            ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text");
-            ViewBag.Linea = new SelectList(lineas, "Value", "Text");
-            ViewBag.Tipo_Equipo_Primario = tipoequipo;
+            ViewBag.Subestacion = new SelectList(instalaciones, "Value", "Text");
             ViewBag.Interruptores = new SelectList(db.Desconectivos.ToList(), "Codigo", "Codigo");
             ViewBag.Relevadores = new SelectList(reles, "Value", "Text");
             ViewBag.RelevadorFunc = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie");
@@ -487,50 +516,71 @@ namespace EsquemasSecundarios.Controllers
 
         public void Inicializar(EsquemaProteccion esquemaProteccion)
         {
-            var subestaciones = db.Subestacion
+            ViewBag.Nombre = esquemaProteccion.Nombre;
+            var instalaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
-                .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));   
-            var lineas = db.LineaTransmision
-                .Select(c => new SelectListItem { Value = c.Codigolinea, Text = c.Codigolinea + " - " + c.NombreCircuito })
-                .Union(db.CircuitoPrimario
-                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreAntiguo }))
-                .Union(db.CircuitoSubtransmision
-                .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreCircuito }));
-            string IdInstalacion = esquemaProteccion.Subestacion;
-            ViewBag.Subestacion = new SelectList(subestaciones, "Value", "Text", IdInstalacion);
-            ViewBag.Linea = new SelectList(lineas, "Value", "Text", IdInstalacion);
+                    .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }))
+                .Union(db.LineaTransmision
+                    .Select(c => new SelectListItem { Value = c.Codigolinea, Text = c.Codigolinea + " - " + c.NombreCircuito })
+                    .Union(db.CircuitoPrimario
+                        .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreAntiguo }))
+                    .Union(db.CircuitoSubtransmision
+                        .Select(c => new SelectListItem { Value = c.CodigoCircuito, Text = c.CodigoCircuito + " - " + c.NombreCircuito }))
+                );
+                
+            ViewBag.Subestacion = new SelectList(instalaciones, "Value", "Text", esquemaProteccion.Subestacion);
 
             ViewBag.Tipo_Equipo_Primario = esquemaProteccion.Tipo_Equipo_Primario;
             ViewBag.Elemento_Electrico = esquemaProteccion.Elemento_Electrico;
 
-            string IdInterruptor = (
+            var interruptores = db.Desconectivos
+                .Where(c => c.Subestacion.Codigo.Contains(esquemaProteccion.Subestacion))
+                .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo });
+
+            var IdInterruptores = (
                 from ed in db.Esquema_Desconectivo
                 where ed.esquema.Equals(esquemaProteccion.id_Esquema)
                 select ed.desconectivo
-                ).FirstOrDefault();
-            ViewBag.Interruptores = new SelectList(db.Desconectivos.ToList(), "Codigo", "Codigo",IdInterruptor);
+                ).ToList();
+            ViewBag.Interruptores = new MultiSelectList(interruptores, "Value", "Text",IdInterruptores);
 
-            string IdTC = (
+            var tc = db.TransformadoresCorriente
+                    .Where(c => c.CodSub.Contains(esquemaProteccion.Subestacion))
+                    .Select(c => new SelectListItem { Value = c.Nro_Serie, Text = "Nro de Serie: " + c.Nro_Serie + ", Equipo Protegido: " + c.Elemento_Electrico });
+            var IdTCs = (
                 from e in db.Esquema_TC
                 where e.esquema.Equals(esquemaProteccion.id_Esquema)
                 select e.TC
-                ).FirstOrDefault();
-            ViewBag.TC = new SelectList(db.TransformadoresCorriente.ToList(), "Nro_Serie", "Nro_Serie", IdTC);
+                ).ToList();
+            ViewBag.TC = new MultiSelectList(tc, "Value", "Text", IdTCs);
 
-            string IdTP = (
+            var tp = db.TransformadoresPotencial
+                    .Where(c => c.CodSub.Contains(esquemaProteccion.Subestacion))
+                    .Select(c => new SelectListItem { Value = c.Nro_Serie, Text = "Nro de Serie: " + c.Nro_Serie + ", Equipo Protegido: " + c.Elemento_Electrico });
+            var IdTPs = (
                 from e in db.Esquema_TP
                 where e.esquema.Equals(esquemaProteccion.id_Esquema)
                 select e.TP
-                ).FirstOrDefault();
-            ViewBag.TP = new SelectList(db.TransformadoresPotencial.ToList(), "Nro_Serie", "Nro_Serie", IdTP);
+                ).ToList();
+            ViewBag.TP = new MultiSelectList(tp, "Value", "Text", IdTPs);
 
-            string IdRele = (
+            var reles = (
+                from rel in db.Relevadores
+                join pl in db.Plantillas on rel.id_Plantilla equals pl.id_Plantilla
+                join fa in db.Fabricantes on pl.Id_Fabricante equals fa.Id_Fabricante
+                select new SelectListItem
+                {
+                    Value = rel.Nro_Serie,
+                    Text = rel.Nro_Serie + " - " + pl.Modelo + " - " + fa.Nombre
+                }
+            );
+            var IdReles = (
                 from e in db.Esquema_Rele
                 where e.esquema.Equals(esquemaProteccion.id_Esquema)
                 select e.rele
-                ).FirstOrDefault();
-            ViewBag.Relevadores = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie", IdRele);
+                ).ToList();
+            ViewBag.Relevadores = new MultiSelectList(reles, "Value", "Text", IdReles);
 
             ViewBag.RelevadorFunc = new SelectList(db.Relevadores.ToList(), "Nro_Serie", "Nro_Serie");           
         }

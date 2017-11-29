@@ -31,6 +31,9 @@ namespace EsquemasSecundarios
             bundles.Add(new StyleBundle("~/Style/DateRangePicker").Include(
                      "~/Content/daterangepicker.css"));
 
+            bundles.Add(new StyleBundle("~/Style/Switchery").Include(
+                     "~/Content/vendors/switchery/dist/switchery.min.css"));
+
             bundles.Add(new StyleBundle("~/Style/Custom").Include(
                      "~/Content/custom.min.css"));
 
@@ -78,8 +81,8 @@ namespace EsquemasSecundarios
                 "~/Scripts/Lenguaje/datatables.es.js"
                 ));
 
-            bundles.Add(new ScriptBundle("~/Script/jQuerySmartWizard").Include(
-                "~/Content/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"));
+            bundles.Add(new ScriptBundle("~/Script/Switchery").Include(
+                "~/Content/vendors/switchery/dist/switchery.min.js"));
 
              bundles.Add(new ScriptBundle("~/Script/Custom").Include(
                 "~/Scripts/custom.min.js"));

@@ -30,10 +30,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Fabricante.Nombre)
                         </td>
-                        <td>
+                        <td style="width: 40px;">
                             <a href="@Url.Action("Details","Plantillas", new { id = item.id_Plantilla } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
-                            @*<a href="@Url.Action("Edit","Plantillas", new { id = item.id_Plantilla } )" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
-                            <a href="@Url.Action("Delete","Plantillas", new { id = item.id_Plantilla } )" class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>*@
                         </td>
                     </tr>
                 }
@@ -43,13 +41,6 @@
         </table>
     </div>
 </div>
-
-@*<hr />
-<div class="row">
-    <div class="col-md-12">
-        <a href="@Url.Action("Create","Plantillas")" class="btn btn-info"><i class="fa fa-plus"></i> Nueva</a>
-    </div>
-</div>*@
 
 @section styles {
     @Styles.Render("~/Style/DataTables")

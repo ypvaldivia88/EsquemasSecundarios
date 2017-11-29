@@ -1,8 +1,8 @@
 ﻿@model EsquemasSecundarios.Models.EsquemaProteccion
 
 @{
-    ViewBag.Title = "Esquema de protección";
-    ViewBag.PTitle = "Editar";
+    ViewBag.Title = "Esquemas de protección";
+    ViewBag.PTitle = "Nuevo esquema";
 }
 
 @using (Html.BeginForm())
@@ -11,134 +11,147 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(m=> m.id_Esquema)
+        @Html.HiddenFor(m => m.id_Esquema)
 
-        <div class="col-md-7">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3>Datos generales del esquema</h3><hr />
-                    <h2>Nombre del Esquema</h2>
-                    <div class="row clearfix">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @placeholder = "Escriba un nombre descriptivo para el esquema" } })
-                                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+        <h2>Nombre del esquema</h2>
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <div class="form-group">                    
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @title = "Este campo se generará de manera automatizada", @placeholder = "Necesita seleccionar los datos necesarios de acuerdo al tipo de esquema", @readonly= "readonly", @class="form-control", @id = "NombreEsquema" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.Clase)
+        @Html.ValidationMessageFor(model => model.Clase, "", new { @class = "text-danger" })
+
+        <div id="SeccionTipoEsquema">
+            <h2>Tipo de Esquema</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <select id="SelectorTipoEsquema" class="select2_single form-control">
+                            <optgroup label="Esquema de Protección">
+                                <option selected disabled></option>
+                                <option value="Esquema de Protección y Control del Interruptor">Esquema de Protección y Control de Interruptor</option>
+                                <option value="Esquema de Protección del Transformador">Esquema de Protección de Transformador</option>
+                                <option value="Esquema de Protección – Diferencial de la Barra">Esquema de Protección – Diferencial de Barras</option>
+                                <option value="Esquema de Protección DAF/DAV">Esquema de Protección DAF/DAV</option>
+                                <option value="Esquema de Protección Separadora">Esquema de Protección Separadora</option>
+                            </optgroup>
+                            <optgroup label="Esquema de Control">
+                                <option value="Esquema de Control - Ventilación del Transformador">Esquema de Control - Ventilación de Transformador</option>
+                                <option value="Esquema de Control - Cambia Taps del Transformador">Esquema de Control - Cambia Taps de Transformador</option>
+                                <option value="Esquema de Control – del Desconectivo">Esquema de Control – Desconectivo</option>
+                                <option value="Esquema de Control - Potenciales de la Barra">Esquema de Control Potenciales de Barra</option>
+                                <option value="Esquema de Control – Cargador de Baterías">Esquema de Control – Cargador de Baterías</option>
+                                <option value="Esquema de Control Distribución de Corriente Directa">Esquema de Control Distribución de Corriente Directa</option>
+                                <option value="Esquema de Control Distribución de Corriente Alterna">Esquema de Control Distribución de Corriente Alterna</option>
+                            </optgroup>
+                            <optgroup label="Esquema de Señalización">
+                                <option value="Esquema de Señalización Central">Esquema de Señalización Central</option>
+                            </optgroup>
+                            <optgroup label="Esquema de Automática">
+                                <option value="Esquema de Automática RAS (Reposición Automática del Servicio)">Esquema de Automática RAS (Reposición Automática del Servicio)</option>
+                                <option value="Esquema de Protección Especial de la Barra">Esquema de Protección Especial de Barra</option>
+                                <option value="Esquema de Automática de Líneas">Esquema de Automática de Líneas</option>
+                            </optgroup>
+                        </select>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <h2>Tipo de Instalación</h2>
-                    <div class="row clearfix">
-                        <div class="form-group">
-                            <div class="col-md-4">
-                                <small>Seleccione el tipo de Instalación</small>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" class="flat" checked value="0" name="instalacion"> Subestación
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" class="flat" value="1" name="instalacion"> Línea
-                                    </label>
-                                </div>
-                            </div>
-                            <div id="selector_subestacion" class="col-md-8">
-                                <small>Seleccione la Subestación</small>
-                                @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
-                            </div>
-                            <div id="selector_linea" class="col-md-8">
-                                <small>Seleccione la Línea</small>
-                                @Html.DropDownList("Linea", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "linea" })
-                            </div>
-                        </div>
+        <div id="SeccionInstalacion">
+            <h2>Instalación</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div id="VPInstalacion" class="form-group">
+                        @Html.DropDownList("Subestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "SelectorSubestacion" })
                     </div>
+                    @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
 
-                    <div id="Tipo_Equipo_Primario">
-                        <h2>Tipo de equipo primario y Elemento eléctrico</h2>
-                        <div class="row clearfix">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <small>Seleccione el tipo de Equipo Protegido</small>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" class="flat" value="Barra" name="Tipo_Equipo_Primario"> Barra
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" class="flat" value="Transformador" name="Tipo_Equipo_Primario"> Transformador
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" class="flat" value="Línea" name="Tipo_Equipo_Primario"> Línea
-                                        </label>
-                                    </div>
-                                </div>
-                                <div id="elemento_electrico"></div>
-                            </div>
+        <div id="SeccionTipoEquipo">
+            <h2>Tipo de Equipo Primario</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div id="VPTipoEquipoPrimario" class="form-group">
+                        @Html.EditorFor(model => model.Tipo_Equipo_Primario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Tipo_Equipo_Primario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div id="SeccionElementoElectrico">
+            <h2>Elemento Eléctrico</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div id="VPElementoElectrico" class="form-group">
+                        @Html.EditorFor(model => model.Elemento_Electrico, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Elemento_Electrico, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div id="VPInterruptores">
+            <h2>@ViewBag.Titulo</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple", @id = "SelectorInterruptor" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="VPTransformadores">
+            <h2>Transformadores</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-6" id="SelectorTC">
+                            <small>TC</small>
+                            @Html.DropDownList("TC", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+                        </div>
+                        <div class="col-md-6" id="SelectorTP">
+                            <small>TP</small>
+                            @Html.DropDownList("TP", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-5">
-            <div class="panel panel-warning">
-                <div class="panel-body">
-                    <h3>Datos asociados al esquema</h3><hr />
-                    <!-- INTERRUPTORES -->
-                    <h2>Interruptores</h2>
-                    <div class="row clearfix">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.DropDownList("Interruptores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-                            </div>
-                        </div>
+        <div id="SeccionRelevadores">
+            <h2>Relevadores</h2>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.DropDownList("Relevadores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+                        <a id="btnModalFunciones" data-toggle="modal" data-target=".bs-funciones-modal-lg" href="#"><i class="fa fa-cogs"></i> Gestionar funciones</a>
                     </div>
-
-                    <!--  TRANSFORMADORES ELECTRICOS Y DE POTENCIAL -->
-                    <div id="transformadores">
-                        <div class="row clearfix">
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <h2>TC</h2>
-                                    @Html.DropDownList("TC", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-                                </div>
-                                <div class="col-md-6">
-                                    <h2>TP</h2>
-                                    @Html.DropDownList("TP", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- RELEVADORES Y FUNCIONES -->
-                    <h2>Relevadores</h2>
-                    <div class="row clearfix">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.DropDownList("Relevadores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <a id="btnModalFunciones" data-toggle="modal" data-target=".bs-funciones-modal-lg" href="#"><i class="fa fa-cogs"></i> Gestionar funciones</a>
                 </div>
             </div>
         </div>
 
+        @* Boton formulario *@
         <div class="row clearfix">
             <div class="col-md-12">
                 <hr />
-                <button type="submit" class="btn btn-warning"><i class="fa fa-edit"></i> Guardar</button>
-                <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-list"></i> Listado</a>
+                <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Crear Esquema</button>
+                <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-list"></i> Regresar al Listado</a>
             </div>
         </div>
     </div>
 }
 
+@* Modal Funciones de los relevadores *@
 <div class="modal fade bs-funciones-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -175,143 +188,252 @@
 
 @section styles
 {
-    @Styles.Render("~/Style/iCheck")
     @Styles.Render("~/Style/Select2")
 }
 
 @section script
 {
     @Scripts.Render("~/Script/Select2")
+    @Scripts.Render("~/Script/Parsley")
     <script>
-$(document).ready(function () {
 
-    //inicializar con la subestacion marcada y la linea escondida
-    $("#selector_subestacion").show();
-    $("#selector_linea").hide();
+        $(document).ready(function () {
 
-    //ocultar o mostrar linea/subestacion por el radio button
-    $('input:radio[name="instalacion"]').change(function () {
-        if (this.checked && this.value == 0) {
-            $("#selector_linea").hide();
-            $("#selector_subestacion").show();
-            $("#Tipo_Equipo_Primario").show();
-        }
-        if (this.checked && this.value == 1) {
-            $("#selector_subestacion").hide();
-            $("#selector_linea").show();
-            $("#Tipo_Equipo_Primario").hide();
-        }
-    });
+            $("#rele_fn").change(function () {
+                CargarFunciones()
+            });
 
-    //cargar equipos primarios
-    $('input:radio[name="Tipo_Equipo_Primario"]').change(
-        function () {
-            if ($('input:radio[name="instalacion"]').val() == 0) {
-                var cod = $("#subestacion").val();
+            //guardar cambios en las funciones del rele
+            $("#btn-modal-guardar").click(function () {
+                var f = $("#Funciones").val();
+                var r = $("#rele_fn").val();
+                $.ajax({
+                    url: '@Url.Action("GuardarFunciones", "EsquemasProteccion")',
+                    method: "POST",
+                    data: { rele: r, func: f },
+                    success: function (data) {
+                        $('#modal-msg').html(data);
+                        $("#modal-alert-msg").show();
+                    }
+                });
+            });
 
-                if (cod != "") {
-                    var sub = $("#subestacion").val();
-                    if (this.checked && this.value == "Barra")
-                        loadEquiposPrimarios('barra', sub);
-                    else if (this.checked && this.value == "Transformador")
-                        loadEquiposPrimarios('transformador', sub);
-                    else if (this.checked && this.value == "Línea")
-                        loadEquiposPrimarios('linea', sub);
-                }
-                else
-                    $('#elemento_electrico').html(
-                        "<div class='alert alert-warning alert-dismissible fade in col-md-8' role='alert'>" +
-                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
-                        "</button><strong>Atención!</strong> Una subestación debe ser seleccionada</div>"
-                    );
-            }
+            $("#SelectorTipoEsquema").change(function () {
+                Inicializar($(this).val());
+            });
 
         });
 
-    //cargar datos asociados al esquema
-    $("#subestacion").change(function () {
-        loadTransformadores(true);
-        $('#elemento_electrico').html("");
-        var elem = $('#elemento_electrico');
-        $('input[name=Tipo_Equipo_Primario]').attr('checked', false);
-    });
-    $("#linea").change(function () {
-        loadTransformadores(false);
-        $('#elemento_electrico').html("");
-    });
+        function Inicializar(tipoesquema)
+        {
+            $("#SeccionTipoEsquema").show();
+            $("#SeccionInstalacion").show();
+            $("#SeccionTipoEquipo").show();
+            $("#SeccionElementoElectrico").show();
+            $("#SeccionRelevadores").show();
 
-    //mostrar funciones asociadas al rele seleccionado
-    $("#rele_fn").change(function () {
-        var rele = $("#rele_fn").val();
-        if (rele != "") {
+            if (tipoesquema == "Esquema de Protección y Control del Interruptor") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Línea");
+            }
+            if (tipoesquema == "Esquema de Protección del Transformador") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Transformador");
+            }
+            if (tipoesquema == "Esquema de Control - Ventilación del Transformador") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Transformador");
+            }
+            if (tipoesquema == "Esquema de Control - Cambia Taps del Transformador") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Transformador");
+            }
+            if (tipoesquema == "Esquema de Control – del Desconectivo") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                $("#Interr-Descon").html("Desconectivos");
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Control - Potenciales de la Barra") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Barra");
+            }
+            if (tipoesquema == "Esquema de Señalización Central") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Señalización Central");
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Control – Cargador de Baterías") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Control – Cargador de Baterías");
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Protección – Diferencial de la Barra") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Barra");
+            }
+            if (tipoesquema == "Esquema de Protección DAF/DAV") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Protección DAF/DAV");
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Control Distribución de Corriente Directa") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Control Distribución de Corriente Directa");
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Control Distribución de Corriente Alterna") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Control Distribución de Corriente Alterna");
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Automática RAS (Reposición Automática del Servicio)") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Automática RAS");
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Protección Especial de la Barra") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Barra");
+            }
+            if (tipoesquema == "Esquema de Protección Separadora") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Protección Separadora");
+                $("#SeccionInterruptores").hide();
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Subestacion", tipoesquema);
+                CargarTipoEquipoPrimario("Ninguno");
+            }
+            if (tipoesquema == "Esquema de Automática de Líneas") {
+                $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
+                $("#NombreEsquema").val("Esquema de Automática de Líneas");
+                $("#SeccionTransformadores").hide();
+                $("#SeccionRelevadores").hide();
+                CargarInstalaciones("Línea", tipoesquema);
+                CargarTipoEquipoPrimario("Línea");
+            }
+        }
+
+        function CargarInstalaciones(instalacion,tipoesquema)
+        {
             $.ajax({
-                url: '@Url.Action("Funciones", "EsquemasProteccion")',
+                url: '@Url.Action("VPInstalaciones", "EsquemasProteccion")',
                 method: "POST",
-                data: { NroSerie: rele },
+                data: { ti: instalacion, te: tipoesquema },
                 success: function (data) {
-                    $('#modalFuncionesContenido').html(data);
-                    $(".select2_multiple").select2({
-                        placeholder: "Seleccione un elemento de la lista",
-                        allowClear: true
-                    });
-                    $("#btn-modal-guardar").show();
+                    $('#VPInstalacion').html(data);
+                    InitSelect2();
                 }
             });
         }
-    });
 
-    //guardar cambios en las funciones del rele
-    $("#btn-modal-guardar").click(function () {
-        var f = $("#Funciones").val();
-        var r = $("#rele_fn").val();
-        $.ajax({
-            url: '@Url.Action("GuardarFunciones", "EsquemasProteccion")',
-            method: "POST",
-            data: { rele: r, func: f },
-            success: function (data) {
-                $('#modal-msg').html(data);
-                $("#modal-alert-msg").show();
-            }
-        });
-    });
+        function CargarInterruptores(inst, title, esMult)
+        {
+            $.ajax({
+                url: '@Url.Action("VPInterruptores", "EsquemasProteccion")',
+                method: "POST",
+                data: { instalacion: inst, titulo: title, esMultiple: esMult },
+                success: function (data) {
+                    $('#VPInterruptores').html(data);
+                    InitSelect2();
+                }
+            });
+        }
 
-    /*              FUNCIONES AUXILIARES                   */
+        function CargarTipoEquipoPrimario(selected)
+        {
+            $.ajax({
+                url: '@Url.Action("VPTipoEquipoPrimario", "EsquemasProteccion")',
+                method: "POST",
+                data: { seleccionado: selected },
+                success: function (data) {
+                    $('#VPTipoEquipoPrimario').html(data);
+                    InitSelect2();
+                }
+            });
+        }
 
-    function loadEquiposPrimarios(tipoequipo, sub) {
-        $.ajax({
-            url: '@Url.Action("EquiposPrimarios", "EsquemasProteccion")',
-            method: "POST",
-            data: { e: tipoequipo, codsub: sub },
-            success: function (data) {
-                $('#elemento_electrico').html(data);
-                $(".select2_single").select2({
-                    placeholder: "Seleccione un elemento de la lista",
-                    allowClear: true
+        function CargarElementosElectricos(elemento, subestacion)
+        {
+            $.ajax({
+                url: '@Url.Action("VPElementosElectricos", "EsquemasProteccion")',
+                method: "POST",
+                data: { tipoequipo: elemento, codsub: subestacion },
+                success: function (data) {
+                    $('#VPElementoElectrico').html(data);
+                    InitSelect2();
+                }
+            });
+        }
+
+        function CargarTransformadores(subestacion)
+        {
+            $.ajax({
+                url: '@Url.Action("VPTransformadores", "EsquemasProteccion")',
+                method: "POST",
+                data: { codsub: subestacion },
+                success: function (data) {
+                    $('#VPTransformadores').html(data);
+                    InitSelect2();
+                }
+            });
+        }
+
+        function CargarFunciones()
+        {
+            var rele = $("#rele_fn").val();
+            if (rele != "") {
+                $.ajax({
+                    url: '@Url.Action("VPFunciones", "EsquemasProteccion")',
+                    method: "POST",
+                    data: { NroSerie: rele },
+                    success: function (data) {
+                        $('#modalFuncionesContenido').html(data);
+                        InitSelect2();
+                        $("#btn-modal-guardar").show();
+                    }
                 });
             }
-        });
-    }
+        }
 
-    function loadTransformadores() {
-
-        if ($('input:radio[name="instalacion"]').val() == 0)
-            var cod = $("#subestacion").val();
-        else
-            var cod = $("#linea").val();
-        $.ajax({
-            url: '@Url.Action("Transformadores", "EsquemasProteccion")',
-            method: "POST",
-            data: { codsub: cod },
-            success: function (data) {
-                $('#transformadores').html(data);
-                $(".select2_multiple").select2({
-                    placeholder: "Seleccione un elemento de la lista",
-                    allowClear: true
-                });
-            }
-        });
-    }
-
-});
     </script>
 }

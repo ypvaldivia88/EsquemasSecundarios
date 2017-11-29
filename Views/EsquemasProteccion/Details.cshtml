@@ -1,20 +1,18 @@
 ﻿@model EsquemasSecundarios.Models.EsquemaProteccion
 
 @{
-    ViewBag.Title = "Esquema de protección";
+    ViewBag.Title = "Esquemas de protección";
     ViewBag.PTitle = "Detalles del esquema";
 }
 
 <div class="row clearfix">
     <!-- price element -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-12">
         <div class="pricing">
-            <div class="title">
-                <h1>Datos generales del esquema</h1>
-            </div>
             <div class="x_content">
                 <div class="">
                     <div class="pricing_features">
+                        <h3>Datos generales del esquema</h3>
                         <table class="table">
                             <tr>
                                 <th>Nombre del esquema</th>
@@ -35,15 +33,16 @@
                         </table>
                     </div>
                 </div>
-                <div class="pricing_footer">
+                <hr />
+                <p>
                     <a class="btn btn-info" href="@Url.Action("Edit","EsquemasProteccion", new { id = Model.id_Esquema })"><i class="fa fa-edit"></i> Editar</a>
                     <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-list"></i> Listado</a>
-                </div>
+                </p>
             </div>
         </div>
     </div>
     <!-- price element -->
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
                 <h3>Elementos asociados al esquema</h3>

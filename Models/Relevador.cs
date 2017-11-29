@@ -11,10 +11,9 @@ namespace EsquemasSecundarios.Models
     public class Relevador
     {
         [Key]
+        [Display(Name = "Nombre"), MaxLength(120)]
         public string Nro_Serie { get; set; }
-        public bool Ubicado { get; set; }
-        public string Voltaje_Alterno { get; set; }
-        public string Voltaje_Directo { get; set; }
+        [Required]
         public int id_Plantilla { get; set; }
 
         [ForeignKey("id_Plantilla")]

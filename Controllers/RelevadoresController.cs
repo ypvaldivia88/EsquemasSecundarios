@@ -55,7 +55,17 @@ namespace EsquemasSecundarios.Controllers
         // GET: Relevadores/Create
         public ActionResult Create()
         {
-            ViewBag.id_Plantilla = new SelectList(db.Plantillas, "id_Plantilla", "Modelo");
+            var plantillas = (
+                from pl in db.Plantillas
+                join fa in db.Fabricantes on pl.Id_Fabricante equals fa.Id_Fabricante
+                select new SelectListItem
+                {
+                    Value = pl.id_Plantilla.ToString(),
+                    Text = "Modelo: " + pl.Modelo + " Fabricante: " + fa.Nombre
+                }
+            );
+
+            ViewBag.id_Plantilla = new SelectList(plantillas, "Value", "Text");
             return View();
         }
 
@@ -73,8 +83,16 @@ namespace EsquemasSecundarios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.id_Plantilla = new SelectList(db.Plantillas, "id_Plantilla", "Modelo", relevador.id_Plantilla);
+            var plantillas = (
+                from pl in db.Plantillas
+                join fa in db.Fabricantes on pl.Id_Fabricante equals fa.Id_Fabricante
+                select new SelectListItem
+                {
+                    Value = pl.id_Plantilla.ToString(),
+                    Text = "Modelo: " + pl.Modelo + " Fabricante: " + fa.Nombre
+                }
+            );
+            ViewBag.id_Plantilla = new SelectList(plantillas, "Value", "Text", relevador.id_Plantilla);
             return View(relevador);
         }
 
@@ -90,7 +108,16 @@ namespace EsquemasSecundarios.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.id_Plantilla = new SelectList(db.Plantillas, "id_Plantilla", "Modelo", relevador.id_Plantilla);
+            var plantillas = (
+                from pl in db.Plantillas
+                join fa in db.Fabricantes on pl.Id_Fabricante equals fa.Id_Fabricante
+                select new SelectListItem
+                {
+                    Value = pl.id_Plantilla.ToString(),
+                    Text = "Modelo: " + pl.Modelo + " Fabricante: " + fa.Nombre
+                }
+            );
+            ViewBag.id_Plantilla = new SelectList(plantillas, "Value", "Text", relevador.id_Plantilla);
             return View(relevador);
         }
 
@@ -108,7 +135,16 @@ namespace EsquemasSecundarios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.id_Plantilla = new SelectList(db.Plantillas, "id_Plantilla", "Modelo", relevador.id_Plantilla);
+            var plantillas = (
+                from pl in db.Plantillas
+                join fa in db.Fabricantes on pl.Id_Fabricante equals fa.Id_Fabricante
+                select new SelectListItem
+                {
+                    Value = pl.id_Plantilla.ToString(),
+                    Text = "Modelo: " + pl.Modelo + " Fabricante: " + fa.Nombre
+                }
+            );
+            ViewBag.id_Plantilla = new SelectList(plantillas, "Value", "Text");
             return View(relevador);
         }
 
