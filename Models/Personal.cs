@@ -10,11 +10,8 @@ namespace EsquemasSecundarios.Models
     [Table("Personal")]
     public class Personal
     {
-        [Key,Column(Order = 1)]
+        [Key]
         public int Id_Persona { get; set; }
-
-        [Key,Column(Order = 2)]
-        public int id_EAdministrativa_Prov { get; set; }
 
         public string Nombre { get; set; }
 
