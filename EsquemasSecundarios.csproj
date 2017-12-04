@@ -147,12 +147,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Acciones.cs" />
     <Compile Include="Models\Averias.cs" />
     <Compile Include="Models\Barra.cs" />
     <Compile Include="Models\CircuitoPrimario.cs" />
     <Compile Include="Models\CircuitoSubtransmision.cs" />
     <Compile Include="Models\Desconectivo.cs" />
     <Compile Include="Models\EsquemaProteccion.cs" />
+    <Compile Include="Models\EstructuraAdministrativa.cs" />
     <Compile Include="Models\Mantenimientos.cs" />
     <Compile Include="Models\Relevador_Funcion.cs" />
     <Compile Include="Models\Esquema_Desconectivo.cs" />

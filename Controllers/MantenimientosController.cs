@@ -61,15 +61,10 @@ namespace EsquemasSecundarios.Controllers
         // POST: Mantenimientos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdMantenimiento,CodSubestacion,IdEsquema,id_Tipo,Fecha,Observaciones")] Mantenimientos mantenimientos,
-            string CodSubestacion, int IdEsquema, short id_Tipo)
+        public ActionResult Create([Bind(Include = "IdMantenimiento,CodSubestacion,IdEsquema,id_Tipo,Fecha,Observaciones")] Mantenimientos mantenimientos)
         {
             if (ModelState.IsValid)
-            {
-                mantenimientos.CodSubestacion = CodSubestacion;
-                mantenimientos.IdEsquema = IdEsquema;
-                mantenimientos.id_Tipo = id_Tipo;
-
+            {      
                 db.Mantenimientos.Add(mantenimientos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,14 +74,13 @@ namespace EsquemasSecundarios.Controllers
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
-            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
-
-            var e = db.EsquemasProteccion.Where(c => c.Subestacion == CodSubestacion);
-            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", IdEsquema);
+            ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text");
+            
+            ViewBag.IdEsquema = new SelectList(db.EsquemasProteccion, "id_Esquema", "Nombre");
 
             var tipo = db.TipoMantenimiento
                 .Select(c => new SelectListItem { Value = c.id_Tipo.ToString(), Text = c.Siglas + " - " + c.Tipo });
-            ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text", id_Tipo);
+            ViewBag.id_Tipo = new SelectList(tipo, "Value", "Text");
 
             return View(mantenimientos);
         }

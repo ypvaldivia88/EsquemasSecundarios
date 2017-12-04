@@ -12,27 +12,29 @@ namespace EsquemasSecundarios.Models
     {
         [Key]
         public int IdMantenimiento { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd h:mm tt}")]
-        public DateTime Fecha { get; set; }        
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd h:mm tt}"), Required(ErrorMessage = "Debe introducir el campo: {0}")]
+        public DateTime Fecha { get; set; }       
+        
         public string Observaciones { get; set; }
+
+        [Display(Name = "Subestación"),Required(ErrorMessage = "Debe introducir el campo: {0}")]
+        public string CodSubestacion { get; set; }
+
+        [Display(Name = "Esquema"),Required(ErrorMessage = "Debe introducir el campo: {0}")]
+        public int IdEsquema { get; set; }
+
+        [Display(Name = "Tipo de mantenimiento"),Required(ErrorMessage = "Debe introducir el campo: {0}")]
+        public short id_Tipo { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Subestación")]
-        public string CodSubestacion { get; set; }
         [ForeignKey("CodSubestacion")]
-        public Subestacion Subestacion { get; set; }
+        public Subestacion Subestacion { get; set; }        
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Esquema")]
-        public int IdEsquema { get; set; }
         [ForeignKey("IdEsquema")]
-        public EsquemaProteccion Esquema { get; set; }
+        public EsquemaProteccion Esquema { get; set; }        
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Tipo de mantenimiento")]
-        public short? id_Tipo { get; set; }
         [ForeignKey("id_Tipo")]
         public TipoMantenimiento TipoMantenimiento { get; set; }
     }

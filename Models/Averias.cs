@@ -13,7 +13,7 @@ namespace EsquemasSecundarios.Models
         [Key]
         public int IdAveria { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Required(ErrorMessage = "Debe introducir el campo: {0}")]
         [Display(Name = "Fecha del Reporte"), DisplayFormat(DataFormatString = "{0:yyy-MM-dd h:mm tt}")]
         public DateTime FechaReporte { get; set; }
         [Display(Name = "Fecha de Atención"), DisplayFormat(DataFormatString = "{0:yyy-MM-dd h:mm tt}")]
@@ -32,19 +32,14 @@ namespace EsquemasSecundarios.Models
         public string RevisadoPor { get; set; }
         [Display(Name = "Aprobado Por")]
         public string AprobadoPor { get; set; }
+        [Display(Name = "Subestación"), Required(ErrorMessage = "Debe introducir el campo: {0}")]
+        public string CodSubestacion { get; set; }
+        [Display(Name = "Esquema"),Required(ErrorMessage = "Debe introducir el campo: {0}")]
+        public int IdEsquema { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
-
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Subestación")]
-        public string CodSubestacion { get; set; }
-        [ForeignKey("CodSubestacion")]
-        [Display(Name = "Subestación")]
+        [ForeignKey("CodSubestacion"),Display(Name = "Subestación")]
         public Subestacion Subestacion { get; set; }
-        
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Esquema")]
-        public int IdEsquema { get; set; }
         [ForeignKey("IdEsquema")]
         public EsquemaProteccion Esquema { get; set; }
     }

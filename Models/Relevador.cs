@@ -11,9 +11,10 @@ namespace EsquemasSecundarios.Models
     public class Relevador
     {
         [Key]
-        [Display(Name = "Nombre"), MaxLength(120)]
+        [Display(Name = "Nombre"), Required(ErrorMessage = "El campo Nombre es obligatorio"), MaxLength(120)]
         public string Nro_Serie { get; set; }
-        [Required]
+
+        [Display(Name = "Plantilla"), Required]
         public int id_Plantilla { get; set; }
 
         [ForeignKey("id_Plantilla")]
