@@ -7,13 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EsquemasSecundarios.Models;
+using System.Data.SqlClient;
+using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
     [TienePermiso(Servicio: 9)]
     public class AveriasController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();       
 
         // GET: Averias
         [AllowAnonymous]
@@ -70,6 +72,11 @@ namespace EsquemasSecundarios.Controllers
         public ActionResult Create([Bind(Include = "IdAveria,FechaReporte,CodSubestacion,IdEsquema,FechaAtencion,PersonaQueAtendio,DatosReportados,Analisis,Conclusiones,Recomendaciones,ElaboradoPor,RevisadoPor,AprobadoPor")] Averias averias,
             string CodSubestacion , int IdEsquema, string PersonaQueAtendio, string ElaboradoPor, string RevisadoPor, string AprobadoPor)
         {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+
             if (ModelState.IsValid)
             {
                 averias.CodSubestacion = CodSubestacion;
@@ -78,6 +85,8 @@ namespace EsquemasSecundarios.Controllers
                 averias.ElaboradoPor = ElaboradoPor;
                 averias.RevisadoPor = RevisadoPor;
                 averias.AprobadoPor = AprobadoPor;
+                averias.Id_EAdministrativa = EAdmin;
+                averias.Id_NumAccion = GetNumAccion("I", "ESA", 0);
                 db.Averias.Add(averias);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -134,6 +143,11 @@ namespace EsquemasSecundarios.Controllers
         public ActionResult Edit([Bind(Include = "IdAveria,FechaReporte,CodSubestacion,IdEsquema,FechaAtencion,PersonaQueAtendio,DatosReportados,Analisis,Conclusiones,Recomendaciones,ElaboradoPor,RevisadoPor,AprobadoPor")] Averias averias,
             string CodSubestacion, int IdEsquema, string PersonaQueAtendio, string ElaboradoPor, string RevisadoPor, string AprobadoPor)
         {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+
             if (ModelState.IsValid)
             {
                 averias.CodSubestacion = CodSubestacion;
@@ -142,7 +156,10 @@ namespace EsquemasSecundarios.Controllers
                 averias.ElaboradoPor = ElaboradoPor;
                 averias.RevisadoPor = RevisadoPor;
                 averias.AprobadoPor = AprobadoPor;
+                averias.Id_EAdministrativa = EAdmin;
+                averias.Id_NumAccion = GetNumAccion("M", "ESA", averias.Id_NumAccion ?? 0);
                 db.Entry(averias).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -180,8 +197,9 @@ namespace EsquemasSecundarios.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {
+        {       
             Averias averias = db.Averias.Find(id);
+            int accion = GetNumAccion("B", "ESA", averias.Id_NumAccion ?? 0);
             db.Averias.Remove(averias);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -196,14 +214,53 @@ namespace EsquemasSecundarios.Controllers
             base.Dispose(disposing);
         }
 
-        #region AJAX
+        public int GetNumAccion(string tipoSubAccion, string tipoAccion, int? amod)
+        {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short id_usuario = short.Parse(usuario_logueado.Id_Persona.ToString());
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+            short EA = usuario_logueado.id_EA_Persona;
+
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(WebConfigurationManager.ConnectionStrings["ESConnection"].ToString()))
+                {
+                    conexion.Open();
+                    SqlCommand command = conexion.CreateCommand();
+                    command.CommandText = "EXEC GetNumAccion @EAdmin,@tipoSubAccion,@tipoAccion,@usuario,@EA,@amod,@numAccion OUTPUT SELECT @numAccion";
+                    command.Parameters.Add(new SqlParameter("EAdmin", EAdmin));
+                    command.Parameters.Add(new SqlParameter("tipoSubAccion", tipoSubAccion));
+                    command.Parameters.Add(new SqlParameter("tipoAccion", tipoAccion));
+                    command.Parameters.Add(new SqlParameter("usuario", id_usuario));
+                    command.Parameters.Add(new SqlParameter("EA", EA));
+                    command.Parameters.Add(new SqlParameter("amod", amod));
+                    command.Parameters.Add(new SqlParameter("numAccion", amod));
+                    var dr = command.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        return int.Parse(dr.GetValue(0).ToString());
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return new int();
+            }
+            
+        }
+
         public ActionResult CargarEsquemas(string codsub)
         {
             var e = db.EsquemasProteccion.Where(c => c.Subestacion == codsub);
             ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre");
             return PartialView("_CargarEsquemas");
         }
-        #endregion
 
     }
 }

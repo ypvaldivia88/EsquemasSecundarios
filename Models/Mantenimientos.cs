@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Data.SqlClient;
+using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Models
 {
@@ -26,6 +28,11 @@ namespace EsquemasSecundarios.Models
 
         [Display(Name = "Tipo de mantenimiento"),Required(ErrorMessage = "Debe introducir el campo: {0}")]
         public short id_Tipo { get; set; }
+
+        public short? Id_EAdministrativa { get; set; }
+
+        public int? Id_NumAccion { get; set; }
+
 
         //Propiedades Virtuales Referencias a otras clases
 

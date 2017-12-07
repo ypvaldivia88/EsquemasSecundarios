@@ -179,7 +179,7 @@
             timePicker: true,
             timePickerIncrement: 15,
             locale: {
-                format: 'YYYY-MM-DD h:mm A',
+                format: 'DD/MM/YYYY h: mm A',
                 applyLabel: "Aplicar",
                 cancelLabel: "Cancelar",
                 fromLabel: "Desde",
@@ -211,7 +211,7 @@
                 firstDay: 1
             }
         }, function (chosen_date) {
-            $('#drp1').val(chosen_date.format('YYYY-MM-DD h:mm A'));
+            $('#drp1').val(chosen_date.format('DD/MM/YYYY h:mm A'));
         });
 
         $('#drp2').daterangepicker({
@@ -221,7 +221,7 @@
             timePicker: true,
             timePickerIncrement: 15,
             locale: {
-                format: 'YYYY-MM-DD h:mm A',
+                format: 'DD/MM/YYYY h:mm A',
                 applyLabel: "Aplicar",
                 cancelLabel: "Cancelar",
                 fromLabel: "Desde",
@@ -253,7 +253,7 @@
                 firstDay: 1
             }
         }, function (chosen_date) {
-            $('#drp2').val(chosen_date.format('YYYY-MM-DD h:mm A'));
+            $('#drp2').val(chosen_date.format('DD/MM/YYYY h:mm A'));
             });
 
         //Cargar esquemas segun la subestacion

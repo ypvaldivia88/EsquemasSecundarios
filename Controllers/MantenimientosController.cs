@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EsquemasSecundarios.Models;
+using System.Data.SqlClient;
+using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
@@ -63,8 +65,15 @@ namespace EsquemasSecundarios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdMantenimiento,CodSubestacion,IdEsquema,id_Tipo,Fecha,Observaciones")] Mantenimientos mantenimientos)
         {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+
             if (ModelState.IsValid)
-            {      
+            {
+                mantenimientos.Id_EAdministrativa = EAdmin;
+                mantenimientos.Id_NumAccion = GetNumAccion("I", "ESM", 0);
                 db.Mantenimientos.Add(mantenimientos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -120,11 +129,18 @@ namespace EsquemasSecundarios.Controllers
         public ActionResult Edit([Bind(Include = "IdMantenimiento,CodSubestacion,IdEsquema,id_Tipo,Fecha,Observaciones")] Mantenimientos mantenimientos,
             string CodSubestacion, int IdEsquema, short id_Tipo)
         {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+
             if (ModelState.IsValid)
             {
                 mantenimientos.CodSubestacion = CodSubestacion;
                 mantenimientos.IdEsquema = IdEsquema;
                 mantenimientos.id_Tipo = id_Tipo;
+                mantenimientos.Id_EAdministrativa = EAdmin;
+                mantenimientos.Id_NumAccion = GetNumAccion("M", "ESM", mantenimientos.Id_NumAccion ?? 0);
                 db.Entry(mantenimientos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -169,6 +185,7 @@ namespace EsquemasSecundarios.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Mantenimientos mantenimientos = db.Mantenimientos.Find(id);
+            int accion = GetNumAccion("B", "ESM", mantenimientos.Id_NumAccion ?? 0);
             db.Mantenimientos.Remove(mantenimientos);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -183,6 +200,47 @@ namespace EsquemasSecundarios.Controllers
             base.Dispose(disposing);
         }
         #endregion CRUD
+
+        public int GetNumAccion(string tipoSubAccion, string tipoAccion, int? amod)
+        {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short id_usuario = short.Parse(usuario_logueado.Id_Persona.ToString());
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+            short EA = usuario_logueado.id_EA_Persona;
+
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(WebConfigurationManager.ConnectionStrings["ESConnection"].ToString()))
+                {
+                    conexion.Open();
+                    SqlCommand command = conexion.CreateCommand();
+                    command.CommandText = "EXEC GetNumAccion @EAdmin,@tipoSubAccion,@tipoAccion,@usuario,@EA,@amod,@numAccion OUTPUT SELECT @numAccion";
+                    command.Parameters.Add(new SqlParameter("EAdmin", EAdmin));
+                    command.Parameters.Add(new SqlParameter("tipoSubAccion", tipoSubAccion));
+                    command.Parameters.Add(new SqlParameter("tipoAccion", tipoAccion));
+                    command.Parameters.Add(new SqlParameter("usuario", id_usuario));
+                    command.Parameters.Add(new SqlParameter("EA", EA));
+                    command.Parameters.Add(new SqlParameter("amod", amod));
+                    command.Parameters.Add(new SqlParameter("numAccion", amod));
+                    var dr = command.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        return int.Parse(dr.GetValue(0).ToString());
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return new int();
+            }
+
+        }
 
         #region AJAX
         public ActionResult CargarEsquemas(string codsub)

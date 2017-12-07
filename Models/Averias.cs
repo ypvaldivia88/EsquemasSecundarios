@@ -36,6 +36,9 @@ namespace EsquemasSecundarios.Models
         public string CodSubestacion { get; set; }
         [Display(Name = "Esquema"),Required(ErrorMessage = "Debe introducir el campo: {0}")]
         public int IdEsquema { get; set; }
+        public short? Id_EAdministrativa { get; set; }
+        public int? Id_NumAccion { get; set; }
+
 
         //Propiedades Virtuales Referencias a otras clases
         [ForeignKey("CodSubestacion"),Display(Name = "Subestación")]

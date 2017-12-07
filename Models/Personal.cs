@@ -19,6 +19,7 @@ namespace EsquemasSecundarios.Models
         public string Password { get; set; }
         
         public short? id_grupo { get; set; }
+        public short id_EAdministrativa { get; set; }
 
         public short id_EA_Persona { get; set; }
 

@@ -30,6 +30,8 @@ namespace EsquemasSecundarios.Models
         public string Elemento_Electrico { get; set; }
 
         public string Clase { get; set; }
+        public short? Id_EAdministrativa { get; set; }
+        public int? Id_NumAccion { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 

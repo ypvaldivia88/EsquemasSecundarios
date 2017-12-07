@@ -17,6 +17,12 @@ namespace EsquemasSecundarios.Models
         [Display(Name = "Plantilla"), Required]
         public int id_Plantilla { get; set; }
 
+        public short? Id_EAdministrativa { get; set; }
+
+        public int? Id_NumAccion { get; set; }
+
+        //Propiedades Virtuales Referencias a otras clases
+
         [ForeignKey("id_Plantilla")]
         public Plantilla Plantilla { get; set; }
 

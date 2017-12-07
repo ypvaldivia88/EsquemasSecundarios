@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EsquemasSecundarios.Models;
+using System.Data.SqlClient;
+using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
@@ -70,15 +72,20 @@ namespace EsquemasSecundarios.Controllers
         }
 
         // POST: Relevadores/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Nro_Serie,Ubicado,Voltaje_Alterno,Voltaje_Directo,id_Plantilla")] Relevador relevador)
         {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+
             if (ModelState.IsValid)
             {
                 relevador.Plantilla = db.Plantillas.Find(relevador.id_Plantilla);
+                relevador.Id_EAdministrativa = EAdmin;
+                relevador.Id_NumAccion = GetNumAccion("I", "ESR", 0);
                 db.Relevadores.Add(relevador);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -122,15 +129,20 @@ namespace EsquemasSecundarios.Controllers
         }
 
         // POST: Relevadores/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Nro_Serie,Ubicado,Voltaje_Alterno,Voltaje_Directo,id_Plantilla")] Relevador relevador)
         {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+
             if (ModelState.IsValid)
             {
                 relevador.Plantilla = db.Plantillas.Find(relevador.id_Plantilla);
+                relevador.Id_EAdministrativa = EAdmin;
+                relevador.Id_NumAccion = GetNumAccion("M", "ESR", relevador.Id_NumAccion ?? 0);
                 db.Entry(relevador).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -169,6 +181,7 @@ namespace EsquemasSecundarios.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Relevador relevador = db.Relevadores.Find(id);
+            int accion = GetNumAccion("B", "ESR", relevador.Id_NumAccion ?? 0);
             db.Relevadores.Remove(relevador);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -182,5 +195,47 @@ namespace EsquemasSecundarios.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public int GetNumAccion(string tipoSubAccion, string tipoAccion, int? amod)
+        {
+            var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
+            string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
+            var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
+            short id_usuario = short.Parse(usuario_logueado.Id_Persona.ToString());
+            short EAdmin = usuario_logueado.id_EAdministrativa;
+            short EA = usuario_logueado.id_EA_Persona;
+
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(WebConfigurationManager.ConnectionStrings["ESConnection"].ToString()))
+                {
+                    conexion.Open();
+                    SqlCommand command = conexion.CreateCommand();
+                    command.CommandText = "EXEC GetNumAccion @EAdmin,@tipoSubAccion,@tipoAccion,@usuario,@EA,@amod,@numAccion OUTPUT SELECT @numAccion";
+                    command.Parameters.Add(new SqlParameter("EAdmin", EAdmin));
+                    command.Parameters.Add(new SqlParameter("tipoSubAccion", tipoSubAccion));
+                    command.Parameters.Add(new SqlParameter("tipoAccion", tipoAccion));
+                    command.Parameters.Add(new SqlParameter("usuario", id_usuario));
+                    command.Parameters.Add(new SqlParameter("EA", EA));
+                    command.Parameters.Add(new SqlParameter("amod", amod));
+                    command.Parameters.Add(new SqlParameter("numAccion", amod));
+                    var dr = command.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        return int.Parse(dr.GetValue(0).ToString());
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return new int();
+            }
+
+        }
+
     }
 }
