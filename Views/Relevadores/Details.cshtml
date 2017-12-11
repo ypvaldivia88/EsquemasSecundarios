@@ -4,45 +4,79 @@
     ViewBag.Title = "Relevadores";
     ViewBag.PTitle = "Detalles del relevador";
 }
+<!-- content starts here -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.PTitle</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <!-- content starts here -->
 
-<div class="row clearfix">
-    <div class="col-md-12">
-        <table class="table">
-            <tr>
-                <th>Nombre</th>
-                <td>@Model.Nro_Serie</td>
-            </tr>
-            <tr>
-                <th>Modelo</th>
-                <td>@ViewBag.Modelo</td>
-            </tr>
-            <tr>
-                <th>Fabricante</th>
-                <td>@ViewBag.Fabricante</td>
-            </tr>
-        </table>
-    </div>    
-</div>
-<div class="row clearfix">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Funciones asociadas al relevador</div>
-            <div class="panel-body">
-                <table class="table">
-                    @foreach (var item in ViewBag.Funciones)
-                    {
-                        <tr>
-                            <td>@item</td>
-                        </tr>
-                    }
-                </table>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>Nombre</th>
+                                <td>@Model.Nro_Serie</td>
+                            </tr>
+                            <tr>
+                                <th>Modelo</th>
+                                <td>@ViewBag.Modelo</td>
+                            </tr>
+                            <tr>
+                                <th>Fabricante</th>
+                                <td>@ViewBag.Fabricante</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Funciones asociadas al relevador</div>
+                            <div class="panel-body">
+                                <table class="table">
+                                    @foreach (var item in ViewBag.Funciones)
+                                    {
+                                        <tr>
+                                            <td>@item</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <p>
+                    <a class="btn btn-info" href="@Url.Action("Edit","Relevadores", new { id = Model.Nro_Serie })"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-default" href="@Url.Action("Index","Relevadores")"><i class="fa fa-list"></i> Listado</a>
+                </p>
+                <!-- content ends here -->
             </div>
         </div>
     </div>
 </div>
 
-<hr />
-<p>
-    <a class="btn btn-info" href="@Url.Action("Edit","Relevadores", new { id = Model.Nro_Serie })"><i class="fa fa-edit"></i> Editar</a>
-    <a class="btn btn-default" href="@Url.Action("Index","Relevadores")"><i class="fa fa-list"></i> Listado</a>
-</p>

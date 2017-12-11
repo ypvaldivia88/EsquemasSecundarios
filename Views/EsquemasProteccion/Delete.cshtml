@@ -3,32 +3,66 @@
     ViewBag.Title = "Esquemas de protección";
     ViewBag.PTitle = "Eliminar esquema";
 }
-<div class="alert alert-danger alert-dismissible fade in">Atención! Usted está a punto de eliminar este registro...</div>
-<table class="table">
-    <tr>
-        <th>Nombre del esquema</th>
-        <td>@Html.DisplayFor(model => model.Nombre)</td>
-    </tr>
-    <tr>
-        <th>Tipo de instalación</th>
-        <td>@Html.DisplayFor(model => model.Subestacion)</td>
-    </tr>
-    <tr>
-        <th>Tipo de equipo primario</th>
-        <td>@Html.DisplayFor(model => model.Tipo_Equipo_Primario)</td>
-    </tr>
-    <tr>
-        <th>Nombre del elemento eléctrico</th>
-        <td>@Html.DisplayFor(model => model.Elemento_Electrico)</td>
-    </tr>
-</table>
+<!-- content starts here -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.PTitle</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <!-- content starts here -->
+                <div class="alert alert-danger alert-dismissible fade in">Atención! Usted está a punto de eliminar este registro...</div>
+                <table class="table">
+                    <tr>
+                        <th>Nombre del esquema</th>
+                        <td>@Html.DisplayFor(model => model.Nombre)</td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de instalación</th>
+                        <td>@Html.DisplayFor(model => model.Subestacion)</td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de equipo primario</th>
+                        <td>@Html.DisplayFor(model => model.Tipo_Equipo_Primario)</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre del elemento eléctrico</th>
+                        <td>@Html.DisplayFor(model => model.Elemento_Electrico)</td>
+                    </tr>
+                </table>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-    <div class="form-actions no-color">
-        <input type="submit" value="Eliminar" class="btn btn-danger" />
-        <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")">Listado</a>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Eliminar" class="btn btn-danger" />
+                        <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")">Listado</a>
+                    </div>
+                }
+                <!-- content ends here -->
+            </div>
+        </div>
     </div>
-}
+</div>

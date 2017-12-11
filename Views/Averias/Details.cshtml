@@ -4,64 +4,99 @@
     ViewBag.Title = "Averías";
     ViewBag.PTitle = "Detalles de la avería";
 }
+<!-- content starts here -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.PTitle</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <!-- content starts here -->
 
-<div class="row clearfix">
-    <div class="col-md-6">
-        <table class="table">
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Subestacion)</th>
-                <td>@Html.DisplayFor(model => model.CodSubestacion) - @ViewBag.NombreSubestacion</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Esquema)</th>
-                <td>@ViewBag.NombreEsquema</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.FechaReporte)</th>
-                <td>@Html.DisplayFor(model => model.FechaReporte)</td>
-            </tr>            
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.FechaAtencion)</th>
-                <td>@Html.DisplayFor(model => model.FechaAtencion)</td>
-            </tr>
-            <tr>
-                <th> @Html.DisplayNameFor(model => model.PersonaQueAtendio)</th>
-                <td>@Html.DisplayFor(model => model.PersonaQueAtendio)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.ElaboradoPor)</th>
-                <td>@Html.DisplayFor(model => model.ElaboradoPor)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.RevisadoPor)</th>
-                <td>@Html.DisplayFor(model => model.RevisadoPor)</td>
-            </tr>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.AprobadoPor)</th>
-                <td>@Html.DisplayFor(model => model.AprobadoPor)</td>
-            </tr>            
-        </table>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                    <b>@Html.DisplayNameFor(model => model.DatosReportados)</b>
-                    <p>@Html.DisplayFor(model => model.DatosReportados)</p>
-                
-                    <b>@Html.DisplayNameFor(model => model.Analisis)</b>
-                    <p>@Html.DisplayFor(model => model.Analisis)</p>
-               
-                    <b>@Html.DisplayNameFor(model => model.Conclusiones)</b>
-                    <p>@Html.DisplayFor(model => model.Conclusiones)</p>
-               
-                    <b>@Html.DisplayNameFor(model => model.Recomendaciones)</b>
-                    <p>@Html.DisplayFor(model => model.Recomendaciones)</p>
+
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <table class="table">
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Subestacion)</th>
+                                <td>@Html.DisplayFor(model => model.CodSubestacion) - @ViewBag.NombreSubestacion</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Esquema)</th>
+                                <td>@ViewBag.NombreEsquema</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.FechaReporte)</th>
+                                <td>@Html.DisplayFor(model => model.FechaReporte)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.FechaAtencion)</th>
+                                <td>@Html.DisplayFor(model => model.FechaAtencion)</td>
+                            </tr>
+                            <tr>
+                                <th> @Html.DisplayNameFor(model => model.PersonaQueAtendio)</th>
+                                <td>@Html.DisplayFor(model => model.PersonaQueAtendio)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.ElaboradoPor)</th>
+                                <td>@Html.DisplayFor(model => model.ElaboradoPor)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.RevisadoPor)</th>
+                                <td>@Html.DisplayFor(model => model.RevisadoPor)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.AprobadoPor)</th>
+                                <td>@Html.DisplayFor(model => model.AprobadoPor)</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <b>@Html.DisplayNameFor(model => model.DatosReportados)</b>
+                                <p>@Html.DisplayFor(model => model.DatosReportados)</p>
+
+                                <b>@Html.DisplayNameFor(model => model.Analisis)</b>
+                                <p>@Html.DisplayFor(model => model.Analisis)</p>
+
+                                <b>@Html.DisplayNameFor(model => model.Conclusiones)</b>
+                                <p>@Html.DisplayFor(model => model.Conclusiones)</p>
+
+                                <b>@Html.DisplayNameFor(model => model.Recomendaciones)</b>
+                                <p>@Html.DisplayFor(model => model.Recomendaciones)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <p>
+                    <a class="btn btn-info" href="@Url.Action("Edit","Averias", new { id = Model.IdAveria })"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-default" href="@Url.Action("Index","Averias")"><i class="fa fa-list"></i> Listado</a>
+                </p>
+                <!-- content ends here -->
             </div>
         </div>
     </div>
 </div>
-<hr />
-<p>
-    <a class="btn btn-info" href="@Url.Action("Edit","Averias", new { id = Model.IdAveria })"><i class="fa fa-edit"></i> Editar</a>
-    <a class="btn btn-default" href="@Url.Action("Index","Averias")"><i class="fa fa-list"></i> Listado</a>
-</p>

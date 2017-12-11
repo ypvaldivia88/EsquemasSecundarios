@@ -4,44 +4,77 @@
     ViewBag.Title = "Mantenimientos";
     ViewBag.PTitle = "Eliminar";
 }
+<!-- content starts here -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.PTitle</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <!-- content starts here -->
+                <h3>¿Seguro que desea eliminar este Mantenimiento?</h3>
+                <div>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <tr>
+                                    <th>Subestación</th>
+                                    <td>@Html.DisplayFor(model => model.CodSubestacion)</td>
+                                </tr>
+                                <tr>
+                                    <th>Esquema</th>
+                                    <td>@ViewBag.Esquema</td>
+                                </tr>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <td>@Html.DisplayFor(model => model.Fecha)</td>
+                                </tr>
+                                <tr>
+                                    <th>Tipo de mantenimiento</th>
+                                    <td>@ViewBag.TipoMantenimiento</td>
+                                </tr>
+                                <tr>
+                                    <th>Observaciones</th>
+                                    <td>@Html.DisplayFor(model => model.Observaciones)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
 
-<h3>¿Seguro que desea eliminar este Mantenimiento?</h3>
-<div>
-    <div class="row clearfix">
-        <div class="col-md-12">
-            <table class="table">
-                <tr>
-                    <th>Subestación</th>
-                    <td>@Html.DisplayFor(model => model.CodSubestacion)</td>
-                </tr>
-                <tr>
-                    <th>Esquema</th>
-                    <td>@ViewBag.Esquema</td>
-                </tr>
-                <tr>
-                    <th>Fecha</th>
-                    <td>@Html.DisplayFor(model => model.Fecha)</td>
-                </tr>
-                <tr>
-                    <th>Tipo de mantenimiento</th>
-                    <td>@ViewBag.TipoMantenimiento</td>
-                </tr>
-                <tr>
-                    <th>Observaciones</th>
-                    <td>@Html.DisplayFor(model => model.Observaciones)</td>
-                </tr>
-            </table>
+                    <hr />
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
+                            <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
+                        </div>
+                    }
+                </div>
+                <!-- content ends here -->
+            </div>
         </div>
     </div>
-
-    <hr />
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
-            <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
-        </div>
-    }
 </div>

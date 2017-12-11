@@ -4,87 +4,119 @@
     ViewBag.Title = "Mantenimientos";
     ViewBag.PTitle = "Editar mantenimiento";
 }
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.IdMantenimiento)
-
-        <h2>Fecha</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "date-picker form-control" } })
-                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+<!-- content starts here -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.PTitle</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-        </div>
+            <div class="x_content">
+                <!-- content starts here -->
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-        <h2>Subestación</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
-                        @Html.ValidationMessageFor(model => model.CodSubestacion, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.IdMantenimiento)
 
-        <h2>Esquema</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        <div id="cargarEsquemas">
-                            @Html.DropDownList("IdEsquema", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "esquema" })                            
+                        <h2>Fecha</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "date-picker form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        @Html.ValidationMessageFor(model => model.IdEsquema, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <h2>Tipo de mantenimiento</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.DropDownList("id_Tipo", null, "", htmlAttributes: new { @class = "select2_single form-control" })
-                        @Html.ValidationMessageFor(model => model.TipoMantenimiento, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <h2>Subestación</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
+                                        @Html.ValidationMessageFor(model => model.CodSubestacion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        <h2>Observaciones</h2>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.TextArea("Observaciones", new { @class = "form-control", @placeholder = "Escriba una descripción detallada..." })
-                        @Html.ValidationMessageFor(model => model.Observaciones, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <h2>Esquema</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <div id="cargarEsquemas">
+                                            @Html.DropDownList("IdEsquema", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "esquema" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.IdEsquema, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        <hr />
-        <div class="row">
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Actualizar</button>
-                <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
+                        <h2>Tipo de mantenimiento</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.DropDownList("id_Tipo", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                                        @Html.ValidationMessageFor(model => model.TipoMantenimiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Observaciones</h2>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.TextArea("Observaciones", new { @class = "form-control", @placeholder = "Escriba una descripción detallada..." })
+                                        @Html.ValidationMessageFor(model => model.Observaciones, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Actualizar</button>
+                                <a class="btn btn-default" href="@Url.Action("Index","Mantenimientos")"><i class="fa fa-list"></i> Listado</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- content ends here -->
             </div>
         </div>
     </div>
-}
+</div>
 
 @section styles {
 

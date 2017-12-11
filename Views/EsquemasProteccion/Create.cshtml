@@ -4,170 +4,203 @@
     ViewBag.Title = "Esquemas de protección";
     ViewBag.PTitle = "Nuevo esquema";
 }
+<!-- content starts here -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.PTitle</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <!-- content starts here -->
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <div id="SeccionNombreEsquema">
-            <h2>Nombre del esquema</h2>
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input id="NombreEsquema" name="Nombre" title="Este campo se generará de manera automatizada" type="text" placeholder="Necesita seleccionar los datos necesarios de acuerdo al tipo de esquema" readonly="readonly" class="form-control" />
-                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        <div id="SeccionNombreEsquema">
+                            <h2>Nombre del esquema</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input id="NombreEsquema" name="Nombre" title="Este campo se generará de manera automatizada" type="text" placeholder="Necesita seleccionar los datos necesarios de acuerdo al tipo de esquema" readonly="readonly" class="form-control" />
+                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="SeccionClaseEsquema">
+                            @Html.HiddenFor(model => model.Clase)
+                            @Html.ValidationMessageFor(model => model.Clase, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div id="SeccionTipoEsquema">
+                            <h2>Tipo de Esquema</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <select id="SelectorTipoEsquema" class="select2_single form-control">
+                                            <optgroup label="Esquema de Protección">
+                                                <option selected disabled></option>
+                                                <option value="Esquema de Protección y Control del Interruptor">Esquema de Protección y Control de Interruptor</option>
+                                                <option value="Esquema de Protección del Transformador">Esquema de Protección de Transformador</option>
+                                                <option value="Esquema de Protección – Diferencial de la Barra">Esquema de Protección – Diferencial de Barras</option>
+                                                <option value="Esquema de Protección DAF/DAV">Esquema de Protección DAF/DAV</option>
+                                                <option value="Esquema de Protección Separadora">Esquema de Protección Separadora</option>
+                                            </optgroup>
+                                            <optgroup label="Esquema de Control">
+                                                <option value="Esquema de Control - Ventilación del Transformador">Esquema de Control - Ventilación de Transformador</option>
+                                                <option value="Esquema de Control - Cambia Taps del Transformador">Esquema de Control - Cambia Taps de Transformador</option>
+                                                <option value="Esquema de Control – del Desconectivo">Esquema de Control – Desconectivo</option>
+                                                <option value="Esquema de Control - Potenciales de la Barra">Esquema de Control Potenciales de Barra</option>
+                                                <option value="Esquema de Control – Cargador de Baterías">Esquema de Control – Cargador de Baterías</option>
+                                                <option value="Esquema de Control Distribución de Corriente Directa">Esquema de Control Distribución de Corriente Directa</option>
+                                                <option value="Esquema de Control Distribución de Corriente Alterna">Esquema de Control Distribución de Corriente Alterna</option>
+                                            </optgroup>
+                                            <optgroup label="Esquema de Señalización">
+                                                <option value="Esquema de Señalización Central">Esquema de Señalización Central</option>
+                                            </optgroup>
+                                            <optgroup label="Esquema de Automática">
+                                                <option value="Esquema de Automática RAS (Reposición Automática del Servicio)">Esquema de Automática RAS (Reposición Automática del Servicio)</option>
+                                                <option value="Esquema de Protección Especial de la Barra">Esquema de Protección Especial de Barra</option>
+                                                <option value="Esquema de Automática de Líneas">Esquema de Automática de Líneas</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="SeccionInstalacion">
+                            <h2>Instalación</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <div id="VPInstalacion" class="form-group">
+                                        <input type="text" placeholder="Necesita seleccionar un Tipo de Esquema" readonly="readonly" class="form-control" />
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="SeccionTipoEquipo">
+                            <h2>Tipo de Equipo Primario</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <div id="VPTipoEquipoPrimario" class="form-group">
+                                        <input type="text" name="Tipo_Equipo_Primario" placeholder="Necesita seleccionar un tipo de esquema" class="form-control" readonly />
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Tipo_Equipo_Primario, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="SeccionElementoElectrico">
+                            <h2>Elemento Eléctrico</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <div id="VPElementoElectrico" class="form-group">
+                                        <input type="text" id="Elemento_Electrico" name="Elemento_Electrico" placeholder="Necesita seleccionar una instalación" readonly="readonly" class="form-control" />
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Elemento_Electrico, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="SeccionInterruptores">
+                            <div id="VPInterruptores"></div>
+                        </div>
+
+                        <div id="SeccionTransformadores">
+                            <div id="VPTransformadores"></div>
+                        </div>
+
+                        <div id="SeccionRelevadores">
+                            <h2>Relevadores</h2>
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Relevadores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
+                                        <a id="btnModalFunciones" data-toggle="modal" data-target=".bs-funciones-modal-lg" href="#"><i class="fa fa-cogs"></i> Gestionar funciones</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Boton formulario *@
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <hr />
+                                <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Crear Esquema</button>
+                                <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-list"></i> Regresar al Listado</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="SeccionClaseEsquema">
-            @Html.HiddenFor(model => model.Clase)
-            @Html.ValidationMessageFor(model => model.Clase, "", new { @class = "text-danger" })
-        </div>
-        
-        <div id="SeccionTipoEsquema">
-            <h2>Tipo de Esquema</h2>
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <select id="SelectorTipoEsquema" class="select2_single form-control">
-                            <optgroup label="Esquema de Protección">
-                                <option selected disabled></option>
-                                <option value="Esquema de Protección y Control del Interruptor">Esquema de Protección y Control de Interruptor</option>
-                                <option value="Esquema de Protección del Transformador">Esquema de Protección de Transformador</option>
-                                <option value="Esquema de Protección – Diferencial de la Barra">Esquema de Protección – Diferencial de Barras</option>
-                                <option value="Esquema de Protección DAF/DAV">Esquema de Protección DAF/DAV</option>                                
-                                <option value="Esquema de Protección Separadora">Esquema de Protección Separadora</option>
-                            </optgroup>
-                            <optgroup label="Esquema de Control">
-                                <option value="Esquema de Control - Ventilación del Transformador">Esquema de Control - Ventilación de Transformador</option>
-                                <option value="Esquema de Control - Cambia Taps del Transformador">Esquema de Control - Cambia Taps de Transformador</option>
-                                <option value="Esquema de Control – del Desconectivo">Esquema de Control – Desconectivo</option>
-                                <option value="Esquema de Control - Potenciales de la Barra">Esquema de Control Potenciales de Barra</option>
-                                <option value="Esquema de Control – Cargador de Baterías">Esquema de Control – Cargador de Baterías</option>
-                                <option value="Esquema de Control Distribución de Corriente Directa">Esquema de Control Distribución de Corriente Directa</option>
-                                <option value="Esquema de Control Distribución de Corriente Alterna">Esquema de Control Distribución de Corriente Alterna</option>
-                            </optgroup>
-                            <optgroup label="Esquema de Señalización">
-                                <option value="Esquema de Señalización Central">Esquema de Señalización Central</option>
-                            </optgroup>
-                            <optgroup label="Esquema de Automática">
-                                <option value="Esquema de Automática RAS (Reposición Automática del Servicio)">Esquema de Automática RAS (Reposición Automática del Servicio)</option>
-                                <option value="Esquema de Protección Especial de la Barra">Esquema de Protección Especial de Barra</option>
-                                <option value="Esquema de Automática de Líneas">Esquema de Automática de Líneas</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
+                }
 
-        <div id="SeccionInstalacion">
-            <h2>Instalación</h2>
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div id="VPInstalacion" class="form-group">
-                        <input type="text" placeholder="Necesita seleccionar un Tipo de Esquema" readonly="readonly" class="form-control" />
-                    </div>
-                    @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
-                </div>
-            </div>  
-        </div>      
-
-        <div id="SeccionTipoEquipo">
-            <h2>Tipo de Equipo Primario</h2>
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div id="VPTipoEquipoPrimario" class="form-group">
-                        <input type="text" name="Tipo_Equipo_Primario" placeholder="Necesita seleccionar un tipo de esquema" class="form-control" readonly />
-                    </div>
-                    @Html.ValidationMessageFor(model => model.Tipo_Equipo_Primario, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div id="SeccionElementoElectrico">
-            <h2>Elemento Eléctrico</h2>
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div id="VPElementoElectrico" class="form-group">
-                        <input type="text" id="Elemento_Electrico" name="Elemento_Electrico" placeholder="Necesita seleccionar una instalación" readonly="readonly" class="form-control" />
-                    </div>
-                    @Html.ValidationMessageFor(model => model.Elemento_Electrico, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div id="SeccionInterruptores">
-            <div id="VPInterruptores"></div>
-        </div>        
-
-        <div id="SeccionTransformadores">
-            <div id="VPTransformadores"></div>
-        </div>        
-
-        <div id="SeccionRelevadores">
-            <h2>Relevadores</h2>
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        @Html.DropDownList("Relevadores", null, "", htmlAttributes: new { @class = "select2_multiple form-control", @multiple = "multiple" })
-                        <a id="btnModalFunciones" data-toggle="modal" data-target=".bs-funciones-modal-lg" href="#"><i class="fa fa-cogs"></i> Gestionar funciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        @* Boton formulario *@
-        <div class="row clearfix">
-            <div class="col-md-12">
-                <hr />
-                <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Crear Esquema</button>
-                <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")"><i class="fa fa-list"></i> Regresar al Listado</a>
-            </div>
-        </div>
-    </div>
-}
-
-@* Modal Funciones de los relevadores *@
-<div class="modal fade bs-funciones-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title" id="modalFuncionesTitle">Gestionar funciones</h4>
-            </div>
-            <div class="modal-body">
-                <div id="modal-alert-msg" class="alert alert-success alert-dismissible fade in" role="alert" style="display:none">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <div id="modal-msg"></div>
-                </div>
-                <h2>Relevador</h2>
-                <div class="row clearfix">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            @Html.DropDownList("RelevadorFunc", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "rele_fn" })
+                @* Modal Funciones de los relevadores *@
+                <div class="modal fade bs-funciones-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title" id="modalFuncionesTitle">Gestionar funciones</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="modal-alert-msg" class="alert alert-success alert-dismissible fade in" role="alert" style="display:none">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <div id="modal-msg"></div>
+                                </div>
+                                <h2>Relevador</h2>
+                                <div class="row clearfix">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.DropDownList("RelevadorFunc", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "rele_fn" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="modalFuncionesContenido"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="btn-modal-guardar" style="display:none;">Guardar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="modalFuncionesContenido"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btn-modal-guardar" style="display:none;">Guardar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+
+                <!-- content ends here -->
             </div>
         </div>
     </div>
 </div>
-
 @section styles
 {
     @Styles.Render("~/Style/Select2")

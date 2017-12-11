@@ -1,23 +1,35 @@
 ﻿@{
-    ViewBag.Title = "Portada";
-    ViewBag.PTitle = "Resumen";
+    ViewBag.Title = "Esquemas Secundarios del SIGERE";
+    ViewBag.PTitle = "Portada";
 }
-
-<!-- content starts here -->
 <div class="row">
-    <div class="col-md-12">
-        <blockquote>
-            <p class="text-justify">
-                El Módulo Esquemas Secundarios es el encargado de llevar un control estricto de todos los transformadores de corriente, los transformadores de potencial, 
-                los instrumentos de medición y los relevadores de protección que se encuentran tanto en explotación como en el almacén, así como de los esquemas secundarios 
-                formados por estos equipos. En el caso de los relevadores se pueden activar o no las funciones de protecciones así como definir los valores de los ajustes 
-                para cada una, activando el juego de ajuste deseado.
-                El sistema lleva un registro de todos los mantenimientos realizados a los equipos, con el objetivo de mejorar y hacer óptimo este proceso, ya que manteniendo 
-                un control estricto sobre el mismo será fácil ir pasando paulatinamente de los mantenimientos correctivos a los preventivos. Además si un equipo presenta una 
-                avería, las acciones llevadas a cabo por el personal de protecciones se pueden almacenar al igual que la fecha en que ocurrió dicha afectación.
-            </p>
-            <p><a href="http://asp.net" class="btn btn-primary btn-lg">Leer más &raquo;</a></p>
-        </blockquote>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.PTitle</h2>                
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <!-- content starts here -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <blockquote>
+                            <p class="text-justify">
+                                El Módulo Esquemas Secundarios es el encargado de llevar un control estricto de todos los transformadores de corriente, los transformadores de potencial,
+                                los instrumentos de medición y los relevadores de protección que se encuentran tanto en explotación como en el almacén, así como de los esquemas secundarios
+                                formados por estos equipos. En el caso de los relevadores se pueden activar o no las funciones de protecciones así como definir los valores de los ajustes
+                                para cada una, activando el juego de ajuste deseado.
+                                El sistema lleva un registro de todos los mantenimientos realizados a los equipos, con el objetivo de mejorar y hacer óptimo este proceso, ya que manteniendo
+                                un control estricto sobre el mismo será fácil ir pasando paulatinamente de los mantenimientos correctivos a los preventivos. Además si un equipo presenta una
+                                avería, las acciones llevadas a cabo por el personal de protecciones se pueden almacenar al igual que la fecha en que ocurrió dicha afectación.
+                            </p>
+                            <p><a href="#" class="btn btn-primary btn-lg">Leer más &raquo;</a></p>
+                        </blockquote>
+                    </div>
+                </div>                
+                <!-- content ends here -->
+            </div>
+        </div>
     </div>
 </div>
 
@@ -31,8 +43,8 @@
                     con sus funciones.
                 </p>
                 <p>
-                    <a class="btn btn-default" href="@Url.Action("Create","Plantillas")">Crear Plantilla &raquo;</a>
-                    <a class="btn btn-default" href="@Url.Action("Create","Relevadores")">Crear Relevador &raquo;</a>
+                    <a class="btn btn-default" href="@Url.Action("Create","Plantillas")"> Crear Plantillas &raquo;</a>
+                    <a class="btn btn-default" href="@Url.Action("Create","Relevadores")"> Crear Relevadores &raquo;</a>
                 </p>
             </div>
         </div>
@@ -46,8 +58,8 @@
                     Dentro de los nomencladores Ud. tiene la posibilidad de visualizar los distintos transformadores de corriente o potencial en existencia.
                 </p>
                 <p>
-                    <a class="btn btn-default" href="@Url.Action("Index","TransformadoresCorriente")">Listado de TC &raquo;</a>
-                    <a class="btn btn-default" href="@Url.Action("Index","TransformadoresPotencial")">Listado de TP &raquo;</a>
+                    <a class="btn btn-default" href="@Url.Action("Index","TransformadoresCorriente")">Ver TCs &raquo;</a>
+                    <a class="btn btn-default" href="@Url.Action("Index","TransformadoresPotencial")">Ver TPs &raquo;</a>
                 </p>
             </div>
         </div>
@@ -61,10 +73,10 @@
                     Los Esquemas son la finalidad de la aplicación. En este submenú Ud podrá gestionar su trabajo con los distintos modelos de esquemas.
                 </p>
                 <p>
-                    <a class="btn btn-default" href="@Url.Action("Index","TransformadoresCorriente")">Esquemas de protección &raquo;</a>
-                </p>                
+                    <a class="btn btn-default" href="@Url.Action("Create","EsquemasProteccion")">Crear Esquemas &raquo;</a>
+                    <a class="btn btn-default" href="@Url.Action("Index","TransformadoresCorriente")">Ver Reportes &raquo;</a>
+                </p>
             </div>
         </div>
     </div>
 </div>
-<!-- content ends here -->

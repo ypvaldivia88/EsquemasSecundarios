@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<EsquemasSecundarios.Models.Averias>
 
 @{
-    ViewBag.Title = "Averías";
-    ViewBag.PTitle = "Listado de averías";
+    ViewBag.Title = "Reportes";
+    ViewBag.PTitle = "Reporte de averías";
 }
-
 <!-- content starts here -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -75,7 +74,6 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.Recomendaciones)
                                     </th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,11 +116,6 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Recomendaciones)
                                         </td>
-                                        <td style="width: 95px;">
-                                            <a href="@Url.Action("Details","Averias", new { id = item.IdAveria } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
-                                            <a href="@Url.Action("Edit","Averias", new { id = item.IdAveria } )" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
-                                            <a href="@Url.Action("Delete","Averias", new { id = item.IdAveria } )" class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>
-                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -130,17 +123,12 @@
                         </table>
                     </div>
                 </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="@Url.Action("Create","Averias")" class="btn btn-info"><i class="fa fa-plus"></i> Nueva</a>
-                    </div>
-                </div>
                 <!-- content ends here -->
             </div>
         </div>
     </div>
 </div>
+
 
 @section styles {
     @Styles.Render("~/Style/DataTables")

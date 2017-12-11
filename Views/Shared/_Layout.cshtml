@@ -80,25 +80,17 @@
                                     <li>
                                         <a href="@Url.Action("Index","Averias")"><i class="fa fa-chain-broken"></i> Averías</a>
                                     </li>
+                                    <li>
+                                        <a><i class="fa fa-file-excel-o"></i> Reportes <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>@Html.ActionLink("Reporte de Averías", "Averias", "Reportes")</li>
+                                            <li>@Html.ActionLink("Reporte de Mantenimientos", "Mantenimientos", "Reportes")</li>
+                                            <li>@Html.ActionLink("Reporte de Relevadores", "Relevadores", "Reportes")</li>
+                                            <li>@Html.ActionLink("Reporte de Esquemas", "Esquemas", "Reportes")</li>
+                                        </ul>
+                                    </li>                                    
                                 </ul>
-                            </div>
-                            <div class="menu_section">
-                                <h3>Reportes</h3>
-                                <ul class="nav side-menu">
-                                    <li>
-                                        <a href="@Url.Action("Index","Averias")"><i class="fa fa-file-excel-o"></i> Reporte de Averías </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Index","Averias")"><i class="fa fa-file-excel-o"></i> Reporte de Mantenimientos</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Index","Averias")"><i class="fa fa-file-excel-o"></i> Reporte de Relevadores</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Index","Averias")"><i class="fa fa-file-excel-o"></i> Reporte de Esquemas</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            </div>                            
                         </div>
                         <!-- /sidebar menu --> 
 
@@ -171,38 +163,14 @@
             
                 <!-- Pagina de contenido -->
                 <div class="right_col" role="main">
-                    <div class="">  
-                        
+                    <div class="">
                         <div class="page-title">
                             <div class="title_left">
                                 <h3>@ViewBag.Title</h3>
                             </div>
                         </div>
-
                         <div class="clearfix"></div>
-
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="x_panel">
-                                    <div class="x_title">
-                                        <h2>@ViewBag.PTitle</h2>
-                                        <ul class="nav navbar-right panel_toolbox">
-                                            <li>
-                                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                            </li>                                            
-                                            <li>
-                                                <a class="close-link"><i class="fa fa-close"></i></a>
-                                            </li>
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="x_content">
-                                        @RenderBody()
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                  
+                        @RenderBody()                                  
                     </div>
                 </div>
                 <!-- /Pagina de contenido -->

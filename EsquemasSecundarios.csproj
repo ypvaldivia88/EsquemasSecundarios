@@ -142,6 +142,7 @@
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\PlantillasController.cs" />
     <Compile Include="Controllers\RelevadoresController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Controllers\Seguridad.cs" />
     <Compile Include="Controllers\TransformadoresCorrienteController.cs" />
     <Compile Include="Controllers\TransformadoresPotencialController.cs" />
@@ -4470,10 +4471,6 @@
     <Content Include="Views\EsquemasProteccion\Details.cshtml" />
     <Content Include="Views\EsquemasProteccion\Edit.cshtml" />
     <Content Include="Views\EsquemasProteccion\Index.cshtml" />
-    <Content Include="Views\Plantillas\Create.cshtml" />
-    <Content Include="Views\Plantillas\Delete.cshtml" />
-    <Content Include="Views\Plantillas\Details.cshtml" />
-    <Content Include="Views\Plantillas\Edit.cshtml" />
     <Content Include="Views\Plantillas\Index.cshtml" />
     <Content Include="Views\Relevadores\Create.cshtml" />
     <Content Include="Views\Relevadores\Delete.cshtml" />
@@ -4503,6 +4500,10 @@
     <Content Include="Views\EsquemasProteccion\_VPInstalaciones.cshtml" />
     <Content Include="Views\EsquemasProteccion\_VPInterruptores.cshtml" />
     <Content Include="Views\EsquemasProteccion\_VPTipoEquipoPrimario.cshtml" />
+    <Content Include="Views\Reportes\Averias.cshtml" />
+    <Content Include="Views\Reportes\Mantenimientos.cshtml" />
+    <Content Include="Views\Reportes\Esquemas.cshtml" />
+    <Content Include="Views\Reportes\Relevadores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

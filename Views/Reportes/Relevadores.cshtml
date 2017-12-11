@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<EsquemasSecundarios.Models.Relevador>
 
 @{
-    ViewBag.Title = "Relevadores";
-    ViewBag.PTitle = "Listado";
+    ViewBag.Title = "Reportes";
+    ViewBag.PTitle = "Reporte de relevadores";
 }
 <!-- content starts here -->
 <div class="row">
@@ -48,12 +48,11 @@
                                     <th>
                                         Fabricante
                                     </th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
-            {
+                                {
                                     <tr>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Nro_Serie)
@@ -64,22 +63,10 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Plantilla.Fabricante.Nombre)
                                         </td>
-                                        <td style="width: 95px;">
-                                            <a href="@Url.Action("Details","Relevadores", new { id = item.Nro_Serie } )" class="btn btn-info btn-xs" title="Detalles"><i class="fa fa-eye"></i>  </a>
-                                            <a href="@Url.Action("Edit","Relevadores", new { id = item.Nro_Serie } )" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-pencil"></i>  </a>
-                                            <a href="@Url.Action("Delete","Relevadores", new { id = item.Nro_Serie } )" class="btn btn-danger btn-xs" title="Eliminar"><i class="fa fa-trash-o"></i>  </a>
-                                        </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="@Url.Action("Create","Relevadores")" class="btn btn-info"><i class="fa fa-plus"></i> Nuevo</a>
                     </div>
                 </div>
                 <!-- content ends here -->
@@ -87,7 +74,6 @@
         </div>
     </div>
 </div>
-
 
 @section styles {
     @Styles.Render("~/Style/DataTables")
