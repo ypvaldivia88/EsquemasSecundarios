@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Averías";
-    ViewBag.PTitle = "Listado de averías";
 }
 
 <!-- content starts here -->
@@ -10,7 +9,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@ViewBag.PTitle</h2>
+                <h2>Listado de averías</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -80,7 +79,7 @@
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
-            {
+                                {
                                     <tr>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.FechaReporte)

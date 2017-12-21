@@ -4504,6 +4504,9 @@
     <Content Include="Views\Reportes\Mantenimientos.cshtml" />
     <Content Include="Views\Reportes\Esquemas.cshtml" />
     <Content Include="Views\Reportes\Relevadores.cshtml" />
+    <Content Include="Views\Reportes\_CargarAverias.cshtml" />
+    <Content Include="Views\Reportes\_CargarEsquemas.cshtml" />
+    <Content Include="Views\Reportes\_CargarMantenimientos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

@@ -14,8 +14,7 @@ namespace EsquemasSecundarios.Models
         public int Id_Persona { get; set; }
 
         public string Nombre { get; set; }
-
-        [DataType(DataType.Password)]
+        
         public string Password { get; set; }
         
         public short? id_grupo { get; set; }

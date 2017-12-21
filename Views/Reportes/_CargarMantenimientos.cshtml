@@ -1,0 +1,90 @@
+﻿@model IEnumerable<EsquemasSecundarios.Models.Mantenimientos>
+
+<table id="datatable-buttons2" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Subestacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Esquema)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoMantenimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observaciones)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodSubestacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Esquema.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoMantenimiento.Siglas) - @Html.DisplayFor(modelItem => item.TipoMantenimiento.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Observaciones)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+<script>
+    $(function () {
+        var handleDataTableButtons = function () {
+
+            if ($("#datatable-buttons2").length) {
+                $("#datatable-buttons2").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [
+                        {
+                            extend: "copy", className: "btn-sm", label: "Copiar"
+                        },
+                        {
+                            extend: "csv", className: "btn-sm", label: "CSV"
+                        },
+                        {
+                            extend: "excel", className: "btn-sm", label: "Excel"
+                        },
+                        {
+                            extend: "pdfHtml5", className: "btn-sm", label: "PDF"
+                        },
+                        {
+                            extend: "print", className: "btn-sm", label: "Imprimir"
+                        },
+                    ],
+                    responsive: true
+                });
+            }
+        };
+
+        TableManageButtons = function () {
+            "use strict";
+            return {
+                init: function () {
+                    handleDataTableButtons();
+                }
+            };
+        }();
+
+        TableManageButtons.init();
+    });
+</script>

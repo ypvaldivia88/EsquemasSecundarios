@@ -1,0 +1,68 @@
+﻿@model IEnumerable<EsquemasSecundarios.Models.EsquemaProteccion>
+
+<table id="datatable-buttons2" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Instalación</th>
+            <th>Clase de Esquema</th>
+            <th>Tipo Equipo Primario</th>
+            <th>Elemento Eléctrico</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Subestacion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Clase)</td>
+                <td>@Html.DisplayFor(modelItem => item.Tipo_Equipo_Primario)</td>
+                <td>@Html.DisplayFor(modelItem => item.Elemento_Electrico)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(function () {
+        var handleDataTableButtons = function () {
+
+            if ($("#datatable-buttons2").length) {
+                $("#datatable-buttons2").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [
+                        {
+                            extend: "copy", className: "btn-sm", label: "Copiar"
+                        },
+                        {
+                            extend: "csv", className: "btn-sm", label: "CSV"
+                        },
+                        {
+                            extend: "excel", className: "btn-sm", label: "Excel"
+                        },
+                        {
+                            extend: "pdfHtml5", className: "btn-sm", label: "PDF"
+                        },
+                        {
+                            extend: "print", className: "btn-sm", label: "Imprimir"
+                        },
+                    ],
+                    responsive: true
+                });
+            }
+        };
+
+        TableManageButtons = function () {
+            "use strict";
+            return {
+                init: function () {
+                    handleDataTableButtons();
+                }
+            };
+        }();
+
+        TableManageButtons.init();
+    });
+</script>

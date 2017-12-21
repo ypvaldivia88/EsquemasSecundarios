@@ -1,7 +1,7 @@
 ﻿@model EsquemasSecundarios.Models.Averias
 
 @{
-    ViewBag.Title = "Crear Avería";
+    ViewBag.Title = "Averías";
 }
 @using (Html.BeginForm())
 {
@@ -232,14 +232,16 @@
             </div>
         </div>
     </div>
-}
-<hr />
-<div class="row">
-    <div class="col-sm-12">
-        <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Crear</button>
-        <a class="btn btn-default" href="@Url.Action("Index","Averias")"><i class="fa fa-list"></i> Listado</a>
+
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Crear</button>
+            <a class="btn btn-default" href="@Url.Action("Index","Averias")"><i class="fa fa-list"></i> Listado</a>
+        </div>
     </div>
-</div>
+}
+
 @section styles {
 @Styles.Render("~/Style/Select2")
 @Styles.Render("~/Style/DateRangePicker")

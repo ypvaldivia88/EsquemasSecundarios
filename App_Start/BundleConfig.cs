@@ -31,6 +31,9 @@ namespace EsquemasSecundarios
             bundles.Add(new StyleBundle("~/Style/DateRangePicker").Include(
                      "~/Content/daterangepicker.css"));
 
+            bundles.Add(new StyleBundle("~/Style/DateTimePicker").Include(
+                     "~/Content/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"));            
+
             bundles.Add(new StyleBundle("~/Style/Switchery").Include(
                      "~/Content/vendors/switchery/dist/switchery.min.css"));
 
@@ -49,6 +52,9 @@ namespace EsquemasSecundarios
                        "~/Scripts/moment.min.js",
                        "~/Scripts/daterangepicker.js",
                        "~/Scripts/Inicializadores/daterangepicker.js"));
+
+            bundles.Add(new ScriptBundle("~/Script/DateTimePicker").Include(
+                       "~/Content/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"));
 
             bundles.Add(new ScriptBundle("~/Script/FastClick").Include(
                         "~/Content/vendors/fastclick/lib/fastclick.js"));
