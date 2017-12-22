@@ -15,13 +15,13 @@
 
     <title>Autenticar | Módulo Esquemas Secundarios del SIGERE</title>
 
-    <!-- Bootstrap -->
     @Styles.Render("~/Style/Bootstrap")
-    <!-- Font Awesome -->
     @Styles.Render("~/Style/Fonts")
-    <!-- Custom Theme Style -->
-    @Styles.Render("~/Style/Custom")
     @Styles.Render("~/Style/Select2")
+    <link href="~/Content/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    @Styles.Render("~/Style/Custom")
+    
 
 </head>
 
@@ -53,7 +53,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Inserte su contraseña" } })
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Inserte su contraseña", @type = "password" } })
                                     </div>
                                 </div>
                             </div>
@@ -65,6 +65,11 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="separator">
+                            <p class="change_link">
+                                ¿No se puede conectar?
+                                <a href="#signup" class="to_register"> Configure la conexión </a>
+                            </p>
+                            <div class="clearfix"></div>
                             <br />
                             <div>
                                 <h1><i class="fa fa-codepen" style="font-size: 26px;"></i> Esquemas Secundarios</h1>
@@ -76,7 +81,41 @@
 
                 </section>
             </div>
-
+            <div id="register" class="animate form registration_form">
+                <section class="login_content">
+                    <form>
+                        <h1>Configurar conexión</h1>
+                        <div>
+                            <input type="text" name="server" class="form-control" placeholder="Servidor" required="" />
+                        </div>
+                        <div>
+                            <input type="text" name="database" class="form-control" placeholder="Base de datos" required="" />
+                        </div>
+                        <div>
+                            <input type="text" name="username" class="form-control" placeholder="Usuario" required="" />
+                        </div>
+                        <div>
+                            <input type="password" name="userpass" class="form-control" placeholder="Password" required="" />
+                        </div>
+                        <div>
+                            <a class="btn btn-default submit" href="@Url.Action("ConfigurarConexion","Seguridad")">Cambiar datos de conexión</a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            <p class="change_link">
+                                ¿ Desea mantener los datos ?
+                                <a href="#signin" class="to_register"> Autentíquese </a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <h1><i class="fa fa-codepen" style="font-size: 26px;"></i> Esquemas Secundarios</h1>
+                                <p>- SIGERE. ©@DateTime.Now.Year -</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
         </div>
     </div>
 

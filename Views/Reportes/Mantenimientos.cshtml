@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<EsquemasSecundarios.Models.Mantenimientos>
 
 @{
-    ViewBag.Title = "Reportes";
-    ViewBag.PTitle = "Reporte de mantenimientos";
+    ViewBag.Title = "Reporte de mantenimientos";
 }
 
 <!-- FILTROS -->
@@ -71,7 +70,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@ViewBag.PTitle</h2>
+                <h2>Datos del reporte</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -163,12 +162,12 @@
     <script src="~/Scripts/daterangepicker.js"></script>
     <script>
     $(function () {
-        var fechaIni = moment().format('YYYY-MM-DD');
-        var fechaFin = fechaIni;
+        var fechaIni = moment().startOf('year').format('YYYY-MM-DD');
+        var fechaFin = moment().format('YYYY-MM-DD');
         var Subestacion = "";
 
         $('#FReporte').daterangepicker({
-            startDate: moment().subtract('days', 29),
+            startDate: moment().startOf('year'),
             endDate: moment(),
             ranges: {
                 'Hoy': [moment(), moment()],
@@ -179,7 +178,9 @@
                 'Último Mes': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
             },
             format: 'DD/MM/YYYY',
-            separator: ' hasta ',
+            dateLimit: {
+                months: 12
+            },
             locale: {
                 applyLabel: 'Aplicar',
                 cancelLabel: 'Cancelar',
@@ -191,11 +192,11 @@
                 firstDay: 1
             }
         },
-            function (start, end, label) {
-                fechaIni = start.format('YYYY-MM-DD');
-                fechaFin = end.format('YYYY-MM-DD');
-                Filtrar();
-            });
+        function (start, end, label) {
+            fechaIni = start.format('YYYY-MM-DD');
+            fechaFin = end.format('YYYY-MM-DD');
+            Filtrar();
+        });
 
         $("#Subestacion").change(
             function () {
@@ -205,7 +206,7 @@
 
         function Filtrar() {
             $.ajax({
-                url: '@Url.Action("CargarMantenimientos", "Reportes")',
+                url: '@Url.Action("CargarAverias", "Reportes")',
                 method: "POST",
                 data: { FechaInicio: fechaIni, FechaFin: fechaFin, codSub: Subestacion },
                 success: function (data) {
@@ -216,5 +217,5 @@
         }
     });
 
-    </script>
+</script>
 }

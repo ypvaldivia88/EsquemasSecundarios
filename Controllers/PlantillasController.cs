@@ -10,7 +10,6 @@ using EsquemasSecundarios.Models;
 
 namespace EsquemasSecundarios.Controllers
 {    
-    [TienePermiso(Servicio:5)]
     public class PlantillasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -64,8 +63,6 @@ namespace EsquemasSecundarios.Controllers
         }
 
         // POST: Plantillas/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id_Plantilla,Modelo,Id_Fabricante")] Plantilla plantilla, int[] Funciones)
@@ -120,8 +117,6 @@ namespace EsquemasSecundarios.Controllers
         }
 
         // POST: Plantillas/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id_Plantilla,Modelo,Id_Fabricante")] Plantilla plantilla, int[] Funciones)

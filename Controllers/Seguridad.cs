@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using System.Web;
 using System.Web.Configuration;
 using CSCifrado;
+using EsquemasSecundarios.Migrations;
+using System.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
@@ -25,7 +27,18 @@ namespace EsquemasSecundarios.Controllers
             catch (Exception)
             { }
             return false;
-        }        
+        }
+
+        public void ConfigurarConexion(string server, string database, string username, string userpass)
+        {
+            System.Configuration.Configuration Config = WebConfigurationManager.OpenWebConfiguration("~");
+            ConnectionStringsSection conSetting = (ConnectionStringsSection)Config.GetSection("connectionStrings");
+            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{0}", server);
+            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{1}", database);
+            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{2}", username);
+            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{3}", userpass);            
+        }
+
     }
 }
 
@@ -49,7 +62,7 @@ public class TienePermiso : AuthorizeAttribute
                 string nombre_usuario = httpContext.User.Identity.Name;
                 var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
                 int id_usuario = usuario_logueado.Id_Persona;
-                short? id_grupo = usuario_logueado.id_grupo;
+                short? id_grupo = usuario_logueado.id_grupo ?? 0;
                 List<int> Permisos_Persona = Obtener_Permisos_Persona(id_usuario, id_grupo);
                 if (Permisos_Persona.Contains(Servicio))
                     return true;
@@ -61,6 +74,7 @@ public class TienePermiso : AuthorizeAttribute
         return false;
     }
 
+    //devuelve en una lista de enteros los ids de los servicios que posee el usuario logueado
     public List<int> Obtener_Permisos_Persona(int id_persona, short? id_grupo)
     {
         try

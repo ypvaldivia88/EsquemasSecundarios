@@ -234,7 +234,7 @@
             });
             $("#SeccionRelevadores").hide();
             $("#SelectorTipoEsquema").change(function () {
-                Inicializar($(this).val());                
+                Inicializar($(this).val());
             });
 
         });
@@ -246,6 +246,13 @@
             $("#SeccionTipoEquipo").show();
             $("#SeccionElementoElectrico").show();
             $("#SeccionRelevadores").show();
+
+            $("#SeccionTipoEsquema").val([]);
+            $("#SeccionInstalacion").val([]);
+            $("#SeccionTipoEquipo").val([]);
+            $("#SeccionElementoElectrico").val([]);
+            $("#SeccionRelevadores").val([]);
+            $("#NombreEsquema").val([]);
 
             if (tipoesquema == "Esquema de Protección y Control del Interruptor") {
                 $("#Clase").val($('#SelectorTipoEsquema :selected').parent().attr('label'));
@@ -278,6 +285,7 @@
                 $("#SeccionTransformadores").hide();
                 $("#SeccionRelevadores").hide();
                 $("#Interr-Descon").html("Desconectivos");
+                $("#SeccionInterruptores").show();
                 CargarInstalaciones("Subestacion", tipoesquema);
                 CargarTipoEquipoPrimario("Ninguno");
             }

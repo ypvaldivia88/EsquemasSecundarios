@@ -154,6 +154,7 @@
     <Compile Include="Models\Barra.cs" />
     <Compile Include="Models\CircuitoPrimario.cs" />
     <Compile Include="Models\CircuitoSubtransmision.cs" />
+    <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Desconectivo.cs" />
     <Compile Include="Models\EsquemaProteccion.cs" />
     <Compile Include="Models\Mantenimientos.cs" />
@@ -4507,6 +4508,7 @@
     <Content Include="Views\Reportes\_CargarAverias.cshtml" />
     <Content Include="Views\Reportes\_CargarEsquemas.cshtml" />
     <Content Include="Views\Reportes\_CargarMantenimientos.cshtml" />
+    <Content Include="Views\Plantillas\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

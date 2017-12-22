@@ -12,7 +12,7 @@ using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
-    [TienePermiso(Servicio: 9)]
+    [TienePermiso(Servicio: 22)]// Servicio: Gestionar Averías
     public class AveriasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();       

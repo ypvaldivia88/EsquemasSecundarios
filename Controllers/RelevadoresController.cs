@@ -12,7 +12,7 @@ using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
-    [TienePermiso(Servicio: 1)]
+    [TienePermiso(Servicio: 1)]//Servicio: Nomenclar relevadores
     public class RelevadoresController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

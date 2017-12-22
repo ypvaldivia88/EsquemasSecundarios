@@ -10,7 +10,7 @@ using System;
 
 namespace EsquemasSecundarios.Controllers
 {
-    [TienePermiso(Servicio: 9)]
+    [TienePermiso(Servicio: 9)]// Servicio: Gestionar Esquemas de Protección
     public class EsquemasProteccionController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

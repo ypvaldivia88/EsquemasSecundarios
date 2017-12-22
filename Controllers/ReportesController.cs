@@ -12,6 +12,7 @@ using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
+    [TienePermiso(Servicio: 21)]//Servicio: Ver Reportes
     public class ReportesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

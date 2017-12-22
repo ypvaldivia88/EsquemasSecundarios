@@ -12,13 +12,14 @@ using System.Web.Configuration;
 
 namespace EsquemasSecundarios.Controllers
 {
-    [TienePermiso(Servicio: 9)]
+    [TienePermiso(Servicio: 23)]// Servicio: Gestionar Mantenimientos
     public class MantenimientosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         #region CRUD
         // GET: Mantenimientos
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var mantenimientos = db.Mantenimientos.Include(c => c.Esquema).Include(c => c.TipoMantenimiento);            
