@@ -378,6 +378,7 @@
 
         function CargarInstalaciones(instalacion,tipoesquema)
         {
+            $("#SeccionInstalacion").show();
             $.ajax({
                 url: '@Url.Action("VPInstalaciones", "EsquemasProteccion")',
                 method: "POST",
@@ -391,6 +392,7 @@
 
         function CargarInterruptores(inst, title, esMult)
         {
+            $("#SeccionInterruptores").show();
             $.ajax({
                 url: '@Url.Action("VPInterruptores", "EsquemasProteccion")',
                 method: "POST",
@@ -404,6 +406,7 @@
 
         function CargarTipoEquipoPrimario(selected)
         {
+            $("#SeccionTipoEquipo").show();
             $.ajax({
                 url: '@Url.Action("VPTipoEquipoPrimario", "EsquemasProteccion")',
                 method: "POST",
@@ -417,6 +420,7 @@
 
         function CargarElementosElectricos(elemento, subestacion)
         {
+            $("#SeccionElementoElectrico").show();
             $.ajax({
                 url: '@Url.Action("VPElementosElectricos", "EsquemasProteccion")',
                 method: "POST",
@@ -430,6 +434,7 @@
 
         function CargarTransformadores(subestacion)
         {
+            $("#SeccionTransformadores").show();
             $.ajax({
                 url: '@Url.Action("VPTransformadores", "EsquemasProteccion")',
                 method: "POST",

@@ -4,6 +4,7 @@
     ViewBag.Title = "Relevadores";
     ViewBag.PTitle = "Eliminar";
 }
+<h3 class="alert alert-warning">&iexcl;Advertencia! - Esta acción es irreversible.</h3>
 <!-- content starts here -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -33,38 +34,52 @@
             </div>
             <div class="x_content">
                 <!-- content starts here -->
-                <h3>¿Seguro que desea eliminar este relevador?</h3>
-                <div>
-                    <div class="row clearfix">
-                        <div class="col-md-12">
-                            <table class="table">
-                                <tr>
-                                    <th>Nombre</th>
-                                    <td>@Model.Nro_Serie</td>
-                                </tr>
-                                <tr>
-                                    <th>Modelo</th>
-                                    <td>@ViewBag.Modelo</td>
-                                </tr>
-                                <tr>
-                                    <th>Fabricante</th>
-                                    <td>@ViewBag.Fabricante</td>
-                                </tr>
-                            </table>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>Nombre</th>
+                                <td>@Model.Nro_Serie</td>
+                            </tr>
+                            <tr>
+                                <th>Modelo</th>
+                                <td>@ViewBag.Modelo</td>
+                            </tr>
+                            <tr>
+                                <th>Fabricante</th>
+                                <td>@ViewBag.Fabricante</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Funciones asociadas al relevador</div>
+                            <div class="panel-body">
+                                <table class="table">
+                                    @foreach (var item in ViewBag.Funciones)
+                                    {
+                                        <tr>
+                                            <td>@item</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
                         </div>
                     </div>
-
-                    <hr />
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <div class="form-actions no-color">
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
-                            <a class="btn btn-default" href="@Url.Action("Index","Relevadores")"><i class="fa fa-list"></i> Listado</a>
-                        </div>
-                    }
                 </div>
+
+                <hr />
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
+                        <a class="btn btn-default" href="@Url.Action("Index","Relevadores")"><i class="fa fa-list"></i> Listado</a>
+                    </div>
+                }
                 <!-- content ends here -->
             </div>
         </div>

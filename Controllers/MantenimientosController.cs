@@ -27,6 +27,7 @@ namespace EsquemasSecundarios.Controllers
         }
 
         // GET: Mantenimientos/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)

@@ -3,6 +3,10 @@ using System.Linq;
 using System.Web.Mvc;
 using EsquemasSecundarios.Models;
 using System.Web.Security;
+using System.Web.Configuration;
+using System.Configuration;
+using System;
+using System.Data.SqlClient;
 
 namespace EsquemasSecundarios.Controllers
 {
@@ -38,6 +42,29 @@ namespace EsquemasSecundarios.Controllers
             FormsAuthentication.SignOut();
             return Redirect("~/Personal/Login");
         }
-       
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ConfigurarConexion(string server, string database, string username, string userpass)
+        {
+            string ConnStr = "data source=" + server + ";initial catalog=" + database + ";User ID=" + username + ";Password=" + userpass + ";MultipleActiveResultSets=True;App=EntityFramework";            
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(ConnStr))
+                {
+                    conexion.Open();
+                    var lista = new SqlCommand(String.Format(@"SELECT * FROM Personal"), conexion).ExecuteReader();
+                }
+                Configuration Config = WebConfigurationManager.OpenWebConfiguration("~");
+                ConnectionStringsSection conSetting = (ConnectionStringsSection)Config.GetSection("connectionStrings");
+                conSetting.ConnectionStrings["ESConnection"].ConnectionString = ConnStr;
+                Config.Save();
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Los datos de conexión no son válidos";
+                return Redirect("~/Personal/Login#signup");
+            }
+            return Redirect("~/Personal/Login");
+        }
     }
 }

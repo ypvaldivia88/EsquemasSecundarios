@@ -30,9 +30,9 @@
                         <p>
                             Usted está tratando de acceder a un recurso al cual no posee permisos de acceso, si cree que esto es incorrecto por favor <b><a href="#">contacte</a></b> a un administrador.
                         </p>
-                        <div class="mid_center">
-                            <h3><a href="@Url.Action("Index","Home")"><i class="fa fa-reply"></i> Regresar</a></h3>
-                            
+                        <div class="mid_center">                          
+                            <input type="button" value="Regresar" class="btn btn-primary"
+                                   onclick="location.href='@Request.UrlReferrer'" />
                         </div>
                     </div>
                 </div>

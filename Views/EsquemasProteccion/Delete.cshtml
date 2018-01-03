@@ -4,6 +4,7 @@
     ViewBag.PTitle = "Eliminar esquema";
 }
 <!-- content starts here -->
+<h3 class="alert alert-warning">&iexcl;Advertencia! - Esta acción es irreversible.</h3>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -31,8 +32,6 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <!-- content starts here -->
-                <div class="alert alert-danger alert-dismissible fade in">Atención! Usted está a punto de eliminar este registro...</div>
                 <table class="table">
                     <tr>
                         <th>Nombre del esquema</th>
@@ -57,7 +56,7 @@
                     @Html.AntiForgeryToken()
 
                     <div class="form-actions no-color">
-                        <input type="submit" value="Eliminar" class="btn btn-danger" />
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-eraser"></i> Eliminar</button>
                         <a class="btn btn-default" href="@Url.Action("Index","EsquemasProteccion")">Listado</a>
                     </div>
                 }

@@ -28,17 +28,6 @@ namespace EsquemasSecundarios.Controllers
             { }
             return false;
         }
-
-        public void ConfigurarConexion(string server, string database, string username, string userpass)
-        {
-            System.Configuration.Configuration Config = WebConfigurationManager.OpenWebConfiguration("~");
-            ConnectionStringsSection conSetting = (ConnectionStringsSection)Config.GetSection("connectionStrings");
-            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{0}", server);
-            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{1}", database);
-            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{2}", username);
-            conSetting.ConnectionStrings["ESConnection"].ConnectionString = conSetting.ConnectionStrings["ESConnection"].ConnectionString.ToString().Replace("{3}", userpass);            
-        }
-
     }
 }
 

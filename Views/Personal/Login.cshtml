@@ -83,10 +83,11 @@
             </div>
             <div id="register" class="animate form registration_form">
                 <section class="login_content">
-                    <form>
+                    <form action="@Url.Action("ConfigurarConexion", "Personal")" method="post">
                         <h1>Configurar conexión</h1>
+                        @ViewBag.Error
                         <div>
-                            <input type="text" name="server" class="form-control" placeholder="Servidor" required="" />
+                            <input type="text" name="server" class="form-control" placeholder="Servidor" required="" title="Debe entrar un nombre de servidor válido" />
                         </div>
                         <div>
                             <input type="text" name="database" class="form-control" placeholder="Base de datos" required="" />
@@ -98,13 +99,13 @@
                             <input type="password" name="userpass" class="form-control" placeholder="Password" required="" />
                         </div>
                         <div>
-                            <a class="btn btn-default submit" href="@Url.Action("ConfigurarConexion","Seguridad")">Cambiar datos de conexión</a>
+                            <input type="submit" class="btn btn-default submit" value="Cambiar datos de conexión" />
                         </div>
                         <div class="clearfix"></div>
                         <div class="separator">
                             <p class="change_link">
-                                ¿ Desea mantener los datos ?
-                                <a href="#signin" class="to_register"> Autentíquese </a>
+                                ¿Desea mantener los datos?
+                                <a href="#signin" class="to_register"> Ir al login </a>
                             </p>
                             <div class="clearfix"></div>
                             <br />
@@ -141,7 +142,6 @@
             });
         });
     </script>
-    }
 
 </body>
 
