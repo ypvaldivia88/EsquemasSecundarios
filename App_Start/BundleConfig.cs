@@ -84,6 +84,9 @@ namespace EsquemasSecundarios
                 "~/Content/vendors/datatables.net-buttons/js/buttons.flash.min.js",
                 "~/Content/vendors/datatables.net-buttons/js/buttons.html5.min.js",
                 "~/Content/vendors/datatables.net-buttons/js/buttons.print.min.js",
+                "~/Content/vendors/pdfmake/build/pdfmake.min.js",
+                "~/Content/vendors/jszip/dist/jszip.min.js",
+                "~/Scripts/Inicializadores/datatables.js",
                 "~/Scripts/Lenguaje/datatables.es.js"
                 ));
 
