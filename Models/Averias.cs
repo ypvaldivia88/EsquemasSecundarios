@@ -20,7 +20,7 @@ namespace EsquemasSecundarios.Models
         [Display(Name = "Fecha de Atención"), DisplayFormat(DataFormatString = "{0:yyy-MM-dd h:mm tt}")]
         public DateTime FechaAtencion { get; set; }
 
-        [Display(Name = "Persona Que Atendió")]
+        [Display(Name = "Atendido Por")]
         public string PersonaQueAtendio { get; set; }
 
         [Display(Name = "Datos Reportados")]

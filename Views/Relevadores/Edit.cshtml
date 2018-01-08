@@ -64,6 +64,9 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="funciones"></div>
+
                         <hr />
                         <div class="row">
                             <div class="col-sm-12">
@@ -85,4 +88,21 @@
 
 @section script {
     @Scripts.Render("~/Script/Select2")
+    <script>
+        $("#plantilla").change(function () {
+
+            var p = $("#plantilla").val();
+            if (p != "") {
+                $.ajax({
+                    url: '@Url.Action("VPFunciones", "Relevadores")',
+                    method: "POST",
+                    data: { idP: p },
+                    success: function (data) {
+                        $('#funciones').html(data);
+                        InitSelect2();
+                    }
+                });
+            }
+        });
+    </script>
 }

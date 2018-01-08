@@ -4496,7 +4496,6 @@
     <Content Include="Views\Averias\Edit.cshtml" />
     <Content Include="Views\Averias\Index.cshtml" />
     <Content Include="Views\Mantenimientos\_CargarEsquemas.cshtml" />
-    <Content Include="Views\Averias\_CargarEsquemas.cshtml" />
     <Content Include="Views\EsquemasProteccion\Create.cshtml" />
     <Content Include="Views\EsquemasProteccion\_VPInstalaciones.cshtml" />
     <Content Include="Views\EsquemasProteccion\_VPInterruptores.cshtml" />
@@ -4509,6 +4508,8 @@
     <Content Include="Views\Reportes\_CargarEsquemas.cshtml" />
     <Content Include="Views\Reportes\_CargarMantenimientos.cshtml" />
     <Content Include="Views\Plantillas\Details.cshtml" />
+    <Content Include="Views\Averias\_CargarEsquemas.cshtml" />
+    <Content Include="Views\Relevadores\_CargarFunciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

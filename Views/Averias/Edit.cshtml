@@ -48,7 +48,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.EditorFor(model => model.FechaReporte, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp1" } })
+                                            @Html.EditorFor(model => model.FechaReporte, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp1", @required = "required" } })
                                             @Html.ValidationMessageFor(model => model.FechaReporte, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
+                                            @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion", @required = "required" })
                                             @Html.ValidationMessageFor(model => model.CodSubestacion, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -67,9 +67,10 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <div id="sinSubestacion">
-                                                @Html.DropDownList("IdEsquema", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                                                @Html.DropDownList("IdEsquema", null, "", htmlAttributes: new { @class = "select2_single form-control", @required = "required" })
                                             </div>
                                             <div id="cargarEsquemas" hidden></div>
+                                            @Html.ValidationMessageFor(model => model.IdEsquema, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +78,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.EditorFor(model => model.FechaAtencion, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp2" } })
+                                            @Html.EditorFor(model => model.FechaAtencion, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp2", @required = "required" } })
                                             @Html.ValidationMessageFor(model => model.FechaAtencion, "", new { @class = "text-danger" })
                                         </div>
                                     </div>

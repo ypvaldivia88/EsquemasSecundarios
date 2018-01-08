@@ -46,7 +46,7 @@ namespace EsquemasSecundarios.Controllers
         [HttpPost]
         public ActionResult ConfigurarConexion(string server, string database, string username, string userpass)
         {
-            string ConnStr = "data source=" + server + ";initial catalog=" + database + ";User ID=" + username + ";Password=" + userpass + ";MultipleActiveResultSets=True;App=EntityFramework";            
+            string ConnStr = "data source=" + server + ";initial catalog=" + database + ";User ID=" + username + ";Password=" + userpass + ";MultipleActiveResultSets=False;App=EntityFramework";            
             try
             {
                 using (SqlConnection conexion = new SqlConnection(ConnStr))

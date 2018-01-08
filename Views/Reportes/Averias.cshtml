@@ -199,10 +199,10 @@
 @section script {
 @Scripts.Render("~/Script/DataTables")
 @Scripts.Render("~/Script/Select2")
-<script src="~/Scripts/moment.min.js"></script>
-<script src="~/Scripts/daterangepicker.js"></script>
+@Scripts.Render("~/Script/DateRangePicker")
 <script>
-    $(function () {
+    $(document).ready(function () {
+        $(function () {
         var fechaIni = moment().startOf('year').format('YYYY-MM-DD');
         var fechaFin = moment().format('YYYY-MM-DD');
         var Subestacion = "";
@@ -252,10 +252,10 @@
                 data: { FechaInicio: fechaIni, FechaFin: fechaFin, codSub: Subestacion },
                 success: function (data) {
                     $('#tablaContenido').html(data);
-                    InitDataTables();
                 }
             });
         }
+    });
     });
 
 </script>

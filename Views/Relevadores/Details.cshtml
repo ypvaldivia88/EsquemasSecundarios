@@ -49,6 +49,17 @@
                                 <th>Fabricante</th>
                                 <td>@ViewBag.Fabricante</td>
                             </tr>
+                            <tr>
+                                <th>Funciones</th>
+                                <td>
+                                    <ul>
+                                        @foreach (var item in ViewBag.Funciones)
+                                        {
+                                            <li>@item</li>
+                                        }
+                                    </ul>
+                                </td>
+                            </tr>       
                         </table>
                     </div>
                 </div>

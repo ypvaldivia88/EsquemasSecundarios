@@ -71,17 +71,19 @@ namespace EsquemasSecundarios.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdAveria,FechaReporte,CodSubestacion,IdEsquema,FechaAtencion,PersonaQueAtendio,DatosReportados,Analisis,Conclusiones,Recomendaciones,ElaboradoPor,RevisadoPor,AprobadoPor")] Averias averias,
-            string CodSubestacion , int IdEsquema, string PersonaQueAtendio, string ElaboradoPor, string RevisadoPor, string AprobadoPor)
+            string CodSubestacion , int? IdEsquema, string PersonaQueAtendio, string ElaboradoPor, string RevisadoPor, string AprobadoPor)
         {
             var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
             string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
             var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
             short EAdmin = usuario_logueado.id_EAdministrativa;
 
-            if (ModelState.IsValid)
+            int idesq = IdEsquema ?? -1;
+
+            if (ModelState.IsValid && idesq != -1 && CodSubestacion != "")
             {
                 averias.CodSubestacion = CodSubestacion;
-                averias.IdEsquema = IdEsquema;
+                averias.IdEsquema = idesq;
                 averias.PersonaQueAtendio = PersonaQueAtendio;
                 averias.ElaboradoPor = ElaboradoPor;
                 averias.RevisadoPor = RevisadoPor;
@@ -90,7 +92,7 @@ namespace EsquemasSecundarios.Controllers
                 averias.Id_NumAccion = GetNumAccion("I", "ESA", 0);
                 db.Averias.Add(averias);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = averias.IdAveria });
             }
             var subestaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
@@ -105,6 +107,12 @@ namespace EsquemasSecundarios.Controllers
             ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", ElaboradoPor);
             ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", RevisadoPor);
             ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", AprobadoPor);
+
+            ViewBag.ErrorEsquema = "";
+            if (idesq == -1)
+            {
+                ViewBag.ErrorEsquema = "Debe seleccionar un esquema";
+            }
 
             return View(averias);
         }
@@ -142,17 +150,19 @@ namespace EsquemasSecundarios.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdAveria,FechaReporte,CodSubestacion,IdEsquema,FechaAtencion,PersonaQueAtendio,DatosReportados,Analisis,Conclusiones,Recomendaciones,ElaboradoPor,RevisadoPor,AprobadoPor")] Averias averias,
-            string CodSubestacion, int IdEsquema, string PersonaQueAtendio, string ElaboradoPor, string RevisadoPor, string AprobadoPor)
+            string CodSubestacion, int? IdEsquema, string PersonaQueAtendio, string ElaboradoPor, string RevisadoPor, string AprobadoPor)
         {
             var usuario = System.Web.HttpContext.Current.User?.Identity?.Name ?? null;
             string nombre_usuario = System.Web.HttpContext.Current.User.Identity.Name;
             var usuario_logueado = db.Personal.FirstOrDefault(c => c.Nombre == nombre_usuario);
             short EAdmin = usuario_logueado.id_EAdministrativa;
 
-            if (ModelState.IsValid)
+            int idesq = IdEsquema ?? -1;
+
+            if (ModelState.IsValid && idesq != -1 && CodSubestacion != "")
             {
                 averias.CodSubestacion = CodSubestacion;
-                averias.IdEsquema = IdEsquema;
+                averias.IdEsquema = idesq;
                 averias.PersonaQueAtendio = PersonaQueAtendio;
                 averias.ElaboradoPor = ElaboradoPor;
                 averias.RevisadoPor = RevisadoPor;
@@ -162,19 +172,28 @@ namespace EsquemasSecundarios.Controllers
                 db.Entry(averias).State = EntityState.Modified;
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = averias.IdAveria });
             }
             var subestaciones = db.Subestacion
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion })
                 .Union(db.SubestacionTransmision
                 .Select(c => new SelectListItem { Value = c.Codigo, Text = c.Codigo + " - " + c.NombreSubestacion }));
             ViewBag.CodSubestacion = new SelectList(subestaciones, "Value", "Text", CodSubestacion);
+
             var e = db.EsquemasProteccion.Where(c => c.Subestacion == CodSubestacion);
-            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", IdEsquema);
-            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", PersonaQueAtendio);
-            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", ElaboradoPor);
-            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", RevisadoPor);
-            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", AprobadoPor);
+            ViewBag.IdEsquema = new SelectList(e, "id_Esquema", "Nombre", averias.IdEsquema);
+
+            ViewBag.PersonaQueAtendio = new SelectList(db.Personal, "Nombre", "Nombre", averias.PersonaQueAtendio);
+            ViewBag.ElaboradoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.ElaboradoPor);
+            ViewBag.RevisadoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.RevisadoPor);
+            ViewBag.AprobadoPor = new SelectList(db.Personal, "Nombre", "Nombre", averias.AprobadoPor);
+
+            ViewBag.ErrorEsquema = "";
+            if (idesq == -1)
+            {
+                ViewBag.ErrorEsquema = "Debe seleccionar un esquema";
+            }
+
             return View(averias);
         }
 

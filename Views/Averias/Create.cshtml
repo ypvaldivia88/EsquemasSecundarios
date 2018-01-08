@@ -36,42 +36,70 @@
                 </div>
                 <div class="x_content">
                     <!-- content starts here -->
-                        <div class="form-horizontal">                            
-                            <h2>@Html.DisplayNameFor(model => model.FechaReporte)</h2>
+                        <div class="form-horizontal">
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.EditorFor(model => model.FechaReporte, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp1" } })
-                                        @Html.ValidationMessageFor(model => model.FechaReporte, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            <h2>@Html.DisplayNameFor(model => model.Subestacion)</h2>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion" })
-                                        @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            <h2>@Html.DisplayNameFor(model => model.Esquema)</h2>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <div id="sinSubestacion">
-                                            @Html.EditorFor(model => model.Esquema.Nombre, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @placeholder = "Ud. debe seleccionar una subestación" } })
+                                        <div class="col-sm-3 text-right"> 
+                                            <h2>@Html.DisplayNameFor(model => model.FechaReporte)</h2>
                                         </div>
-                                        <div id="cargarEsquemas" hidden></div>
+                                        <div class="col-sm-6">
+                                            @Html.EditorFor(model => model.FechaReporte, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp1", @required = "required" } })
+                                        </div>
+                                        <div class="col-sm-3">
+                                            @Html.ValidationMessageFor(model => model.FechaReporte, "", new { @class = "text-danger" })
+                                        </div>                                        
                                     </div>
                                 </div>
                             </div>
-                            <h2>@Html.DisplayNameFor(model => model.FechaAtencion)</h2>
+                            
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.EditorFor(model => model.FechaAtencion, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp2" } })
-                                        @Html.ValidationMessageFor(model => model.FechaAtencion, "", new { @class = "text-danger" })
+                                        <div class="col-sm-3 text-right">
+                                            <h2>@Html.DisplayNameFor(model => model.Subestacion)</h2>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.DropDownList("CodSubestacion", null, "", htmlAttributes: new { @class = "select2_single form-control", @id = "subestacion", @required = "required" })
+                                        </div>
+                                        <div class="col-sm-3">
+                                            @Html.ValidationMessageFor(model => model.Subestacion, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <div class="col-sm-3 text-right">
+                                            <h2>@Html.DisplayNameFor(model => model.Esquema)</h2>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="sinSubestacion">
+                                                @Html.EditorFor(model => model.Esquema.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @placeholder = "Ud. debe seleccionar una subestación", @required = "required" } })
+                                            </div>
+                                            <div id="cargarEsquemas" hidden></div>                                            
+                                        </div>
+                                        <div class="col-sm-3">
+                                            @Html.ValidationMessageFor(model => model.IdEsquema, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <div class="col-sm-3">
+                                            <h2>@Html.DisplayNameFor(model => model.FechaAtencion)</h2>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.EditorFor(model => model.FechaAtencion, new { htmlAttributes = new { @class = "date-picker form-control", @id = "drp2", @required = "required" } })
+                                        </div>
+                                        <div class="col-sm-3">
+                                            @Html.ValidationMessageFor(model => model.FechaAtencion, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -108,41 +136,69 @@
                 </div>
                 <div class="x_content">
                     <!-- content starts here -->
-                    <h2>@Html.DisplayNameFor(model => model.PersonaQueAtendio)</h2>
+                    
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="form-line">
-                                @Html.DropDownList("PersonaQueAtendio", null, "", htmlAttributes: new { @class = "select2_single form-control" })
-                                @Html.ValidationMessageFor(model => model.PersonaQueAtendio, "", new { @class = "text-danger" })
+                                <div class="col-sm-3 text-right">
+                                    <h2>@Html.DisplayNameFor(model => model.PersonaQueAtendio)</h2>
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("PersonaQueAtendio", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.PersonaQueAtendio, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <h2>@Html.DisplayNameFor(model => model.ElaboradoPor)</h2>
+                    
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="form-line">
-                                @Html.DropDownList("ElaboradoPor", null, "", htmlAttributes: new { @class = "select2_single form-control" })
-                                @Html.ValidationMessageFor(model => model.ElaboradoPor, "", new { @class = "text-danger" })
+                                <div class="col-sm-3 text-right">
+                                    <h2>@Html.DisplayNameFor(model => model.ElaboradoPor)</h2>
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("ElaboradoPor", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.ElaboradoPor, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <h2>@Html.DisplayNameFor(model => model.RevisadoPor)</h2>
+                    
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="form-line">
-                                @Html.DropDownList("RevisadoPor", null, "", htmlAttributes: new { @class = "select2_single form-control" })
-                                @Html.ValidationMessageFor(model => model.RevisadoPor, "", new { @class = "text-danger" })
+                                <div class="col-sm-3 text-right">
+                                    <h2>@Html.DisplayNameFor(model => model.RevisadoPor)</h2>
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("RevisadoPor", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.RevisadoPor, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <h2>@Html.DisplayNameFor(model => model.AprobadoPor)</h2>
+                    
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="form-line">
-                                @Html.DropDownList("AprobadoPor", null, "", htmlAttributes: new { @class = "select2_single form-control" })
-                                @Html.ValidationMessageFor(model => model.AprobadoPor, "", new { @class = "text-danger" })
+                                <div class="col-sm-3 text-right">
+                                    <h2>@Html.DisplayNameFor(model => model.AprobadoPor)</h2>
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("AprobadoPor", null, "", htmlAttributes: new { @class = "select2_single form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.AprobadoPor, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -347,7 +403,7 @@ $(document).ready(function () {
             $("#sinSubestacion").hide();
             $("#cargarEsquemas").show();
             $.ajax({
-                url: '@Url.Action("CargarEsquemas", "Mantenimientos")',
+                url: '@Url.Action("CargarEsquemas", "Averias")',
                 method: "POST",
                 data: { codsub: sub },
                 success: function (data) {
